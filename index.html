@@ -324,19 +324,22 @@ function lanzarEstrellas() {
 
 <audio id="audioLuna" preload="auto">
 <source src="audioLuna.mp3" type="audio/mpeg">
+</audio>
+
 <script>
 const audio = document.getElementById("audioLuna");
+
 /* ⏱️ TIEMPOS (NO CAMBIES, SOLO PON TUS PALABRAS ARRIBA) */
 const cues = [
   { time: 2,  el: "l1" },
   { time: 5,  el: "l2" },
   { time: 8,  el: "l3" },
-  { time: 11,  el: "l4" },
-  { time: 15.0, el: "l5" },
-  { time: 18.4, el: "l6" },
-  { time: 21.0, el: "l7" },
-  { time: 24.6, el: "l8" },
-  { time: 26.5, el: "l9" }
+  { time: 9.5,  el: "l4" },
+  { time: 12.0, el: "l5" },
+  { time: 16.4, el: "l6" },
+  { time: 19.0, el: "l7" },
+  { time: 21.6, el: "l8" },
+  { time: 25.5, el: "l9" }
 ];
 
 let currentIndex = -1;
@@ -1286,8 +1289,9 @@ function spawnLily(){
 </div>
 </div>
 </center>
-<!-- ❤️🐼 LLUVIA OPTIMIZADA (SIN LAG) -->
+  <!-- ❤️🐼 LLUVIA MASIVA DE CORAZONES Y PANDAS -->
 <style>
+/* Contenedor global */
 .lluvia-amor {
   position: fixed;
   inset: 0;
@@ -1296,54 +1300,73 @@ function spawnLily(){
   z-index: 9999;
 }
 
-/* Partículas optimizadas */
+/* Partículas */
 .particula-amor {
   position: absolute;
-  top: -40px;
-  opacity: 0.85;
-  will-change: transform, opacity;
+  top: -50px;
+  opacity: 0.95;
   animation: caerAmor linear forwards;
 }
 
-/* Animación liviana */
+/* Animación de caída */
 @keyframes caerAmor {
-  from {
-    transform: translateY(0);
+  0% {
+    transform: translateY(0) scale(0.6) rotate(0deg);
     opacity: 1;
   }
-  to {
-    transform: translateY(110vh);
+  100% {
+    transform: translateY(120vh) scale(1.4) rotate(360deg);
     opacity: 0;
   }
 }
 </style>
 
+<!-- CONTENEDOR DE LA LLUVIA -->
 <div class="lluvia-amor" id="lluviaAmor"></div>
+
+<!-- 🎵 AUDIO DE EJEMPLO -->
+<audio id="musica" preload="auto">
+  musica.mp3
+</audio>
+
+<!-- BOTÓN DE EJEMPLO -->
+<button onclick="toggleMusica()">🎶 Play / Pausa</button>
 
 <script>
 let lluviaInterval = null;
-const ES_MOBILE = window.innerWidth < 768;
 
-/* 🔥 Cantidades adaptativas */
-const POR_TANDA = ES_MOBILE ? 10 : 20;
-const INTERVALO = ES_MOBILE ? 900 : 700;
+/* Play / Pausa de la música */
+function toggleMusica() {
+  const audio = document.getElementById("musica");
 
+  if (audio.paused) {
+    audio.play();
+    iniciarLluviaAmor();
+  } else {
+    audio.pause();
+    detenerLluviaAmor();
+  }
+}
+
+/* Inicia la lluvia */
 function iniciarLluviaAmor() {
   if (lluviaInterval) return;
 
   lluviaInterval = setInterval(() => {
-    generarParticulas(POR_TANDA);
-  }, INTERVALO);
+    generarParticulas(80); // cantidad MASIVA
+  }, 350);
 }
 
+/* Detiene la lluvia */
 function detenerLluviaAmor() {
   clearInterval(lluviaInterval);
   lluviaInterval = null;
 }
 
+/* Generador de corazones y pandas */
 function generarParticulas(cantidad) {
   const cont = document.getElementById("lluviaAmor");
-  const simbolos = ["❤", "💖", "🐼", "💕"];
+  const simbolos = ["❤", "💖", "💕", "🐼", "🐼", "🐼"];
 
   for (let i = 0; i < cantidad; i++) {
     const p = document.createElement("div");
@@ -1351,14 +1374,18 @@ function generarParticulas(cantidad) {
     p.textContent = simbolos[Math.floor(Math.random() * simbolos.length)];
 
     p.style.left = Math.random() * 100 + "%";
-    p.style.fontSize = (16 + Math.random() * 20) + "px";
-    p.style.animationDuration = (4 + Math.random() * 3) + "s";
+    p.style.fontSize = 16 + Math.random() * 30 + "px";
+    p.style.animationDuration = 3 + Math.random() * 4 + "s";
+    p.style.color = Math.random() > 0.5 ? "#ff69b4" : "#e91e63";
 
     cont.appendChild(p);
-    setTimeout(() => p.remove(), 7000);
+    setTimeout(() => p.remove(), 8000);
   }
 }
-</script>
 
+/* Detener lluvia al finalizar canción */
+document.getElementById("musica").addEventListener("ended", detenerLluviaAmor);
+</script>
+``
 </BODY>
 </HTML>
