@@ -38,7 +38,97 @@
 </div>
 
 <BR><FONT COLOR="BLACK" SIZE="30" FACE="TAHOMA"><MARQUEE BEHAVIOR="ALTERNATE">BIENVENIDA MI AMOOOR</MARQUEE></FONT>
-<BR><CENTER><IMG SRC="love.jpg" HEIGHT="225" WHIDT="225"></CENTER>
+<!-- 🎬 OVERLAY VIDEO + CANCIÓN (10s) -->
+<style>
+.video-overlay {
+  position: fixed;
+  inset: 0;
+  background: black;
+  z-index: 100000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+
+.video-overlay.activo {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.video-overlay video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Botón */
+.boton-video {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
+  z-index: 100001;
+  background: #7b4cff;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 14px 26px;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 12px 30px rgba(123,76,255,.4);
+}
+.boton-video:hover {
+  filter: brightness(1.1);
+}
+</style>
+
+<!-- Overlay de video -->
+<div class="video-overlay" id="videoOverlay">
+  <video id="moche" playsinline preload="auto">
+    <source src="noche.mp4" type="video/mp4">
+    Tu navegador no soporta video.
+  </video>
+</div>
+
+<!-- Audio separado -->
+<audio id="cancion3" preload="auto">
+  <source src="cancion3.mp3" type="audio/mpeg">
+  Tu navegador no soporta audio.
+</audio>
+
+<!-- Botón -->
+<button class="boton-video" onclick="activarNoche()">
+  🎬 Noche Estrellada
+</button>
+
+<script>
+function activarVideoNoche() {
+  const overlay = document.getElementById("videoOverlay");
+  const video = document.getElementById("noche");
+  const audio = document.getElementById("cancion3");
+
+  // Reset
+  video.currentTime = 0;
+  audio.currentTime = 0;
+
+  // Mostrar overlay
+  overlay.classList.add("activo");
+
+  // Reproducir ambos
+  video.play();
+  audio.play();
+
+  // Detener todo después de 10 segundos
+  setTimeout(() => {
+    video.pause();
+    audio.pause();
+    overlay.classList.remove("activo");
+  }, 10000);
+}
+</script>
+  <BR><CENTER><IMG SRC="love.jpg" HEIGHT="225" WHIDT="225"></CENTER>
 <!-- 🌟 APARTADO ESTRELLA + PANDA BAILANDO -->
 <style>
 .estrella-apartado {
