@@ -109,15 +109,28 @@
 
 .estrella {
   position: absolute;
+  bottom: -20px;          /* 👈 NACEN ABAJO */
   font-size: 22px;
   color: #f4d03f;
-  animation: subirEstrella 3s ease-out forwards;
+  animation: subirEstrella 3.2s ease-out forwards;
 }
 
 @keyframes subirEstrella {
-  from { transform: translateY(0) scale(1); opacity: 1; }
-  to   { transform: translateY(-140px) scale(1.6); opacity: 0; }
+  0% {
+    bottom: -20px;
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    bottom: 160px;       /* 👈 SUBEN VISUALMENTE */
+    opacity: 0;
+    transform: scale(1.6);
+  }
 }
+``
 
 /* Móvil */
 @media (max-width: 600px) {
