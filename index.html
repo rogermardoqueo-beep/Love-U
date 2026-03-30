@@ -43,6 +43,129 @@
 <BR><FONT COLOR="GREEN" SIZE="30" FACE="TAHOMA"><A HREF="https://open.spotify.com/intl-es/track/5gcHIPUzf4WZwcgfJ7vHkq?si=13ecb94826bf434a">TE AMO<3</A></FONT>
 <BR><FONT COLOR="RED" SIZE="30" FACE="TAHOMA">  Tus locuras van con mis locuras</FONT><A HREF="https://open.spotify.com/track/3kII7smb04nI2T2vnj5eZr"><IMG SRC="IG.PNG" HEIGHT="50" WHIGT="50"></A>
 <BR><BR>
+  <!-- 📝 APARTADO DE POEMAS CON AUDIO -->
+<style>
+.poemas-seccion {
+  position: relative;
+  width: 95%;
+  max-width: 900px;
+  margin: 80px auto;
+  background: #fff;
+  border: 4px solid #9b59b6;
+  border-radius: 18px;
+  padding: 30px 26px;
+  box-shadow: 0 12px 25px rgba(155, 89, 182, 0.3);
+  overflow: hidden;
+  z-index: 5;
+}
+
+/* Corazones animados de fondo */
+.poemas-fondo {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.poema-corazon {
+  position: absolute;
+  font-size: 46px;
+  color: rgba(255, 105, 180, 0.12);
+  animation:
+    flotar 14s linear infinite,
+    latir 2.8s ease-in-out infinite;
+}
+
+@keyframes flotar {
+  from { transform: translateY(40px); }
+  to   { transform: translateY(-160px); }
+}
+
+@keyframes latir {
+  0%, 100% { scale: 1; }
+  50% { scale: 1.18; }
+}
+
+/* Contenido */
+.poemas-contenido {
+  position: relative;
+  z-index: 2;
+  font-family: 'Segoe Script','Comic Sans MS','Ink Free',Tahoma,sans-serif;
+}
+
+.poemas-contenido h2 {
+  text-align: center;
+  color: #8e44ad;
+  font-size: 32px;
+  margin-bottom: 24px;
+}
+
+.poema {
+  margin-bottom: 30px;
+  font-size: 20px;
+  line-height: 1.9;
+  color: #444;
+}
+
+.firma {
+  text-align: end;
+  font-size: 18px;
+  color: #9b59b6;
+  margin-top: 10px;
+}
+
+/* Móvil */
+@media (max-width: 600px) {
+  .poemas-contenido h2 { font-size: 26px; }
+  .poema { font-size: 18px; }
+}
+</style>
+
+<div class="poemas-seccion">
+
+  <!-- ❤️ Corazones de fondo -->
+  <div class="poemas-fondo">
+    <div class="poema-corazon" style="left:5%; animation-delay:0s">❤</div>
+    <div class="poema-corazon" style="left:20%; animation-delay:3s">❤</div>
+    <div class="poema-corazon" style="left:40%; animation-delay:6s">❤</div>
+    <div class="poema-corazon" style="left:60%; animation-delay:1s">❤</div>
+    <div class="poema-corazon" style="left:80%; animation-delay:5s">❤</div>
+  </div>
+
+  <!-- ✨ Texto -->
+  <div class="poemas-contenido">
+    <h2>🌸 Mis palabras para ti 🌸</h2>
+
+    <div class="poema">
+      No escribo para que recuerdes,<br>
+      escribo para quedarme,<br>
+      porque donde estás tú,<br>
+      siempre quiero volver.
+      <div class="firma">— Siempre</div>
+    </div>
+
+    <div class="poema">
+      Hay silencios que suenan a paz,<br>
+      y todos se parecen a ti,<br>
+      cuando el mundo se detiene<br>
+      solo para mirarte.
+      <div class="firma">— Para ti</div>
+    </div>
+
+    <div class="poema">
+      Si algún día dudas,<br>
+      vuelve a estas palabras,<br>
+      todas laten con tu nombre.
+      <div class="firma">— Con amor</div>
+    </div>
+  </div>
+</div>
+
+<!-- 🎵 AUDIO DEL APARTADO -->
+<audio id="musica" preload="auto">
+  musica.mp3
+  Tu navegador no soporta audio.
+</audio>
+``
 <CENTER>
  
 <style>
