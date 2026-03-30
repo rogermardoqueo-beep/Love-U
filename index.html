@@ -86,28 +86,28 @@
 
 <!-- Overlay de video -->
 <div class="video-overlay" id="videoOverlay">
-  <video id="moche" playsinline preload="auto">
+  <video id="videoNoche" playsinline preload="auto">
     <source src="noche.mp4" type="video/mp4">
     Tu navegador no soporta video.
   </video>
 </div>
 
 <!-- Audio separado -->
-<audio id="cancion3" preload="auto">
+<audio id="audioCancion3" preload="auto">
   <source src="cancion3.mp3" type="audio/mpeg">
   Tu navegador no soporta audio.
 </audio>
 
 <!-- Botón -->
-<button class="boton-video" onclick="activarNoche()">
+<button class="boton-video" onclick="activarVideoNoche()">
   🎬 Noche Estrellada
 </button>
 
 <script>
 function activarVideoNoche() {
   const overlay = document.getElementById("videoOverlay");
-  const video = document.getElementById("noche");
-  const audio = document.getElementById("cancion3");
+  const video = document.getElementById("videoNoche");
+  const audio = document.getElementById("audioCancion3");
 
   // Reset
   video.currentTime = 0;
