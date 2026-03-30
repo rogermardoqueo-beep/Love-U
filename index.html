@@ -285,6 +285,132 @@ de lo que siento por ti.
 
 <BR><BR>
 <FONT COLOR="LIGHTBLUE" SIZE="28" FACE="TAHOMA">
+<!-- PUCCA BESA A GARU (CAMBIO DE IMÁGENES) -->
+<style>
+.scene {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 500px;
+  height: 180px;
+  pointer-events: none;
+  z-index: 50;
+}
 
+/* ==== GARU ==== */
+.garu {
+  position: absolute;
+  bottom: 20px;
+  left: 280px;
+  width: 80px;
+  height: 80px;
+}
+
+.garu img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.garu .dormido {
+  animation: garuDormido 8s infinite;
+}
+
+.garu .corriendo {
+  opacity: 0;
+  animation: garuCorriendo 8s infinite;
+}
+
+/* ==== PUCCA ==== */
+.pucca {
+  position: absolute;
+  bottom: 20px;
+  width: 80px;
+  height: 80px;
+}
+
+.pucca img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.pucca .lenta {
+  animation: puccaLenta 8s infinite;
+}
+
+.pucca .corriendo {
+  opacity: 0;
+  animation: puccaCorriendo 8s infinite;
+}
+
+/* ==== CORAZÓN ==== */
+.beso {
+  position: absolute;
+  left: 330px;
+  bottom: 120px;
+  font-size: 22px;
+  opacity: 0;
+  color: hotpink;
+  animation: beso 8s infinite;
+}
+
+/* ==== ANIMACIONES ==== */
+
+/* Garu dormido */
+@keyframes garuDormido {
+  0%, 55% { opacity: 1; }
+  60%, 100% { opacity: 0; }
+}
+
+/* Garu corriendo */
+@keyframes garuCorriendo {
+  0%, 55% { opacity: 0; left: 280px; }
+  60% { opacity: 1; left: 280px; }
+  100% { left: 480px; }
+}
+
+/* Pucca lenta (beso) */
+@keyframes puccaLenta {
+  0% { left: -120px; opacity: 1; }
+  40% { left: 180px; }
+  55% { left: 210px; opacity: 1; }
+  60%, 100% { opacity: 0; }
+}
+
+/* Pucca corriendo */
+@keyframes puccaCorriendo {
+  0%, 55% { opacity: 0; left: 210px; }
+  60% { opacity: 1; left: 210px; }
+  100% { left: 430px; }
+}
+
+/* Corazón beso */
+@keyframes beso {
+  0%, 40% { opacity: 0; transform: scale(1); }
+  48% { opacity: 1; transform: scale(1.4); }
+  55% { opacity: 0; transform: scale(1.8); }
+  100% { opacity: 0; }
+}
+</style>
+
+<div class="scene">
+
+  <div class="pucca">
+    <img src="pucca_lento.png" class="lenta" alt="Pucca beso">
+    <img src="pucca_corriendo.png" class="corriendo" alt="Pucca corriendo">
+  </div>
+
+  <div class="garu">
+    <img src="garu_dormido.png" class="dormido" alt="Garu dormido">
+    <img src="garu_corriendo.png" class="corriendo" alt="Garu corriendo">
+  </div>
+
+  <div class="beso">❤</div>
+
+</div>
+``
 </BODY>
 </HTML>
