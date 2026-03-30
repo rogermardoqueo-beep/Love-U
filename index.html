@@ -907,25 +907,91 @@ ol{
 </div>
 </center>
 
-</center>
-<FONT COLOR="PINK" SIZE="40" FACE="TAHOMA">
-TE AMO CON TODO MI CORAZÓN
-</FONT>
+<!-- 💜 APARTADO DE AMOR CON CORAZONES -->
+<style>
+.apartado-amor {
+  position: relative;
+  max-width: 900px;
+  margin: 80px auto;
+  padding: 50px 40px;
+  background: linear-gradient(180deg, #fff 0%, #fde9f3 100%);
+  border-radius: 25px;
+  box-shadow: 0 15px 30px rgba(155, 89, 182, 0.25);
+  font-family: 'Segoe Script','Comic Sans MS','Ink Free',Tahoma,sans-serif;
+  overflow: hidden;
+}
 
-<BR><BR>
-<FONT COLOR="BLACK" SIZE="28" FACE="TAHOMA">
-Este espacio está lleno de cariño,  
-pensado para recordarte lo especial que eres.
-</FONT>
+/* Corazones de fondo */
+.apartado-amor::before {
+  content: "💜 💜 💜 💜 💜 💜 💜 💜 💜 💜";
+  position: absolute;
+  inset: 0;
+  font-size: 48px;
+  color: rgba(155, 89, 182, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  pointer-events: none;
+}
 
-<BR><BR>
-<FONT COLOR="YELLOW" SIZE="26" FACE="TAHOMA">
-Cada día mi amor crece más,  
-y estas palabras son solo una pequeña muestra  
-de lo que siento por ti.
-</FONT>
+/* Contenido encima */
+.contenido-amor {
+  position: relative;
+  z-index: 2;
+}
 
-<BR><BR>
+/* Título */
+.contenido-amor h1 {
+  text-align: center;
+  color: #c2185b;
+  font-size: 42px;
+  margin-bottom: 30px;
+  text-shadow: 0 2px 6px rgba(255,105,180,.3);
+}
+
+/* Texto principal */
+.contenido-amor p {
+  font-size: 22px;
+  line-height: 1.9;
+  color: #333;
+  margin-bottom: 28px;
+}
+
+/* Texto destacado */
+.contenido-amor .destacado {
+  color: #9b59b6;
+  font-weight: bold;
+}
+
+/* Móvil */
+@media (max-width: 600px) {
+  .contenido-amor h1 {
+    font-size: 30px;
+  }
+  .contenido-amor p {
+    font-size: 18px;
+  }
+}
+</style>
+
+<div class="apartado-amor">
+  <div class="contenido-amor">
+    <h1>💗 TE AMO CON TODO MI CORAZÓN 💗</h1>
+
+    <p>
+      Este espacio está lleno de cariño,<br>
+      pensado para recordarte <span class="destacado">lo especial que eres</span>.
+    </p>
+
+    <p class="destacado">
+      Cada día mi amor crece más,<br>
+      y estas palabras son solo una pequeña muestra<br>
+      de lo que siento por ti.
+    </p>
+  </div>
+</div>
+
 <FONT COLOR="LIGHTBLUE" SIZE="28" FACE="TAHOMA">
 <!-- PUCCA BESA A GARU (CAMBIO DE IMÁGENES) -->
 <style>
