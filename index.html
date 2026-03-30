@@ -11,6 +11,39 @@
 <BR><FONT COLOR="RED" SIZE="30" FACE="TAHOMA">VISITAME EN MIS REDES SOCIALES</FONT><A HREF="https://www.instagram.com/?hl=es"><IMG SRC="IG.PNG" HEIGHT="50" WHIGT="50"></A>
 <BR><BR>
 <CENTER>
+  <style>
+.snoopy-container {
+  position: fixed;
+  bottom: 20px;
+  left: -120px;
+  animation: caminar 12s linear infinite;
+  z-index: 10;
+}
+
+.snoopy {
+  font-size: 60px;
+  animation: saludar 1.5s ease-in-out infinite;
+}
+
+@keyframes caminar {
+  from {
+    left: -120px;
+  }
+  to {
+    left: 110%;
+  }
+}
+
+@keyframes saludar {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(10deg); }
+}
+</style>
+
+<div class="snoopy-container">
+  <div class="snoopy">🐶</div>
+</div>
+
 <style>
 /* Fondo con corazones flotando */
 .fondo {
