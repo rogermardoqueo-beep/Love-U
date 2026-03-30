@@ -175,8 +175,140 @@ function lanzarEstrellas() {
 
 </script>
 <BR><FONT COLOR="GREEN" SIZE="30" FACE="TAHOMA"><A HREF="https://open.spotify.com/intl-es/track/5gcHIPUzf4WZwcgfJ7vHkq?si=13ecb94826bf434a">TE AMO<3</A></FONT>
-<BR><FONT COLOR="RED" SIZE="30" FACE="TAHOMA">  Tus locuras van con mis locuras</FONT><A HREF="https://open.spotify.com/track/3kII7smb04nI2T2vnj5eZr"><IMG SRC="IG.PNG" HEIGHT="50" WHIGT="50"></A>
-<BR><BR>
+<!-- 🌙 APARTADO LUNA SINCRONIZADO -->
+<style>
+/* CONTENEDOR */
+.luna-seccion {
+  width: 100%;
+  min-height: 70vh;
+  background: radial-gradient(circle at top, #1b1f3b, #05070f);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  font-family: 'Segoe Script','Comic Sans MS',Tahoma,sans-serif;
+}
+
+/* LUNA */
+.luna {
+  position: absolute;
+  top: 15%;
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(circle, #fff 30%, #ccc 70%);
+  border-radius: 50%;
+  box-shadow: 0 0 45px rgba(255,255,255,.6);
+  animation: flotar 6s ease-in-out infinite;
+}
+
+@keyframes flotar {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-22px); }
+}
+
+/* TEXTO */
+.texto-luna {
+  position: absolute;
+  color: white;
+  font-size: 30px;
+  max-width: 80%;
+  opacity: 0;
+  transform: translateY(25px);
+  transition: all .8s ease;
+}
+
+/* ACTIVO */
+.texto-luna.activo {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* BOTÓN */
+.boton-luna {
+  position: absolute;
+  bottom: 40px;
+  background: rgba(255,255,255,0.15);
+  color: white;
+  border: 2px solid white;
+  padding: 14px 30px;
+  font-size: 18px;
+  border-radius: 30px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+}
+.boton-luna:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+/* MÓVIL */
+@media (max-width:600px){
+  .texto-luna { font-size:22px; }
+  .luna { width:110px; height:110px; }
+}
+</style>
+
+<div class="luna-seccion">
+  <div class="luna"></div>
+
+  <!-- 📝 AQUÍ PONES LAS PALABRAS -->
+  <div id="l1" class="texto-luna">[PALABRA O FRASE 1]</div>
+  <div id="l2" class="texto-luna">[PALABRA O FRASE 2]</div>
+  <div id="l3" class="texto-luna">[PALABRA O FRASE 3]</div>
+  <div id="l4" class="texto-luna">[PALABRA O FRASE 4]</div>
+  <div id="l5" class="texto-luna">[PALABRA O FRASE 5]</div>
+  <div id="l6" class="texto-luna">[PALABRA O FRASE 6]</div>
+  <div id="l7" class="texto-luna">[PALABRA O FRASE 7]</div>
+  <div id="l8" class="texto-luna">[PALABRA O FRASE 8]</div>
+  <div id="l9" class="texto-luna">[PALABRA O FRASE 9]</div>
+
+  <button class="boton-luna" onclick="playLuna()">🌙 Reproducir</button>
+</div>
+
+<!-- 🎵 AUDIO -->
+<audio id="audioLuna" preload="auto">
+  luna.mp3
+</audio>
+
+<script>
+const audio = document.getElementById("audioLuna");
+
+/* ⏱️ TIEMPOS YA DEFINIDOS (solo cambias texto en HTML) */
+const cues = [
+  { time: 0.8,  el: "l1" },
+  { time: 3.2,  el: "l2" },
+  { time: 5.6,  el: "l3" },
+  { time: 8.1,  el: "l4" },
+  { time: 11.0, el: "l5" },
+  { time: 14.4, el: "l6" },
+  { time: 18.0, el: "l7" },
+  { time: 21.6, el: "l8" },
+  { time: 25.5, el: "l9" }
+];
+
+function playLuna(){
+  audio.currentTime = 0;
+  audio.play();
+  resetTextos();
+
+  audio.ontimeupdate = () => {
+    cues.forEach(c => {
+      const el = document.getElementById(c.el);
+      if (audio.currentTime >= c.time) {
+        el.classList.add("activo");
+      }
+    });
+  };
+}
+
+function resetTextos(){
+  document.querySelectorAll(".texto-luna").forEach(t=>{
+    t.classList.remove("activo");
+  });
+}
+</script>
+``
   <!-- 📝 APARTADO DE POEMAS CON AUDIO -->
 <style>
 .poemas-seccion {
