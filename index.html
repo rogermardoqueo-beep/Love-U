@@ -316,7 +316,7 @@ function lanzarEstrellas() {
   <div id="l5" class="texto-luna">dame solo un beso</div>
   <div id="l6" class="texto-luna">Que me alcance hasta morir</div>
   <div id="l7" class="texto-luna">como un vicio</div>
-  <div id="l8" class="texto-luna">que me mueve</div>
+  <div id="l8" class="texto-luna">que me duele</div>
   <div id="l9" class="texto-luna">quiero mirarte a los ojos</div>
 
   <button class="boton-luna" onclick="toggleLuna()">🌙 Play / Pausa</button>
@@ -333,13 +333,13 @@ const audio = document.getElementById("audioLuna");
 const cues = [
   { time: 2,  el: "l1" },
   { time: 6,  el: "l2" },
-  { time: 9,  el: "l3" },
-  { time: 12,  el: "l4" },
-  { time: 14.0, el: "l5" },
-  { time: 18.4, el: "l6" },
-  { time: 21.0, el: "l7" },
-  { time: 23.6, el: "l8" },
-  { time: 25.5, el: "l9" }
+  { time: 10,  el: "l3" },
+  { time: 13,  el: "l4" },
+  { time: 16.0, el: "l5" },
+  { time: 20.4, el: "l6" },
+  { time: 23.0, el: "l7" },
+  { time: 25.6, el: "l8" },
+  { time: 26, el: "l9" }
 ];
 
 let currentIndex = -1;
@@ -1353,7 +1353,7 @@ function iniciarLluviaAmor() {
   if (lluviaInterval) return;
 
   lluviaInterval = setInterval(() => {
-    generarParticulas(80); // cantidad MASIVA
+    generarParticulas(20); // cantidad MASIVA
   }, 350);
 }
 
@@ -1379,7 +1379,7 @@ function generarParticulas(cantidad) {
     p.style.color = Math.random() > 0.5 ? "#ff69b4" : "#e91e63";
 
     cont.appendChild(p);
-    setTimeout(() => p.remove(), 8000);
+    setTimeout(() => p.remove(), 800);
   }
 }
 
@@ -1387,5 +1387,138 @@ function generarParticulas(cantidad) {
 document.getElementById("musica").addEventListener("ended", detenerLluviaAmor);
 </script>
 ``
+ <!-- 💌 SOBRES ROMÁNTICOS -->
+<style>
+/* Contenedor */
+.sobres-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 6000;
+}
+
+/* Sobre */
+.sobre {
+  position: absolute;
+  width: 90px;
+  height: 60px;
+  background: #f8c8dc;
+  border-radius: 6px;
+  cursor: pointer;
+  animation: flotarSobre 5s ease-in-out infinite;
+  pointer-events: auto;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+/* Triángulo */
+.sobre::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, transparent 50%, #f5a9c7 50%),
+    linear-gradient(225deg, transparent 50%, #f5a9c7 50%);
+  background-position: left, right;
+  background-size: 50% 100%;
+  background-repeat: no-repeat;
+  border-radius: 6px;
+}
+
+/* Corazón */
+.sobre::after {
+  content: "❤";
+  position: absolute;
+  top: 18px;
+  left: 37px;
+  font-size: 16px;
+  color: #d81b60;
+}
+
+/* Mensaje */
+.mensaje {
+  position: absolute;
+  top: -10px;
+  left: -40px;
+  width: 170px;
+  background: white;
+  border: 2px solid #d81b60;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 14px;
+  color: #4a235a;
+  text-align: center;
+  opacity: 0;
+  transform: scale(0.7);
+  transition: all .3s ease;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* Mostrar mensaje */
+.sobre.abierto .mensaje {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Animación */
+@keyframes flotarSobre {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Móvil */
+@media (max-width:600px){
+  .sobre {
+    width: 75px;
+    height: 50px;
+  }
+  .mensaje {
+    font-size: 13px;
+  }
+}
+</style>
+
+<div class="sobres-container" id="sobres"></div>
+
+<script>
+const frasesRomanticas = [
+  "Eres mi lugar favorito 💖",
+  "Te elegiría en todas las vidas ✨",
+  "Mi corazón sonríe contigo 💕",
+  "No hay día que no piense en ti 🌸",
+  "Tú haces que todo valga la pena 💫",
+  "Eres mi casualidad más bonita 💌",
+  "Contigo todo tiene sentido 🌙"
+];
+
+function crearSobre() {
+  const cont = document.getElementById("sobres");
+
+  const sobre = document.createElement("div");
+  sobre.className = "sobre";
+  sobre.style.left = Math.random() * 85 + "%";
+  sobre.style.top = Math.random() * 70 + "%";
+
+  const mensaje = document.createElement("div");
+  mensaje.className = "mensaje";
+  mensaje.textContent =
+    frasesRomanticas[Math.floor(Math.random() * frasesRomanticas.length)];
+
+  sobre.appendChild(mensaje);
+
+  sobre.onclick = () => {
+    sobre.classList.toggle("abierto");
+  };
+
+  cont.appendChild(sobre);
+
+  /* Autodestruye suave */
+  setTimeout(() => sobre.remove(), 20000);
+}
+
+/* Generar sobres ocasionalmente */
+setInterval(crearSobre, 3500);
+</script>
+`` 
 </BODY>
 </HTML>
