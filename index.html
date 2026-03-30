@@ -446,17 +446,17 @@ de lo que siento por ti.
 
 </div>
 ``
-<!-- 📖 LIBRO DE IMÁGENES -->
+<!-- 📖 LIBRO DE IMÁGENES: FRASES + ANIMACIÓN -->
 <style>
 .libro-fotos {
-  width: 90%;
-  max-width: 700px;
+  width: 94%;
+  max-width: 720px;
   margin: 80px auto;
-  background: rgba(255,255,255,0.95);
+  background: rgba(255,255,255,0.96);
   border: 5px solid #ff8fb1;
   border-radius: 20px;
   box-shadow: 0 15px 30px rgba(255,105,180,.4);
-  padding: 20px;
+  padding: 18px;
   text-align: center;
   position: relative;
   z-index: 10;
@@ -464,107 +464,137 @@ de lo que siento por ti.
 
 .libro-fotos h2 {
   color: #e91e63;
-  font-family: Tahoma, sans-serif;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 }
 
 .pagina-foto {
   display: none;
-  animation: aparecer .6s ease;
+  animation: hoja .55s ease;
 }
 
-@keyframes aparecer {
-  from { opacity: 0; transform: scale(0.96); }
-  to   { opacity: 1; transform: scale(1); }
+@keyframes hoja {
+  from { opacity: 0; transform: translateY(6px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .pagina-foto img {
   max-width: 100%;
-  max-height: 400px;
-  border-radius: 15px;
+  max-height: 420px;
+  border-radius: 16px;
   border: 3px solid #ffd1e6;
 }
 
-/* navegación */
-input[name="foto"] {
-  display: none;
+.frase {
+  margin-top: 10px;
+  color: #c2185b;
+  font-size: 16px;
+  font-weight: 500;
 }
+
+/* radios */
+input[name="foto"]{ display:none; }
 
 /* mostrar página */
 #f1:checked ~ .paginas #foto1,
 #f2:checked ~ .paginas #foto2,
 #f3:checked ~ .paginas #foto3,
-#f4:checked ~ .paginas #foto4 {
-  display: block;
-}
+#f4:checked ~ .paginas #foto4,
+#f5:checked ~ .paginas #foto5,
+#f6:checked ~ .paginas #foto6 { display:block; }
 
-.controles-foto {
-  margin-top: 15px;
+/* controles */
+.controles-foto{
+  margin-top: 12px;
   display: flex;
   justify-content: space-between;
 }
-
-.controles-foto label {
-  background: #ff69b4;
-  color: white;
-  padding: 8px 15px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-size: 14px;
+.controles-foto label{
+  background:#ff69b4;
+  color:#fff;
+  padding:10px 18px;
+  border-radius:22px;
+  cursor:pointer;
+  font-size:15px;
 }
-.controles-foto label:hover {
-  background: #ff4fa0;
+.controles-foto label:hover{ background:#ff4fa0; }
+
+/* móvil */
+@media (max-width:480px){
+  .frase{ font-size:15px; }
+  .controles-foto label{ padding:12px 20px; font-size:16px; }
 }
 </style>
 
-<center>
 <div class="libro-fotos">
+  <h2>📖 Nuestro Libro de Momentos</h2>
+  <p>Cada página guarda algo de nosotros 💖</p>
 
-<h2>📖 Nuestro Libro de Momentos</h2>
-<p>Un recuerdo en cada página 💖</p>
+  <!-- radios -->
+  <input type="radio" name="foto" id="f1" checked>
+  <input type="radio" name="foto" id="f2">
+  <input type="radio" name="foto" id="f3">
+  <input type="radio" name="foto" id="f4">
+  <input type="radio" name="foto" id="f5">
+  <input type="radio" name="foto" id="f6">
 
-<!-- radios -->
-<input type="radio" name="foto" id="f1" checked>
-<input type="radio" name="foto" id="f2">
-<input type="radio" name="foto" id="f3">
-<input type="radio" name="foto" id="f4">
+  <div class="paginas">
 
-<div class="paginas">
-
-  <div class="pagina-foto" id="foto1">
-    <img src="foto1.jpg" alt="Recuerdo 1">
-    <div class="controles-foto">
-      <span></span>
-      <label for="f2">Siguiente ▶</label>
+    <div class="pagina-foto" id="foto1">
+      <img src="foto1.jpg" alt="Momento 1">
+      <div class="frase">Aquí empezó todo, y yo supe que eras tú.</div>
+      <div class="controles-foto">
+        <label for="f6">◀ Anterior</label>
+        <label for="f2">Siguiente ▶</label>
+      </div>
     </div>
-  </div>
 
-  <div class="pagina-foto" id="foto2">
-    <img src="foto2.jpg" alt="Recuerdo 2">
-    <div class="controles-foto">
-      <label for="f1">◀ Anterior</label>
-      <label for="f3">Siguiente ▶</label>
+    <div class="pagina-foto" id="foto2">
+      <img src="foto2.jpg" alt="Momento 2">
+      <div class="frase">Contigo, cada día se siente especial.</div>
+      <div class="controles-foto">
+        <label for="f1">◀ Anterior</label>
+        <label for="f3">Siguiente ▶</label>
+      </div>
     </div>
-  </div>
 
-  <div class="pagina-foto" id="foto3">
-    <img src="foto3.jpg" alt="Recuerdo 3">
-    <div class="controles-foto">
-      <label for="f2">◀ Anterior</label>
-      <label for="f4">Siguiente ▶</label>
+    <div class="pagina-foto" id="foto3">
+      <img src="foto3.jpg" alt="Momento 3">
+      <div class="frase">Tus sonrisas son mis lugares favoritos.</div>
+      <div class="controles-foto">
+        <label for="f2">◀ Anterior</label>
+        <label for="f4">Siguiente ▶</label>
+      </div>
     </div>
-  </div>
 
-  <div class="pagina-foto" id="foto4">
-    <img src="foto4.jpg" alt="Recuerdo 4">
-    <div class="controles-foto">
-      <label for="f3">◀ Anterior</label>
-      <span></span>
+    <div class="pagina-foto" id="foto4">
+      <img src="foto4.jpg" alt="Momento 4">
+      <div class="frase">A tu lado, todo tiene sentido.</div>
+      <div class="controles-foto">
+        <label for="f3">◀ Anterior</label>
+        <label for="f5">Siguiente ▶</label>
+      </div>
     </div>
-  </div>
 
+    <div class="pagina-foto" id="foto5">
+      <img src="foto5.jpg" alt="Momento 5">
+      <div class="frase">Gracias por ser mi calma y mi alegría.</div>
+      <div class="controles-foto">
+        <label for="f4">◀ Anterior</label>
+        <label for="f6">Siguiente ▶</label>
+      </div>
+    </div>
+
+    <div class="pagina-foto" id="foto6">
+      <img src="foto6.jpg" alt="Momento 6">
+      <div class="frase">Y sigamos escribiendo nuestra historia… juntos.</div>
+      <div class="controles-foto">
+        <label for="f5">◀ Anterior</label>
+        <label for="f1">Inicio ▶</label>
+      </div>
+    </div>
+
+  </div>
 </div>
-
 </div>
 </center>  
 </BODY>
