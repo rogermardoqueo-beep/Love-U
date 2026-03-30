@@ -1387,9 +1387,8 @@ function generarParticulas(cantidad) {
 document.getElementById("musica").addEventListener("ended", detenerLluviaAmor);
 </script>
 ``
- <!-- 💌 SOBRES ROMÁNTICOS -->
+<!-- 💌 SOBRES ROMÁNTICOS OPTIMIZADOS -->
 <style>
-/* Contenedor */
 .sobres-container {
   position: fixed;
   inset: 0;
@@ -1408,9 +1407,10 @@ document.getElementById("musica").addEventListener("ended", detenerLluviaAmor);
   animation: flotarSobre 5s ease-in-out infinite;
   pointer-events: auto;
   box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  transition: opacity .4s ease, transform .4s ease;
 }
 
-/* Triángulo */
+/* Forma del sobre */
 .sobre::before {
   content: "";
   position: absolute;
@@ -1434,7 +1434,7 @@ document.getElementById("musica").addEventListener("ended", detenerLluviaAmor);
   color: #d81b60;
 }
 
-/* Mensaje */
+/* Mensaje oculto */
 .mensaje {
   position: absolute;
   top: -10px;
@@ -1454,27 +1454,28 @@ document.getElementById("musica").addEventListener("ended", detenerLluviaAmor);
   pointer-events: none;
 }
 
-/* Mostrar mensaje */
+/* Abierto */
 .sobre.abierto .mensaje {
   opacity: 1;
   transform: scale(1);
 }
 
-/* Animación */
+/* Desaparecer */
+.sobre.desaparecer {
+  opacity: 0;
+  transform: scale(0.6);
+}
+
+/* Flotación */
 @keyframes flotarSobre {
   0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  50% { transform: translateY(-8px); }
 }
 
 /* Móvil */
 @media (max-width:600px){
-  .sobre {
-    width: 75px;
-    height: 50px;
-  }
-  .mensaje {
-    font-size: 13px;
-  }
+  .sobre { width: 75px; height: 50px; }
+  .mensaje { font-size: 13px; }
 }
 </style>
 
@@ -1485,10 +1486,9 @@ const frasesRomanticas = [
   "Eres mi lugar favorito 💖",
   "Te elegiría en todas las vidas ✨",
   "Mi corazón sonríe contigo 💕",
-  "No hay día que no piense en ti 🌸",
-  "Tú haces que todo valga la pena 💫",
   "Eres mi casualidad más bonita 💌",
-  "Contigo todo tiene sentido 🌙"
+  "Contigo todo tiene sentido 🌙",
+  "Siempre tú, incluso en silencio 💫"
 ];
 
 function crearSobre() {
@@ -1506,19 +1506,34 @@ function crearSobre() {
 
   sobre.appendChild(mensaje);
 
+  let abierto = false;
+
+  // Abrir sobre
   sobre.onclick = () => {
-    sobre.classList.toggle("abierto");
+    abierto = true;
+    sobre.classList.add("abierto");
   };
 
   cont.appendChild(sobre);
 
-  /* Autodestruye suave */
-  setTimeout(() => sobre.remove(), 20000);
+  // ⏱️ Si NO se abre en 2 segundos → se va
+  setTimeout(() => {
+    if (!abierto) {
+      sobre.classList.add("desaparecer");
+      setTimeout(() => sobre.remove(), 400);
+    }
+  }, 2000);
+
+  // Seguridad: remove máximo
+  setTimeout(() => {
+    if (document.body.contains(sobre)) {
+      sobre.remove();
+    }
+  }, 15000);
 }
 
-/* Generar sobres ocasionalmente */
-setInterval(crearSobre, 3500);
+/* 💌 Aparecen POCO seguido */
+setInterval(crearSobre, 7000); /* cada 7 segundos */
 </script>
-`` 
 </BODY>
 </HTML>
