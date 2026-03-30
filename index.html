@@ -1288,6 +1288,104 @@ function spawnLily(){
   </div>
 </div>
 </div>
-</center>  
+</center>
+  <!-- ❤️🐼 LLUVIA MASIVA DE CORAZONES Y PANDAS -->
+<style>
+/* Contenedor global */
+.lluvia-amor {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 9999;
+}
+
+/* Partículas */
+.particula-amor {
+  position: absolute;
+  top: -50px;
+  opacity: 0.95;
+  animation: caerAmor linear forwards;
+}
+
+/* Animación de caída */
+@keyframes caerAmor {
+  0% {
+    transform: translateY(0) scale(0.6) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(120vh) scale(1.4) rotate(360deg);
+    opacity: 0;
+  }
+}
+</style>
+
+<!-- CONTENEDOR DE LA LLUVIA -->
+<div class="lluvia-amor" id="lluviaAmor"></div>
+
+<!-- 🎵 AUDIO DE EJEMPLO -->
+<audio id="musica" preload="auto">
+  musica.mp3
+</audio>
+
+<!-- BOTÓN DE EJEMPLO -->
+<button onclick="toggleMusica()">🎶 Play / Pausa</button>
+
+<script>
+let lluviaInterval = null;
+
+/* Play / Pausa de la música */
+function toggleMusica() {
+  const audio = document.getElementById("musica");
+
+  if (audio.paused) {
+    audio.play();
+    iniciarLluviaAmor();
+  } else {
+    audio.pause();
+    detenerLluviaAmor();
+  }
+}
+
+/* Inicia la lluvia */
+function iniciarLluviaAmor() {
+  if (lluviaInterval) return;
+
+  lluviaInterval = setInterval(() => {
+    generarParticulas(80); // cantidad MASIVA
+  }, 350);
+}
+
+/* Detiene la lluvia */
+function detenerLluviaAmor() {
+  clearInterval(lluviaInterval);
+  lluviaInterval = null;
+}
+
+/* Generador de corazones y pandas */
+function generarParticulas(cantidad) {
+  const cont = document.getElementById("lluviaAmor");
+  const simbolos = ["❤", "💖", "💕", "🐼", "🐼", "🐼"];
+
+  for (let i = 0; i < cantidad; i++) {
+    const p = document.createElement("div");
+    p.className = "particula-amor";
+    p.textContent = simbolos[Math.floor(Math.random() * simbolos.length)];
+
+    p.style.left = Math.random() * 100 + "%";
+    p.style.fontSize = 16 + Math.random() * 30 + "px";
+    p.style.animationDuration = 3 + Math.random() * 4 + "s";
+    p.style.color = Math.random() > 0.5 ? "#ff69b4" : "#e91e63";
+
+    cont.appendChild(p);
+    setTimeout(() => p.remove(), 8000);
+  }
+}
+
+/* Detener lluvia al finalizar canción */
+document.getElementById("musica").addEventListener("ended", detenerLluviaAmor);
+</script>
+``
 </BODY>
 </HTML>
