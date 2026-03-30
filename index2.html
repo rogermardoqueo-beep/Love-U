@@ -1,0 +1,1391 @@
+<HTML>
+<HEAD>
+<TITLE>I love U</TITLE>
+<LINK REL="ICON" HREF="snoopy.jpg">
+</HEAD>
+<BODY BACKGROUND="love.jpg">
+<style>
+.snoopy-container {
+  position: fixed;
+  bottom: 20px;
+  left: -120px;
+  animation: caminar 12s linear infinite;
+  z-index: 10;
+}
+
+.snoopy {
+  font-size: 60px;
+  animation: saludar 1.5s ease-in-out infinite;
+}
+
+@keyframes caminar {
+  from {
+    left: -120px;
+  }
+  to {
+    left: 110%;
+  }
+}
+
+@keyframes saludar {
+  0%, 100% { transform: rotate(0deg); }
+  50% { transform: rotate(10deg); }
+}
+</style>
+
+<div class="snoopy-container">
+  <div class="snoopy">🐼</div>
+</div>
+
+<BR><FONT COLOR="BLACK" SIZE="30" FACE="TAHOMA"><MARQUEE BEHAVIOR="ALTERNATE">BIENVENIDA MI AMOOOR</MARQUEE></FONT>
+<BR><CENTER><IMG SRC="love.jpg" HEIGHT="225" WHIDT="225"></CENTER>
+<!-- 🌟 APARTADO ESTRELLA + PANDA BAILANDO -->
+<style>
+.estrella-apartado {
+  width: 95%;
+  max-width: 850px;
+  margin: 90px auto;
+  background: white;
+  border: 4px solid #9b59b6;
+  border-radius: 20px;
+  padding: 35px 30px;
+  text-align: center;
+  box-shadow: 0 12px 25px rgba(155, 89, 182, 0.35);
+  font-family: 'Segoe Script','Comic Sans MS','Ink Free',Tahoma,sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Texto */
+.estrella-texto {
+  font-size: 28px;
+  color: #4a235a;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+/* Panda */
+.panda {
+  font-size: 64px;
+  margin: 10px 0;
+  display: inline-block;
+}
+
+/* Panda bailando */
+.panda.bailando {
+  animation: bailar 0.8s infinite ease-in-out;
+}
+
+@keyframes bailar {
+  0%   { transform: rotate(0deg) scale(1); }
+  25%  { transform: rotate(-8deg) scale(1.05); }
+  50%  { transform: rotate(8deg) scale(1.1); }
+  75%  { transform: rotate(-8deg) scale(1.05); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+/* Botón */
+.boton-estrella {
+  background: #ff69b4;
+  color: white;
+  border: none;
+  border-radius: 26px;
+  padding: 14px 32px;
+  font-size: 20px;
+  cursor: pointer;
+  margin-top: 10px;
+  box-shadow: 0 6px 14px rgba(255,105,180,.35);
+}
+.boton-estrella:hover {
+  background: #ff4fa0;
+}
+
+/* Estrellas */
+.estrellas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.estrella {
+  position: absolute;
+  bottom: -20px;          /* 👈 NACEN ABAJO */
+  font-size: 22px;
+  color: #f4d03f;
+  animation: subirEstrella 3.2s ease-out forwards;
+}
+
+@keyframes subirEstrella {
+  0% {
+    bottom: -20px;
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  20% {
+    opacity: 1;
+  }
+  100% {
+    bottom: 160px;       /* 👈 SUBEN VISUALMENTE */
+    opacity: 0;
+    transform: scale(1.6);
+  }
+}
+``
+
+/* Móvil */
+@media (max-width: 600px) {
+  .estrella-texto { font-size: 22px; }
+  .panda { font-size: 72px; }
+}
+</style>
+
+<div class="estrella-apartado">
+  <div class="estrella-texto">
+    ✨ Si parece imposible alcanzar una estrella,<br>
+    yo lo haría por ti ✨
+  </div>
+
+  <div class="panda" id="panda">🐼</div>
+
+  <button class="boton-estrella" onclick="toggleEstrella()">
+    ✨ Púlsame ✨
+  </button>
+
+  <div class="estrellas" id="estrellas"></div>
+</div>
+
+<!-- 🎵 AUDIO -->
+<audio id="cancion2" preload="auto">
+<source src="cancion2.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+let estrellasInterval = null;
+let sonando = false;
+
+function toggleEstrella() {
+  const audio = document.getElementById('cancion2');
+  const panda = document.getElementById('panda');
+
+  if (!sonando) {
+    audio.play();
+    panda.classList.add('bailando');
+    estrellasInterval = setInterval(lanzarEstrellas, 400);
+    sonando = true;
+  } else {
+    audio.pause();
+    audio.currentTime = 0;
+    panda.classList.remove('bailando');
+    clearInterval(estrellasInterval);
+    sonando = false;
+  }
+}
+
+function lanzarEstrellas() {
+  const cont = document.getElementById('estrellas');
+  for (let i = 0; i < 4; i++) {
+    const e = document.createElement('div');
+    e.className = 'estrella';
+    e.textContent = '⭐';
+    e.style.left = (20 + Math.random() * 60) + '%';
+    e.style.bottom = '0px';
+    e.style.fontSize = (18 + Math.random() * 16) + 'px';
+    cont.appendChild(e);
+    setTimeout(() => e.remove(), 3000);
+  }
+}
+</script>
+<BR><FONT COLOR="GREEN" SIZE="30" FACE="TAHOMA"><A HREF="https://open.spotify.com/intl-es/track/5gcHIPUzf4WZwcgfJ7vHkq?si=13ecb94826bf434a">TE AMO<3</A></FONT>
+<!-- 🌙 APARTADO LUNA SINCRONIZADO -->
+<style>
+/* CONTENEDOR */
+.luna-seccion {
+  width: 100%;
+  min-height: 70vh;
+  background: radial-gradient(circle at top, #1b1f3b, #05070f);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  font-family: 'Segoe Script','Comic Sans MS',Tahoma,sans-serif;
+}
+
+/* LUNA */
+.luna {
+  position: absolute;
+  top: 14%;
+  width: 140px;
+  height: 140px;
+  background: radial-gradient(circle, #fff 30%, #ccc 70%);
+  border-radius: 50%;
+  box-shadow: 0 0 45px rgba(255,255,255,.6);
+  animation: flotar 6s ease-in-out infinite;
+  z-index: 2;
+}
+
+@keyframes flotar {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-22px); }
+}
+
+/* ESTRELLAS */
+.estrellas {
+  position: absolute;
+  top: 8%;
+  left: 50%;
+  width: 260px;
+  height: 220px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.estrella {
+  position: absolute;
+  color: #f7e27f;
+  font-size: 14px;
+  animation: parpadear 2.5s infinite alternate;
+}
+
+@keyframes parpadear {
+  from { opacity: .3; }
+  to { opacity: 1; }
+}
+
+/* TEXTO */
+.texto-luna {
+  position: absolute;
+  color: white;
+  font-size: 30px;
+  max-width: 80%;
+  opacity: 0;
+  transform: translateY(25px);
+  transition: all .8s ease;
+}
+
+/* ACTIVO */
+.texto-luna.activo {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* BOTÓN */
+.boton-luna {
+  position: absolute;
+  bottom: 40px;
+  background: rgba(255,255,255,0.15);
+  color: white;
+  border: 2px solid white;
+  padding: 14px 30px;
+  font-size: 18px;
+  border-radius: 30px;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+}
+.boton-luna:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+@media (max-width:600px){
+  .texto-luna { font-size:22px; }
+  .luna { width:110px; height:110px; }
+}
+</style>
+
+<div class="luna-seccion">
+
+  <!-- ESTRELLAS -->
+  <div class="estrellas">
+    <div class="estrella" style="top:20%; left:30%">★</div>
+    <div class="estrella" style="top:10%; left:60%">✦</div>
+    <div class="estrella" style="top:55%; left:20%">✧</div>
+    <div class="estrella" style="top:40%; left:80%">★</div>
+    <div class="estrella" style="top:70%; left:55%">✦</div>
+  </div>
+
+  <!-- LUNA -->
+  <div class="luna"></div>
+
+  <!-- TEXTO (TÚ PONES LAS PALABRAS) -->
+  <div id="l1" class="texto-luna">[y cuando te me acercas]</div>
+  <div id="l2" class="texto-luna">[se acelera mi motor]</div>
+  <div id="l3" class="texto-luna">[me da fiebre, me hago fuego]</div>
+  <div id="l4" class="texto-luna">[y me vuelvo a consumir]</div>
+  <div id="l5" class="texto-luna">[dame solo un beso]</div>
+  <div id="l6" class="texto-luna">Que me alcance hasta morir</div>
+  <div id="l7" class="texto-luna">[como un vicio</div>
+  <div id="l8" class="texto-luna">[que me mueve]</div>
+  <div id="l9" class="texto-luna">[quiero mirarte a los ojos]</div>
+
+  <button class="boton-luna" onclick="toggleLuna()">🌙 Play / Pausa</button>
+</div>
+
+<audio id="audioLuna" preload="auto">
+<source src="audioLuna.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const audio = document.getElementById("audioLuna");
+
+/* ⏱️ TIEMPOS (NO CAMBIES, SOLO PON TUS PALABRAS ARRIBA) */
+const cues = [
+  { time: 2,  el: "l1" },
+  { time: 5,  el: "l2" },
+  { time: 8,  el: "l3" },
+  { time: 9.5,  el: "l4" },
+  { time: 12.0, el: "l5" },
+  { time: 16.4, el: "l6" },
+  { time: 19.0, el: "l7" },
+  { time: 21.6, el: "l8" },
+  { time: 25.5, el: "l9" }
+];
+
+let currentIndex = -1;
+
+function toggleLuna(){
+  if (audio.paused) {
+    audio.play();
+  } else {
+    audio.pause();
+  }
+}
+
+audio.ontimeupdate = () => {
+  cues.forEach((c, i) => {
+    if (audio.currentTime >= c.time && currentIndex !== i) {
+      // quitar texto anterior
+      if (currentIndex >= 0) {
+        document.getElementById(cues[currentIndex].el)
+          .classList.remove("activo");
+      }
+      // mostrar texto actual
+      document.getElementById(c.el).classList.add("activo");
+      currentIndex = i;
+    }
+  });
+};
+
+audio.onended = () => {
+  // limpiar al terminar
+  document.querySelectorAll(".texto-luna").forEach(t=>{
+    t.classList.remove("activo");
+  });
+  currentIndex = -1;
+};
+</script>
+  <!-- 📝 APARTADO DE POEMAS CON AUDIO -->
+<style>
+.poemas-seccion {
+  position: relative;
+  width: 95%;
+  max-width: 900px;
+  margin: 80px auto;
+  background: #fff;
+  border: 4px solid #9b59b6;
+  border-radius: 18px;
+  padding: 30px 26px;
+  box-shadow: 0 12px 25px rgba(155, 89, 182, 0.3);
+  overflow: hidden;
+  z-index: 5;
+}
+
+/* Corazones animados de fondo */
+.poemas-fondo {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.poema-corazon {
+  position: absolute;
+  font-size: 46px;
+  color: rgba(255, 105, 180, 0.12);
+  animation:
+    flotar 14s linear infinite,
+    latir 2.8s ease-in-out infinite;
+}
+
+@keyframes flotar {
+  from { transform: translateY(40px); }
+  to   { transform: translateY(-160px); }
+}
+
+@keyframes latir {
+  0%, 100% { scale: 1; }
+  50% { scale: 1.18; }
+}
+
+/* Contenido */
+.poemas-contenido {
+  position: relative;
+  z-index: 2;
+  font-family: 'Segoe Script','Comic Sans MS','Ink Free',Tahoma,sans-serif;
+}
+
+.poemas-contenido h2 {
+  text-align: center;
+  color: #8e44ad;
+  font-size: 32px;
+  margin-bottom: 24px;
+}
+
+.poema {
+  margin-bottom: 30px;
+  font-size: 20px;
+  line-height: 1.9;
+  color: #444;
+}
+
+.firma {
+  text-align: end;
+  font-size: 18px;
+  color: #9b59b6;
+  margin-top: 10px;
+}
+
+/* Móvil */
+@media (max-width: 600px) {
+  .poemas-contenido h2 { font-size: 26px; }
+  .poema { font-size: 18px; }
+}
+</style>
+
+<div class="poemas-seccion">
+
+  <!-- ❤️ Corazones de fondo -->
+  <div class="poemas-fondo">
+    <div class="poema-corazon" style="left:5%; animation-delay:0s">❤</div>
+    <div class="poema-corazon" style="left:20%; animation-delay:3s">❤</div>
+    <div class="poema-corazon" style="left:40%; animation-delay:6s">❤</div>
+    <div class="poema-corazon" style="left:60%; animation-delay:1s">❤</div>
+    <div class="poema-corazon" style="left:80%; animation-delay:5s">❤</div>
+  </div>
+
+  <!-- ✨ Texto -->
+  <div class="poemas-contenido">
+    <h2>🌸 Mis palabras para ti 🌸</h2>
+
+    <div class="poema">
+      No escribo para que recuerdes,<br>
+      escribo para quedarme,<br>
+      porque donde estás tú,<br>
+      siempre quiero volver.
+      <div class="firma">— Siempre</div>
+    </div>
+
+    <div class="poema">
+      Hay silencios que suenan a paz,<br>
+      y todos se parecen a ti,<br>
+      cuando el mundo se detiene<br>
+      solo para mirarte.
+      <div class="firma">— Para ti</div>
+    </div>
+
+    <div class="poema">
+      Si algún día dudas,<br>
+      vuelve a estas palabras,<br>
+      todas laten con tu nombre.
+      <div class="firma">— Con amor</div>
+    </div>
+  </div>
+</div>
+
+``
+<CENTER>
+ 
+<style>
+/* Fondo con corazones flotando */
+.fondo {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: linear-gradient(#fff, #ffe6ef);
+  z-index: -1;
+}
+.corazon {
+  position: absolute;
+  bottom: -40px;
+  font-size: 16px;
+  color: hotpink;
+  animation: flotar 10s linear infinite;
+  opacity: 0.7;
+}
+@keyframes flotar {
+  from { transform: translateY(0) scale(1); }
+  to { transform: translateY(-110vh) scale(1.5); }
+}
+
+<style>
+
+/* Fuente tipo libro */
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400&family=Poppins:wght@400;600&display=swap');
+
+/* Fondo corazones */
+.fondo{
+  position:fixed;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  z-index:-1;
+}
+.corazon{
+  position:absolute;
+  bottom:-50px;
+  font-size:26px;
+  animation: flotar linear infinite;
+  opacity:.7;
+}
+@keyframes flotar{
+  from{ transform:translateY(0); }
+  to{ transform:translateY(-110vh); }
+}
+.corazon.c1{ left:10%; animation-duration:12s; }
+.corazon.c2{ left:30%; animation-duration:9s; }
+.corazon.c3{ left:50%; animation-duration:11s; }
+.corazon.c4{ left:70%; animation-duration:8s; }
+.corazon.c5{ left:85%; animation-duration:10s; }
+
+/* Libro */
+.libro {
+  width: 95%;
+  max-width: 520px;
+  margin: 20px auto;
+  font-family: 'Merriweather', serif;
+  background: #fff;
+  border: 4px solid #ff8fb1;
+  border-radius: 16px;
+  box-shadow: 0 12px 25px rgba(255,105,180,.35);
+  padding: 20px;
+}
+
+/* Títulos */
+.titulo {
+  text-align: center;
+  font-size: 28px;
+  font-weight: 600;
+  color: #e91e63;
+}
+
+.sub {
+  text-align:center;
+  color:#777;
+  margin-bottom:10px;
+  font-size:16px;
+}
+
+.corazones {
+  text-align:center;
+  color: hotpink;
+  margin: 10px 0;
+  font-size:20px;
+}
+
+/* Páginas */
+.pagina { 
+  display: none; 
+  animation: entrar .5s ease;
+}
+
+@keyframes entrar {
+  from { opacity: 0; transform: translateX(20px) scale(.98); }
+  to   { opacity: 1; transform: translateX(0) scale(1); }
+}
+
+input[type="radio"]{ display:none; }
+
+/* Mostrar página activa */
+#p1:checked ~ .paginas #pag1,
+#p2:checked ~ .paginas #pag2,
+#p3:checked ~ .paginas #pag3,
+#p4:checked ~ .paginas #pag4,
+#p5:checked ~ .paginas #pag5,
+#p6:checked ~ .paginas #pag6,
+#p7:checked ~ .paginas #pag7,
+#p8:checked ~ .paginas #pag8,
+#p9:checked ~ .paginas #pag9,
+#p10:checked ~ .paginas #pag10 { display:block; }
+
+/* Controles */
+.controles{
+  display:flex; 
+  justify-content:space-between; 
+  margin-top:18px;
+}
+
+/* Botones */
+label{
+  background:#ff69b4; 
+  color:#fff; 
+  padding:10px 16px;
+  border-radius:25px; 
+  cursor:pointer; 
+  font-size:16px;
+  transition:.2s;
+}
+
+label:hover{ 
+  background:#ff4fa0; 
+  transform: scale(1.05);
+}
+
+/* Texto principal */
+ol{ 
+  font-size:17px; 
+  padding-left:24px; 
+  line-height:1.7;
+}
+
+.panda{ 
+  text-align:center; 
+  font-size:42px; 
+}
+
+/* Responsive */
+@media (max-width: 400px) {
+  .titulo { font-size: 24px; }
+  ol { font-size: 16px; }
+  label { font-size: 14px; }
+}
+
+</style>
+
+<div class="fondo">
+  <div class="corazon c1">❤</div>
+  <div class="corazon c2">❤</div>
+  <div class="corazon c3">❤</div>
+  <div class="corazon c4">❤</div>
+  <div class="corazon c5">❤</div>
+</div>
+
+<center>
+<div class="libro">
+
+<input type="radio" name="pagina" id="p1" checked>
+<input type="radio" name="pagina" id="p2">
+<input type="radio" name="pagina" id="p3">
+<input type="radio" name="pagina" id="p4">
+<input type="radio" name="pagina" id="p5">
+<input type="radio" name="pagina" id="p6">
+<input type="radio" name="pagina" id="p7">
+<input type="radio" name="pagina" id="p8">
+<input type="radio" name="pagina" id="p9">
+<input type="radio" name="pagina" id="p10">
+
+<div class="paginas">
+
+<!-- PAGINAS 1 a 10 (todas completas) -->
+<!-- (No cambié nada del contenido, solo estilo) -->
+
+<!-- P1 -->
+<div class="pagina" id="pag1">
+<div class="panda">🐼💖</div>
+<div class="titulo">100 razones por las que te amo</div>
+<div class="sub">tortu💖</div>
+<div class="corazones">❤ ❤ ❤</div>
+<ol start="1">
+<li>Porque iluminas mis días</li><li>Porque tu sonrisa me calma</li>
+<li>Porque me haces sentir en casa</li><li>Porque confío en ti</li>
+<li>Porque me escuchas</li><li>Porque me aceptas</li>
+<li>Porque me inspiras</li><li>Porque me haces reír</li>
+<li>Porque me cuidas</li><li>Porque siempre estás</li>
+</ol>
+<div class="controles"><span></span><label for="p2">Siguiente ▶</label></div>
+</div>
+
+<!-- P2 -->
+<div class="pagina" id="pag2">
+<div class="panda">🐼🌸</div><div class="corazones">❤ ❤ ❤</div>
+<ol start="11">
+<li>Porque crees en mí</li><li>Porque compartes mis sueños</li>
+<li>Porque respetas mis silencios</li><li>Porque tu voz me tranquiliza</li>
+<li>Porque eres honesta</li><li>Porque eres fuerte</li>
+<li>Porque eres sensible</li><li>Porque me das confianza</li>
+<li>Porque eres paciente</li><li>Porque me entiendes</li>
+</ol>
+<div class="controles"><label for="p1">◀</label><label for="p3">▶</label></div>
+</div>
+
+<!-- P3 -->
+<div class="pagina" id="pag3">
+<div class="panda">🐼💞</div><div class="corazones">❤ ❤ ❤</div>
+<ol start="21">
+<li>Porque contigo soy yo</li><li>Porque haces fácil lo difícil</li>
+<li>Porque celebras mis logros</li><li>Porque compartes mis locuras</li>
+<li>Porque eres real</li><li>Porque me apoyas</li>
+<li>Porque me das paz</li><li>Porque tu risa es única</li>
+<li>Porque me haces mejor</li><li>Porque eres constante</li>
+</ol>
+<div class="controles"><label for="p2">◀</label><label for="p4">▶</label></div>
+</div>
+
+<!-- P4 -->
+<div class="pagina" id="pag4">
+<div class="panda">🐼🌷</div><div class="corazones">❤ ❤ ❤</div>
+<ol start="31">
+<li>Porque sabes perdonar</li><li>Porque me das seguridad</li>
+<li>Porque creces conmigo</li><li>Porque eres detallista</li>
+<li>Porque no me juzgas</li><li>Porque me acompañas</li>
+<li>Porque me inspiras a soñar</li><li>Porque confío en tu amor</li>
+<li>Porque eres luz</li><li>Porque eres ternura</li>
+</ol>
+<div class="controles"><label for="p3">◀</label><label for="p5">▶</label></div>
+</div>
+
+<!-- P5 -->
+<div class="pagina" id="pag5">
+<div class="panda">🐼💕</div><div class="corazones">❤ ❤ ❤</div>
+<ol start="41">
+<li>Porque me haces sentir especial</li><li>Porque eres mi apoyo</li>
+<li>Porque compartes mi mundo</li><li>Porque me haces sonreír sin razón</li>
+<li>Porque me das esperanza</li><li>Porque me eliges</li>
+<li>Porque eres mi refugio</li><li>Porque tu amor es sincero</li>
+<li>Porque estás en mis pensamientos</li><li>Porque cuidas mi corazón</li>
+</ol>
+<div class="controles"><label for="p4">◀</label><label for="p6">▶</label></div>
+</div>
+
+<!-- P6 -->
+<div class="pagina" id="pag6">
+<div class="panda">🐼💘</div><div class="corazones">❤ ❤ ❤</div>
+<ol start="51">
+<li>Porque transformas mis días</li><li>Porque me haces sentir amado</li>
+<li>Porque eres mi alegría</li><li>Porque confías en mí</li>
+<li>Porque eres mi calma</li><li>Porque compartes mis miedos</li>
+<li>Porque me sostienes</li><li>Porque eres mi inspiración</li>
+<li>Porque me das fuerzas</li><li>Porque haces magia en lo simple</li>
+</ol>
+<div class="controles"><label for="p5">◀</label><label for="p7">▶</label></div>
+</div>
+
+<!-- P7 -->
+<div class="pagina" id="pag7">
+<div class="panda">🐼🌺</div><div class="corazones">❤ ❤ ❤</div>
+<ol start="61">
+<li>Porque me das tranquilidad</li><li>Porque eres fiel</li>
+<li>Porque me haces creer</li><li>Porque me acompañas siempre</li>
+<li>Porque eres sincera</li><li>Porque cuidas los detalles</li>
+<li>Porque me haces sentir completo</li><li>Porque eres mi razón</li>
+<li>Porque me das felicidad</li><li>Porque estás en mis sueños</li>
+</ol>
+<div class="controles"><label for="p6">◀</label><label for="p8">▶</label></div>
+</div>
+
+<!-- P8 -->
+<div class="pagina" id="pag8">
+<div class="panda">🐼💓</div><div class="corazones">❤ ❤ ❤</div>
+<ol start="71">
+<li>Porque me haces sentir vivo</li><li>Porque compartes mis silencios</li>
+<li>Porque me das estabilidad</li><li>Porque me haces creer en el amor</li>
+<li>Porque eres mi compañía</li><li>Porque estás en mis planes</li>
+<li>Porque haces hermoso el presente</li><li>Porque eres mi elección</li>
+<li>Porque me haces confiar</li><li>Porque me cuidas siempre</li>
+</ol>
+<div class="controles"><label for="p7">◀</label><label for="p9">▶</label></div>
+</div>
+
+<!-- P9 -->
+<div class="pagina" id="pag9">
+<div class="panda">🐼🌼</div><div class="corazones">❤ ❤ ❤</div>
+<ol start="81">
+<li>Porque eres mi destino</li><li>Porque me haces sentir seguro</li>
+<li>Porque me apoyas</li><li>Porque me das confianza</li>
+<li>Porque eres mi razón de sonreír</li><li>Porque me das tranquilidad</li>
+<li>Porque eres mi inspiración diaria</li><li>Porque me haces crecer</li>
+<li>Porque contigo todo tiene sentido</li><li>Porque eres mi amor</li>
+</ol>
+<div class="controles"><label for="p8">◀</label><label for="p10">▶</label></div>
+</div>
+
+<!-- P10 -->
+<div class="pagina" id="pag10">
+<div class="panda">🐼💖</div><div class="corazones">❤ ❤ ❤</div>
+<ol start="91">
+<li>Porque eres mi presente</li><li>Porque eres mi futuro</li>
+<li>Porque te elijo cada día</li><li>Porque eres mi felicidad</li>
+<li>Porque me haces mejor persona</li><li>Porque eres mi paz</li>
+<li>Porque eres mi inspiración</li><li>Porque eres única</li>
+<li>Porque eres mi todo</li><li>Porque simplemente te amo</li>
+</ol>
+<div class="controles"><label for="p9">◀ Anterior</label><span></span></div>
+</div>
+
+</div>
+</div>
+</div>
+</center>
+
+</center>
+<FONT COLOR="PINK" SIZE="40" FACE="TAHOMA">
+TE AMO CON TODO MI CORAZÓN
+</FONT>
+
+<BR><BR>
+<FONT COLOR="BLACK" SIZE="28" FACE="TAHOMA">
+Este espacio está lleno de cariño,  
+pensado para recordarte lo especial que eres.
+</FONT>
+
+<BR><BR>
+<FONT COLOR="YELLOW" SIZE="26" FACE="TAHOMA">
+Cada día mi amor crece más,  
+y estas palabras son solo una pequeña muestra  
+de lo que siento por ti.
+</FONT>
+
+<BR><BR>
+<FONT COLOR="LIGHTBLUE" SIZE="28" FACE="TAHOMA">
+<!-- PUCCA BESA A GARU (CAMBIO DE IMÁGENES) -->
+<style>
+.scene {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 500px;
+  height: 180px;
+  pointer-events: none;
+  z-index: 50;
+}
+
+/* ==== GARU ==== */
+.garu {
+  position: absolute;
+  bottom: 20px;
+  left: 280px;
+  width: 80px;
+  height: 80px;
+}
+
+.garu img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.garu .dormido {
+  animation: garuDormido 8s infinite;
+}
+
+.garu .corriendo {
+  opacity: 0;
+  animation: garuCorriendo 8s infinite;
+}
+
+/* ==== PUCCA ==== */
+.pucca {
+  position: absolute;
+  bottom: 20px;
+  width: 80px;
+  height: 80px;
+}
+
+.pucca img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.pucca .lenta {
+  animation: puccaLenta 8s infinite;
+}
+
+.pucca .corriendo {
+  opacity: 0;
+  animation: puccaCorriendo 8s infinite;
+}
+
+/* ==== CORAZÓN ==== */
+.beso {
+  position: absolute;
+  left: 330px;
+  bottom: 120px;
+  font-size: 22px;
+  opacity: 0;
+  color: hotpink;
+  animation: beso 8s infinite;
+}
+
+/* ==== ANIMACIONES ==== */
+
+/* Garu dormido */
+@keyframes garuDormido {
+  0%, 55% { opacity: 1; }
+  60%, 100% { opacity: 0; }
+}
+
+/* Garu corriendo */
+@keyframes garuCorriendo {
+  0%, 55% { opacity: 0; left: 280px; }
+  60% { opacity: 1; left: 280px; }
+  100% { left: 480px; }
+}
+
+/* Pucca lenta (beso) */
+@keyframes puccaLenta {
+  0% { left: -120px; opacity: 1; }
+  40% { left: 180px; }
+  55% { left: 210px; opacity: 1; }
+  60%, 100% { opacity: 0; }
+}
+
+/* Pucca corriendo */
+@keyframes puccaCorriendo {
+  0%, 55% { opacity: 0; left: 210px; }
+  60% { opacity: 1; left: 210px; }
+  100% { left: 430px; }
+}
+
+/* Corazón beso */
+@keyframes beso {
+  0%, 40% { opacity: 0; transform: scale(1); }
+  48% { opacity: 1; transform: scale(1.4); }
+  55% { opacity: 0; transform: scale(1.8); }
+  100% { opacity: 0; }
+}
+</style>
+
+<div class="scene">
+
+  <div class="pucca">
+    <img src="pucca_lento.png" class="lenta" alt="Pucca beso">
+    <img src="pucca_corriendo.png" class="corriendo" alt="Pucca corriendo">
+  </div>
+
+  <div class="garu">
+    <img src="garu_dormido.png" class="dormido" alt="Garu dormido">
+    <img src="garu_corriendo.png" class="corriendo" alt="Garu corriendo">
+  </div>
+
+  <div class="beso">❤</div>
+
+</div>
+``
+<!-- 📖 LIBRO DE IMÁGENES: FRASES + ANIMACIÓN -->
+<style>
+.libro-fotos {
+  width: 94%;
+  max-width: 720px;
+  margin: 80px auto;
+  background: rgba(255,255,255,0.96);
+  border: 5px solid #ff8fb1;
+  border-radius: 20px;
+  box-shadow: 0 15px 30px rgba(255,105,180,.4);
+  padding: 18px;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+}
+
+.libro-fotos h2 {
+  color: #e91e63;
+  margin-bottom: 6px;
+}
+
+.pagina-foto {
+  display: none;
+  animation: hoja .55s ease;
+}
+
+@keyframes hoja {
+  from { opacity: 0; transform: translateY(6px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.pagina-foto img {
+  max-width: 100%;
+  max-height: 420px;
+  border-radius: 16px;
+  border: 3px solid #ffd1e6;
+}
+
+.frase {
+  margin-top: 10px;
+  color: #c2185b;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* radios */
+input[name="foto"]{ display:none; }
+
+/* mostrar página */
+#f1:checked ~ .paginas #foto1,
+#f2:checked ~ .paginas #foto2,
+#f3:checked ~ .paginas #foto3,
+#f4:checked ~ .paginas #foto4,
+#f5:checked ~ .paginas #foto5,
+#f6:checked ~ .paginas #foto6 { display:block; }
+
+/* controles */
+.controles-foto{
+  margin-top: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+.controles-foto label{
+  background:#ff69b4;
+  color:#fff;
+  padding:10px 18px;
+  border-radius:22px;
+  cursor:pointer;
+  font-size:15px;
+}
+.controles-foto label:hover{ background:#ff4fa0; }
+
+/* móvil */
+@media (max-width:480px){
+  .frase{ font-size:15px; }
+  .controles-foto label{ padding:12px 20px; font-size:16px; }
+}
+</style>
+
+<div class="libro-fotos">
+  <h2>📖 Nuestro Libro de Momentos</h2>
+  <p>Cada página guarda algo de nosotros 💖</p>
+
+  <!-- radios -->
+  <input type="radio" name="foto" id="f1" checked>
+  <input type="radio" name="foto" id="f2">
+  <input type="radio" name="foto" id="f3">
+  <input type="radio" name="foto" id="f4">
+  <input type="radio" name="foto" id="f5">
+  <input type="radio" name="foto" id="f6">
+
+  <div class="paginas">
+
+    <div class="pagina-foto" id="foto1">
+      <img src="foto1.jpg" alt="Momento 1">
+      <div class="frase">Aquí empezó todo, y yo supe que eras tú.</div>
+      <div class="controles-foto">
+        <label for="f6">◀ Anterior</label>
+        <label for="f2">Siguiente ▶</label>
+      </div>
+    </div>
+
+    <div class="pagina-foto" id="foto2">
+      <img src="foto2.jpg" alt="Momento 2">
+      <div class="frase">Contigo, cada día se siente especial.</div>
+      <div class="controles-foto">
+        <label for="f1">◀ Anterior</label>
+        <label for="f3">Siguiente ▶</label>
+      </div>
+    </div>
+
+    <div class="pagina-foto" id="foto3">
+      <img src="foto3.jpg" alt="Momento 3">
+      <div class="frase">Tus sonrisas son mis lugares favoritos.</div>
+      <div class="controles-foto">
+        <label for="f2">◀ Anterior</label>
+        <label for="f4">Siguiente ▶</label>
+      </div>
+    </div>
+
+    <div class="pagina-foto" id="foto4">
+      <img src="foto4.jpg" alt="Momento 4">
+      <div class="frase">A tu lado, todo tiene sentido.</div>
+      <div class="controles-foto">
+        <label for="f3">◀ Anterior</label>
+        <label for="f5">Siguiente ▶</label>
+      </div>
+    </div>
+
+    <div class="pagina-foto" id="foto5">
+      <img src="foto5.jpg" alt="Momento 5">
+      <div class="frase">Gracias por ser mi calma y mi alegría.</div>
+      <div class="controles-foto">
+        <label for="f4">◀ Anterior</label>
+        <label for="f6">Siguiente ▶</label>
+      </div>
+    </div>
+
+    <div class="pagina-foto" id="foto6">
+      <img src="foto6.jpg" alt="Momento 6">
+      <div class="frase">Y sigamos escribiendo nuestra historia… juntos.</div>
+      <div class="controles-foto">
+        <label for="f5">◀ Anterior</label>
+        <label for="f1">Inicio ▶</label>
+      </div>
+    </div>
+<!-- 💿🎵💖 TOCADISCOS + FX + LIRIOS REALES -->
+<style>
+/* ===== CAPAS GLOBALES ===== */
+.fx-field, .lilies-field{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:2;
+}
+
+/* ===== PARTÍCULAS (corazones, notas, pandas) ===== */
+.particula{
+  position:absolute;
+  bottom:40%;
+  left:50%;
+  animation: flotar 3s ease-out forwards;
+}
+@keyframes flotar{
+  0%{transform:translate(0,0) scale(1);opacity:1;}
+  100%{transform:translate(-60px,-180px) scale(1.6);opacity:0;}
+}
+
+/* ===== LIRIOS REALES (CSS) ===== */
+.lily{
+  position:absolute;
+  bottom:0;
+  animation: riseLily 6s linear forwards;
+}
+.lily-stem{
+  width:6px;
+  height:0;
+  background:#2ecc71;
+  border-radius:3px;
+  margin:auto;
+  animation: growStem 2.5s forwards;
+}
+.lily-leaf{
+  position:absolute;
+  width:22px; height:12px;
+  background:#27ae60;
+  border-radius:50%;
+  left:-18px; top:45%;
+  transform:rotate(-25deg);
+  opacity:0;
+  animation: showLeaf 1s 1.4s forwards;
+}
+.lily-flower{
+  width:36px; height:36px;
+  margin:-12px auto 0;
+  border-radius:50%;
+  background: radial-gradient(circle, #f5e9ff 15%, #b084f5 45%, #7b3fcf 70%);
+  box-shadow:0 0 12px rgba(155,89,182,.6);
+  transform:scale(0);
+  animation: bloom 1.6s 2.4s forwards;
+}
+@keyframes growStem{ to{height:140px;} }
+@keyframes showLeaf{ to{opacity:1;} }
+@keyframes bloom{ to{transform:scale(1);} }
+@keyframes riseLily{ to{transform:translateY(-260px);opacity:0;} }
+
+/* ===== TOCADISCOS ===== */
+.tocadiscos-wrap{
+  display:flex; flex-direction:column; align-items:center; gap:12px; z-index:3;
+}
+.tocadiscos{
+  position:relative; width:240px; height:240px;
+}
+.disco{
+  width:100%; height:100%; border-radius:50%;
+  background:radial-gradient(circle,#444 0%,#111 60%,#000 100%);
+  border:10px solid #222;
+  animation:spin 2s linear infinite; animation-play-state:paused;
+}
+.disco::after{
+  content:""; position:absolute; top:50%; left:50%;
+  width:22px; height:22px; background:hotpink; border-radius:50%;
+  transform:translate(-50%,-50%);
+}
+.aguja{
+  position:absolute; top:-10px; right:-45px;
+  width:90px; height:6px; background:#ddd;
+  transform-origin:left center; transform:rotate(-25deg); transition:.4s;
+}
+.tocadiscos.activo .disco{ animation-play-state:running; }
+.tocadiscos.activo .aguja{ transform:rotate(0deg); }
+@keyframes spin{ to{ transform:rotate(360deg);} }
+
+.boton-play{
+  background:#ff69b4; color:white; border:none; border-radius:26px;
+  padding:14px 30px; font-size:18px; cursor:pointer;
+}
+.boton-play:hover{ background:#ff4fa0; }
+</style>
+
+<!-- CAPAS -->
+<div class="fx-field" id="fx"></div>
+<div class="lilies-field" id="lilies"></div>
+
+<!-- TOCADISCOS -->
+<div class="tocadiscos-wrap">
+  <div class="tocadiscos" id="deck">
+    <div class="disco"></div>
+    <div class="aguja"></div>
+  </div>
+  <button class="boton-play" onclick="toggleDisco()">✨ Púlsame ✨</button>
+</div>
+
+<audio id="musica" src="cancion.mp3"></audio>
+
+<script>
+let fxInterval=null;
+let lilyInterval=null;
+
+function toggleDisco(){
+  const audio=document.getElementById('musica');
+  const deck=document.getElementById('deck');
+
+  if(audio.paused){
+    audio.play();
+    deck.classList.add('activo');
+    startFx();
+    startLilies();
+  }else{
+    audio.pause();
+    deck.classList.remove('activo');
+    stopFx();
+    stopLilies();
+  }
+}
+
+/* === FX: corazones, notas, pandas === */
+function startFx(){
+  if(fxInterval) return;
+  fxInterval=setInterval(spawnFx,400);
+}
+function stopFx(){
+  clearInterval(fxInterval); fxInterval=null;
+}
+function spawnFx(){
+  const cont=document.getElementById('fx');
+  const icons=['❤','💖','💕','♪','♫','🎶','🐼'];
+  for(let i=0;i<4;i++){
+    const p=document.createElement('div');
+    p.className='particula';
+    p.textContent=icons[Math.floor(Math.random()*icons.length)];
+    p.style.left=(40+Math.random()*20)+'%';
+    p.style.fontSize=(18+Math.random()*16)+'px';
+    p.style.color=['#ff69b4','#e91e63','#9c27b0'][Math.floor(Math.random()*3)];
+    cont.appendChild(p);
+    setTimeout(()=>p.remove(),3000);
+  }
+}
+
+/* === LIRIOS REALES DISPERSOS === */
+function startLilies(){
+  if(lilyInterval) return;
+  lilyInterval=setInterval(spawnLily,1200);
+}
+function stopLilies(){
+  clearInterval(lilyInterval); lilyInterval=null;
+}
+function spawnLily(){
+  const field=document.getElementById('lilies');
+  const lily=document.createElement('div');
+  lily.className='lily';
+  lily.style.left=(Math.random()*95)+'%';
+  lily.innerHTML=`
+    <div class="lily-flower"></div>
+    <div class="lily-leaf"></div>
+    <div class="lily-stem"></div>
+  `;
+  field.appendChild(lily);
+  setTimeout(()=>lily.remove(),6000);
+}
+</script>
+  </div>
+</div>
+</div>
+</center>
+  <!-- ❤️🐼 LLUVIA MASIVA DE CORAZONES Y PANDAS -->
+<style>
+/* Contenedor global */
+.lluvia-amor {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 9999;
+}
+
+/* Partículas */
+.particula-amor {
+  position: absolute;
+  top: -50px;
+  opacity: 0.95;
+  animation: caerAmor linear forwards;
+}
+
+/* Animación de caída */
+@keyframes caerAmor {
+  0% {
+    transform: translateY(0) scale(0.6) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(120vh) scale(1.4) rotate(360deg);
+    opacity: 0;
+  }
+}
+</style>
+
+<!-- CONTENEDOR DE LA LLUVIA -->
+<div class="lluvia-amor" id="lluviaAmor"></div>
+
+<!-- 🎵 AUDIO DE EJEMPLO -->
+<audio id="musica" preload="auto">
+  musica.mp3
+</audio>
+
+<!-- BOTÓN DE EJEMPLO -->
+<button onclick="toggleMusica()">🎶 Play / Pausa</button>
+
+<script>
+let lluviaInterval = null;
+
+/* Play / Pausa de la música */
+function toggleMusica() {
+  const audio = document.getElementById("musica");
+
+  if (audio.paused) {
+    audio.play();
+    iniciarLluviaAmor();
+  } else {
+    audio.pause();
+    detenerLluviaAmor();
+  }
+}
+
+/* Inicia la lluvia */
+function iniciarLluviaAmor() {
+  if (lluviaInterval) return;
+
+  lluviaInterval = setInterval(() => {
+    generarParticulas(80); // cantidad MASIVA
+  }, 350);
+}
+
+/* Detiene la lluvia */
+function detenerLluviaAmor() {
+  clearInterval(lluviaInterval);
+  lluviaInterval = null;
+}
+
+/* Generador de corazones y pandas */
+function generarParticulas(cantidad) {
+  const cont = document.getElementById("lluviaAmor");
+  const simbolos = ["❤", "💖", "💕", "🐼", "🐼", "🐼"];
+
+  for (let i = 0; i < cantidad; i++) {
+    const p = document.createElement("div");
+    p.className = "particula-amor";
+    p.textContent = simbolos[Math.floor(Math.random() * simbolos.length)];
+
+    p.style.left = Math.random() * 100 + "%";
+    p.style.fontSize = 16 + Math.random() * 30 + "px";
+    p.style.animationDuration = 3 + Math.random() * 4 + "s";
+    p.style.color = Math.random() > 0.5 ? "#ff69b4" : "#e91e63";
+
+    cont.appendChild(p);
+    setTimeout(() => p.remove(), 8000);
+  }
+}
+
+/* Detener lluvia al finalizar canción */
+document.getElementById("musica").addEventListener("ended", detenerLluviaAmor);
+</script>
+``
+</BODY>
+</HTML>
