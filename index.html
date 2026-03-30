@@ -194,18 +194,43 @@ function lanzarEstrellas() {
 /* LUNA */
 .luna {
   position: absolute;
-  top: 15%;
+  top: 14%;
   width: 140px;
   height: 140px;
   background: radial-gradient(circle, #fff 30%, #ccc 70%);
   border-radius: 50%;
   box-shadow: 0 0 45px rgba(255,255,255,.6);
   animation: flotar 6s ease-in-out infinite;
+  z-index: 2;
 }
 
 @keyframes flotar {
   0%,100% { transform: translateY(0); }
   50% { transform: translateY(-22px); }
+}
+
+/* ESTRELLAS */
+.estrellas {
+  position: absolute;
+  top: 8%;
+  left: 50%;
+  width: 260px;
+  height: 220px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.estrella {
+  position: absolute;
+  color: #f7e27f;
+  font-size: 14px;
+  animation: parpadear 2.5s infinite alternate;
+}
+
+@keyframes parpadear {
+  from { opacity: .3; }
+  to { opacity: 1; }
 }
 
 /* TEXTO */
@@ -242,7 +267,6 @@ function lanzarEstrellas() {
   background: rgba(255,255,255,0.3);
 }
 
-/* MÓVIL */
 @media (max-width:600px){
   .texto-luna { font-size:22px; }
   .luna { width:110px; height:110px; }
@@ -250,23 +274,33 @@ function lanzarEstrellas() {
 </style>
 
 <div class="luna-seccion">
+
+  <!-- ESTRELLAS -->
+  <div class="estrellas">
+    <div class="estrella" style="top:20%; left:30%">★</div>
+    <div class="estrella" style="top:10%; left:60%">✦</div>
+    <div class="estrella" style="top:55%; left:20%">✧</div>
+    <div class="estrella" style="top:40%; left:80%">★</div>
+    <div class="estrella" style="top:70%; left:55%">✦</div>
+  </div>
+
+  <!-- LUNA -->
   <div class="luna"></div>
 
-  <!-- 📝 AQUÍ PONES LAS PALABRAS -->
-  <div id="l1" class="texto-luna">[Y cuando te me acercas]</div>
+  <!-- TEXTO (TÚ PONES LAS PALABRAS) -->
+  <div id="l1" class="texto-luna">[y cuando te me acercas]</div>
   <div id="l2" class="texto-luna">[se acelera mi motor]</div>
   <div id="l3" class="texto-luna">[me da fiebre, me hago fuego]</div>
-  <div id="l4" class="texto-luna">[Y me vuelvo a consumir]</div>
+  <div id="l4" class="texto-luna">[y me vuelvo a consumir]</div>
   <div id="l5" class="texto-luna">[dame solo un beso]</div>
-  <div id="l6" class="texto-luna">[Que me alcance hasta morir]</div>
-  <div id="l7" class="texto-luna">[como un vicio ]</div>
-  <div id="l8" class="texto-luna">[que me duele]</div>
+  <div id="l6" class="texto-luna">Que me alcance hasta morir</div>
+  <div id="l7" class="texto-luna">[como un vicio</div>
+  <div id="l8" class="texto-luna">[que me mueve]</div>
   <div id="l9" class="texto-luna">[quiero mirarte a los ojos]</div>
 
-  <button class="boton-luna" onclick="playLuna()">🌙 Reproducir</button>
+  <button class="boton-luna" onclick="toggleLuna()">🌙 Play / Pausa</button>
 </div>
 
-<!-- 🎵 AUDIO -->
 <audio id="audioLuna" preload="auto">
 <source src="audioLuna.mp3" type="audio/mpeg">
 </audio>
@@ -274,7 +308,7 @@ function lanzarEstrellas() {
 <script>
 const audio = document.getElementById("audioLuna");
 
-/* ⏱️ TIEMPOS YA DEFINIDOS (solo cambias texto en HTML) */
+/* ⏱️ TIEMPOS (NO CAMBIES, SOLO PON TUS PALABRAS ARRIBA) */
 const cues = [
   { time: 0.8,  el: "l1" },
   { time: 3.2,  el: "l2" },
@@ -287,28 +321,39 @@ const cues = [
   { time: 25.5, el: "l9" }
 ];
 
-function playLuna(){
-  audio.currentTime = 0;
-  audio.play();
-  resetTextos();
+let currentIndex = -1;
 
-  audio.ontimeupdate = () => {
-    cues.forEach(c => {
-      const el = document.getElementById(c.el);
-      if (audio.currentTime >= c.time) {
-        el.classList.add("activo");
-      }
-    });
-  };
+function toggleLuna(){
+  if (audio.paused) {
+    audio.play();
+  } else {
+    audio.pause();
+  }
 }
 
-function resetTextos(){
+audio.ontimeupdate = () => {
+  cues.forEach((c, i) => {
+    if (audio.currentTime >= c.time && currentIndex !== i) {
+      // quitar texto anterior
+      if (currentIndex >= 0) {
+        document.getElementById(cues[currentIndex].el)
+          .classList.remove("activo");
+      }
+      // mostrar texto actual
+      document.getElementById(c.el).classList.add("activo");
+      currentIndex = i;
+    }
+  });
+};
+
+audio.onended = () => {
+  // limpiar al terminar
   document.querySelectorAll(".texto-luna").forEach(t=>{
     t.classList.remove("activo");
   });
-}
+  currentIndex = -1;
+};
 </script>
-``
   <!-- 📝 APARTADO DE POEMAS CON AUDIO -->
 <style>
 .poemas-seccion {
