@@ -39,7 +39,149 @@
 
 <BR><FONT COLOR="BLACK" SIZE="30" FACE="TAHOMA"><MARQUEE BEHAVIOR="ALTERNATE">BIENVENIDA MI AMOOOR</MARQUEE></FONT>
 <BR><CENTER><IMG SRC="love.jpg" HEIGHT="225" WHIDT="225"></CENTER>
-<P><H1><LEFT><FONT COLOR="RED" SIZE="30" FACE="INK FREE">Si parece imposible,alcanzar una estrella;Yo lo haría por ti</FONT></LEFT></H1></P>
+<!-- 🌟 APARTADO ESTRELLA + PANDA BAILANDO -->
+<style>
+.estrella-apartado {
+  width: 95%;
+  max-width: 850px;
+  margin: 90px auto;
+  background: white;
+  border: 4px solid #9b59b6;
+  border-radius: 20px;
+  padding: 35px 30px;
+  text-align: center;
+  box-shadow: 0 12px 25px rgba(155, 89, 182, 0.35);
+  font-family: 'Segoe Script','Comic Sans MS','Ink Free',Tahoma,sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Texto */
+.estrella-texto {
+  font-size: 28px;
+  color: #4a235a;
+  line-height: 1.8;
+  margin-bottom: 20px;
+}
+
+/* Panda */
+.panda {
+  font-size: 64px;
+  margin: 10px 0;
+  display: inline-block;
+}
+
+/* Panda bailando */
+.panda.bailando {
+  animation: bailar 0.8s infinite ease-in-out;
+}
+
+@keyframes bailar {
+  0%   { transform: rotate(0deg) scale(1); }
+  25%  { transform: rotate(-8deg) scale(1.05); }
+  50%  { transform: rotate(8deg) scale(1.1); }
+  75%  { transform: rotate(-8deg) scale(1.05); }
+  100% { transform: rotate(0deg) scale(1); }
+}
+
+/* Botón */
+.boton-estrella {
+  background: #ff69b4;
+  color: white;
+  border: none;
+  border-radius: 26px;
+  padding: 14px 32px;
+  font-size: 20px;
+  cursor: pointer;
+  margin-top: 10px;
+  box-shadow: 0 6px 14px rgba(255,105,180,.35);
+}
+.boton-estrella:hover {
+  background: #ff4fa0;
+}
+
+/* Estrellas */
+.estrellas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.estrella {
+  position: absolute;
+  font-size: 22px;
+  color: #f4d03f;
+  animation: subirEstrella 3s ease-out forwards;
+}
+
+@keyframes subirEstrella {
+  from { transform: translateY(0) scale(1); opacity: 1; }
+  to   { transform: translateY(-140px) scale(1.6); opacity: 0; }
+}
+
+/* Móvil */
+@media (max-width: 600px) {
+  .estrella-texto { font-size: 22px; }
+  .panda { font-size: 72px; }
+}
+</style>
+
+<div class="estrella-apartado">
+  <div class="estrella-texto">
+    ✨ Si parece imposible alcanzar una estrella,<br>
+    yo lo haría por ti ✨
+  </div>
+
+  <div class="panda" id="panda">🐼</div>
+
+  <button class="boton-estrella" onclick="toggleEstrella()">
+    ✨ Púlsame ✨
+  </button>
+
+  <div class="estrellas" id="estrellas"></div>
+</div>
+
+<!-- 🎵 AUDIO -->
+<audio id="cancion2" preload="auto">
+  cancion2.mp3
+</audio>
+
+<script>
+let estrellasInterval = null;
+let sonando = false;
+
+function toggleEstrella() {
+  const audio = document.getElementById('cancion2');
+  const panda = document.getElementById('panda');
+
+  if (!sonando) {
+    audio.play();
+    panda.classList.add('bailando');
+    estrellasInterval = setInterval(lanzarEstrellas, 400);
+    sonando = true;
+  } else {
+    audio.pause();
+    audio.currentTime = 0;
+    panda.classList.remove('bailando');
+    clearInterval(estrellasInterval);
+    sonando = false;
+  }
+}
+
+function lanzarEstrellas() {
+  const cont = document.getElementById('estrellas');
+  for (let i = 0; i < 4; i++) {
+    const e = document.createElement('div');
+    e.className = 'estrella';
+    e.textContent = '⭐';
+    e.style.left = (20 + Math.random() * 60) + '%';
+    e.style.bottom = '0px';
+    e.style.fontSize = (18 + Math.random() * 16) + 'px';
+    cont.appendChild(e);
+    setTimeout(() => e.remove(), 3000);
+  }
+}
+</script>
 <BR><FONT COLOR="GREEN" SIZE="30" FACE="TAHOMA"><A HREF="https://open.spotify.com/intl-es/track/5gcHIPUzf4WZwcgfJ7vHkq?si=13ecb94826bf434a">TE AMO<3</A></FONT>
 <BR><FONT COLOR="RED" SIZE="30" FACE="TAHOMA">  Tus locuras van con mis locuras</FONT><A HREF="https://open.spotify.com/track/3kII7smb04nI2T2vnj5eZr"><IMG SRC="IG.PNG" HEIGHT="50" WHIGT="50"></A>
 <BR><BR>
