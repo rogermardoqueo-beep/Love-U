@@ -39,7 +39,7 @@
 
 <BR><FONT COLOR="BLACK" SIZE="30" FACE="TAHOMA"><MARQUEE BEHAVIOR="ALTERNATE">BIENVENIDA MI AMOOOR</MARQUEE></FONT>
 
-<!-- ❤️ EFECTO ROMÁNTICO ROJO CON TEXTO + ESTRELLAS Y ROSAS -->
+<!-- ❤️ EFECTO ROMÁNTICO ROJO CON TEXTO (OPTIMIZADO) -->
 <style>
 /* Botón izquierdo */
 .boton-romantico {
@@ -71,11 +71,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: opacity .6s ease;
 }
 .overlay-romance.activo {
   opacity: 1;
   pointer-events: auto;
-  transition: opacity .6s ease;
 }
 
 /* Texto */
@@ -94,20 +94,22 @@
   transform: translateY(0);
 }
 
-/* Partículas */
+/* Partículas OPTIMIZADAS */
 .particula {
   position: absolute;
   font-size: 22px;
-  animation: flotar 3s ease-out forwards;
-  opacity: 0.9;
+  color: rgba(220,40,60,.85);
+  animation: flotar 2.6s ease-out forwards;
+  will-change: transform, opacity;
 }
+
 @keyframes flotar {
   from {
-    transform: translateY(0) scale(0.7);
+    transform: translateY(0) scale(0.8);
     opacity: 1;
   }
   to {
-    transform: translateY(-220px) scale(1.4);
+    transform: translateY(-160px) scale(1.3);
     opacity: 0;
   }
 }
@@ -123,12 +125,12 @@
 
 <!-- AUDIO -->
 <audio id="audioRomance" preload="auto">
-  <source src="cancion4.mp3" type="audio/mpeg">
+  <source src="cancion.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 /* =========================
-   📝 TEXTOS (NO CAMBIADOS)
+   TEXTOS (NO CAMBIADOS)
    ========================= */
 const textos = [
   "Eres una obra de arte",
@@ -144,21 +146,19 @@ const textos = [
 ];
 
 /* =========================
-   ⏱️ TIEMPOS EDITABLES AQUÍ
-   =========================
-   (segundos desde que empieza el audio)
-*/
+   TIEMPOS EDITABLES (segundos)
+   ========================= */
 const tiempos = [
-  0.0,   // Eres una obra de arte
-  2.6,   // Con solo mirarte
-  5.1,   // Algo que da paz
-  7.6,   // Cariño
-  9.6,   // Eres un amor
-  12.1,  // Cariño
-  14.4,  // Pintas en color
-  17.9,  // Quiero tanto devorarte
-  21.3,  // Esta vez besarte
-  24.7   // Si es que soy capaz
+  0.0,
+  2.6,
+  5.1,
+  7.6,
+  9.6,
+  12.1,
+  14.4,
+  17.9,
+  21.3,
+  24.7
 ];
 
 let indiceActual = -1;
@@ -198,20 +198,19 @@ function cambiarTexto(contenido) {
   }, 400);
 }
 
+/* ✅ PARTÍCULAS OPTIMIZADAS */
 function lanzarParticulas() {
   const overlay = document.getElementById("overlayRomance");
-  const simbolos = ["🌹","⭐","❤️"];
+  const simbolos = ["🌹", "⭐", "❤️"];
 
-  for (let i = 0; i < 18; i++) {
+  for (let i = 0; i < 8; i++) {
     const p = document.createElement("div");
     p.className = "particula";
-    p.textContent = simbolos[Math.floor(Math.random()*simbolos.length)];
-    p.style.left = Math.random()*100 + "%";
-    p.style.top = Math.random()*100 + "%";
-    p.style.fontSize = (18 + Math.random()*24) + "px";
-    p.style.color = "rgba(220,40,60,.9)";
+    p.textContent = simbolos[Math.floor(Math.random() * simbolos.length)];
+    p.style.left = Math.random() * 100 + "%";
+    p.style.top = "55%";
     overlay.appendChild(p);
-    setTimeout(()=>p.remove(),3000);
+    setTimeout(() => p.remove(), 2600);
   }
 }
 
