@@ -39,16 +39,15 @@
 
 <BR><FONT COLOR="BLACK" SIZE="30" FACE="TAHOMA"><MARQUEE BEHAVIOR="ALTERNATE">BIENVENIDA MI AMOOOR</MARQUEE></FONT>
 
-<!-- ❤️ ROMANCE EN CANVAS (FLUIDO Y ESTABLE) -->
+<!-- ❤️ EFECTO ROMÁNTICO ROJO CON TEXTO (MEJORADO Y SINCRONIZADO) -->
 <style>
-/* Botón izquierdo */
-.boton-romance {
+.boton-romantico {
   position: fixed;
   left: 20px;
   top: 50%;
   transform: translateY(-50%);
   background: #b11226;
-  color: #fff;
+  color: white;
   border: none;
   border-radius: 28px;
   padding: 14px 26px;
@@ -57,9 +56,8 @@
   z-index: 10001;
   box-shadow: 0 10px 24px rgba(177,18,38,.5);
 }
-.boton-romance:hover { filter: brightness(1.1); }
+.boton-romantico:hover { filter: brightness(1.1); }
 
-/* Overlay */
 .overlay-romance {
   position: fixed;
   inset: 0;
@@ -67,6 +65,10 @@
   opacity: 0;
   pointer-events: none;
   z-index: 10000;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: opacity .6s ease;
 }
 .overlay-romance.activo {
@@ -74,50 +76,52 @@
   pointer-events: auto;
 }
 
-/* Texto */
 .texto-romance {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) translateY(20px);
   color: #ffd6d6;
   font-size: 28px;
   text-align: center;
   max-width: 80%;
-  font-family: 'Segoe Script','Comic Sans MS','Ink Free',Tahoma,sans-serif;
   opacity: 0;
+  transform: translateY(25px);
   transition: all .6s ease;
-  z-index: 10002;
+  font-family: 'Segoe Script','Comic Sans MS','Ink Free',Tahoma,sans-serif;
 }
 .texto-romance.activo {
   opacity: 1;
-  transform: translate(-50%, -50%) translateY(0);
+  transform: translateY(0);
 }
 
-canvas {
-  position: fixed;
-  inset: 0;
-  z-index: 10001;
+.particula {
+  position: absolute;
+  font-size: 22px;
+  color: rgba(220,40,60,.85);
+  animation: flotar 2.4s ease-out forwards;
+  will-change: transform, opacity;
+}
+
+@keyframes flotar {
+  from {
+    transform: translateY(0) scale(0.8);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-160px) scale(1.3);
+    opacity: 0;
+  }
 }
 </style>
 
-<!-- BOTÓN -->
-<button class="boton-romance" onclick="iniciarRomance()">❤️ Presióname</button>
+<button class="boton-romantico" onclick="iniciarRomance()">❤️ Presióname</button>
 
-<!-- OVERLAY -->
-<div class="overlay-romance" id="overlay"></div>
-<canvas id="canvas"></canvas>
-<div id="texto" class="texto-romance"></div>
+<div class="overlay-romance" id="overlayRomance">
+  <div id="textoRomance" class="texto-romance"></div>
+</div>
 
-<!-- AUDIO -->
-<audio id="audio" preload="auto">
-   <source src="cancion4.mp3" type="audio/mpeg">
+<audio id="audioRomance" preload="auto">
+  <source src="cancion4.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-/* ======================
-   TEXTOS (SIN CAMBIOS)
-   ====================== */
 const textos = [
   "Eres una obra de arte",
   "Con solo mirarte",
@@ -131,110 +135,77 @@ const textos = [
   "Si es que soy capaz"
 ];
 
-/* ======================
-   TIEMPOS EDITABLES (s)
-   ====================== */
-const tiempos = [0,2.6,5.1,7.6,9.6,12.1,14.4,17.9,21.3,24.7];
+/* 🔥 TIEMPOS NUEVOS (BIEN SINCRONIZADOS) */
+const tiempos = [
+  0.5,
+  2.9,
+  5.2,
+  7.4,
+  9.8,
+  12.0,
+  14.3,
+  17.5,
+  20.8,
+  24.0
+];
 
-let indice = -1;
+let indiceActual = -1;
 
-/* ======================
-   CANVAS
-   ====================== */
-const canvas = document.getElementById("canvas");
-const ctx = canvas.getContext("2d");
-let w, h;
-let particles = [];
-
-function resize() {
-  w = canvas.width = window.innerWidth;
-  h = canvas.height = window.innerHeight;
-}
-window.addEventListener("resize", resize);
-
-/* Partícula */
-class Particle {
-  constructor(char) {
-    this.char = char;
-    this.x = Math.random() * w;
-    this.y = h * 0.55;
-    this.vy = - (1 + Math.random() * 2);
-    this.size = 18 + Math.random() * 18;
-    this.life = 100;
-  }
-  update() {
-    this.y += this.vy;
-    this.life--;
-  }
-  draw() {
-    ctx.font = `${this.size}px serif`;
-    ctx.fillText(this.char, this.x, this.y);
-  }
-}
-
-/* ✅ CANTIDAD FIJA DE EMOJIS */
-function spawnParticles(cantidad = 8) {
-  particles = []; // limpieza total
-  const simbolos = ["❤️","🌹","⭐"];
-
-  for (let i = 0; i < cantidad; i++) {
-    particles.push(new Particle(
-      simbolos[Math.floor(Math.random()*simbolos.length)]
-    ));
-  }
-}
-
-function animate() {
-  ctx.clearRect(0,0,w,h);
-  particles = particles.filter(p => p.life > 0);
-  particles.forEach(p => {
-    p.update();
-    p.draw();
-  });
-  requestAnimationFrame(animate);
-}
-
-/* ======================
-   LÓGICA PRINCIPAL
-   ====================== */
 function iniciarRomance() {
-  const overlay = document.getElementById("overlay");
-  const textoEl = document.getElementById("texto");
-  const audio = document.getElementById("audio");
+  const overlay = document.getElementById("overlayRomance");
+  const texto = document.getElementById("textoRomance");
+  const audio = document.getElementById("audioRomance");
 
-  resize();
+  indiceActual = -1;
+  texto.textContent = "";
+  texto.classList.remove("activo");
   overlay.classList.add("activo");
-  indice = -1;
-
-  textoEl.textContent = "";
-  textoEl.classList.remove("activo");
 
   audio.currentTime = 0;
   audio.play().catch(()=>{});
 
   audio.ontimeupdate = () => {
-    for (let i=0;i<tiempos.length;i++) {
-      if (audio.currentTime >= tiempos[i] && indice !== i) {
-        indice = i;
-
-        textoEl.classList.remove("activo");
-        setTimeout(() => {
-          textoEl.textContent = textos[i];
-          textoEl.classList.add("activo");
-        }, 300);
-
-        spawnParticles(8); // 🔥 SIEMPRE 8
-      }
+    if (indiceActual < tiempos.length - 1 && audio.currentTime >= tiempos[indiceActual + 1]) {
+      indiceActual++;
+      cambiarTexto(textos[indiceActual]);
+      lanzarParticulas();
     }
   };
 
-  audio.onended = cerrarTodo;
-  animate();
+  audio.onended = finalizarRomance;
 }
 
-function cerrarTodo() {
-  document.getElementById("overlay").classList.remove("activo");
-  particles = [];
+/* 🔥 transición más suave */
+function cambiarTexto(contenido) {
+  const texto = document.getElementById("textoRomance");
+  texto.classList.remove("activo");
+
+  setTimeout(() => {
+    texto.textContent = contenido;
+    texto.classList.add("activo");
+  }, 250);
+}
+
+function lanzarParticulas() {
+  const overlay = document.getElementById("overlayRomance");
+  const simbolos = ["🌹", "⭐", "❤️"];
+
+  for (let i = 0; i < 6; i++) {
+    const p = document.createElement("div");
+    p.className = "particula";
+    p.textContent = simbolos[Math.floor(Math.random() * simbolos.length)];
+    p.style.left = Math.random() * 100 + "%";
+    p.style.top = "55%";
+    overlay.appendChild(p);
+    setTimeout(() => p.remove(), 2400);
+  }
+}
+
+function finalizarRomance() {
+  const overlay = document.getElementById("overlayRomance");
+  const audio = document.getElementById("audioRomance");
+  audio.pause();
+  overlay.classList.remove("activo");
 }
 </script>
   <!-- 💜🐼 FAN #1 — VERSION ROBUSTA -->
