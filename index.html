@@ -39,10 +39,10 @@
 
 <BR><FONT COLOR="BLACK" SIZE="30" FACE="TAHOMA"><MARQUEE BEHAVIOR="ALTERNATE">BIENVENIDA MI AMOOOR</MARQUEE></FONT>
 
-<!-- ❤️ EFECTO ROMÁNTICO ROJO CON TEXTO + ESTRELLAS Y ROSAS -->
+<!-- ❤️ ROMANCE CON TEXTO SINCRONIZADO (EDITABLE) -->
 <style>
 /* Botón izquierdo */
-.boton-romantico {
+.boton-romance {
   position: fixed;
   left: 20px;
   top: 50%;
@@ -57,7 +57,7 @@
   z-index: 10001;
   box-shadow: 0 10px 24px rgba(177,18,38,.5);
 }
-.boton-romantico:hover { filter: brightness(1.1); }
+.boton-romance:hover { filter: brightness(1.1); }
 
 /* Overlay */
 .overlay-romance {
@@ -71,11 +71,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: opacity .6s ease;
 }
 .overlay-romance.activo {
   opacity: 1;
   pointer-events: auto;
-  transition: opacity .6s ease;
 }
 
 /* Texto */
@@ -94,28 +94,22 @@
   transform: translateY(0);
 }
 
-/* Partículas */
-.particula {
+/* Corazones */
+.corazon {
   position: absolute;
   font-size: 22px;
+  color: rgba(220,40,60,.9);
   animation: flotar 3s ease-out forwards;
-  opacity: 0.9;
 }
 
 @keyframes flotar {
-  from {
-    transform: translateY(0) scale(0.7);
-    opacity: 1;
-  }
-  to {
-    transform: translateY(-220px) scale(1.4);
-    opacity: 0;
-  }
+  from { transform: translateY(0) scale(.7); opacity: 1; }
+  to   { transform: translateY(-220px) scale(1.4); opacity: 0; }
 }
 </style>
 
 <!-- BOTÓN -->
-<button class="boton-romantico" onclick="iniciarRomance()">❤️ Presióname</button>
+<button class="boton-romance" onclick="iniciarRomance()">❤️ Presióname</button>
 
 <!-- OVERLAY -->
 <div class="overlay-romance" id="overlayRomance">
@@ -124,32 +118,38 @@
 
 <!-- AUDIO -->
 <audio id="audioRomance" preload="auto">
-  <source src="cancion4.mp3" type="audio/mpeg">
+<source src="cancion4.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-const textos = [
-  "Eres una obra de arte",
-  "Con solo mirarte",
-  "Algo que da paz",
-  "Cariño",
-  "Eres un amor",
-  "Cariño",
-  "Pintas en color",
-  "Quiero tanto devorarte",
-  "Esta vez besarte",
-  "Si es que soy capaz"
+/* =========================
+   🔧 TIEMPOS EDITABLES AQUÍ
+   =========================
+   time = segundos DESDE que empieza esta parte de la canción
+*/
+const cues = [
+  { time: 0.0,  text: "Eres una obra de arte" },
+  { time: 2.6,  text: "Con solo mirarte" },
+  { time: 5.1,  text: "Algo que da paz" },
+  { time: 7.6,  text: "Cariño" },
+  { time: 9.6,  text: "Eres un amor" },
+  { time: 12.1, text: "Cariño" },
+  { time: 14.4, text: "Pintas en color" },
+  { time: 17.9, text: "Quiero tanto devorarte" },
+  { time: 21.3, text: "Esta vez besarte" },
+  { time: 24.7, text: "Si es que soy capaz" }
 ];
 
-let indice = 0;
-let intervalo = null;
+/* ========================= */
+
+let indiceActual = -1;
 
 function iniciarRomance() {
   const overlay = document.getElementById("overlayRomance");
   const texto = document.getElementById("textoRomance");
   const audio = document.getElementById("audioRomance");
 
-  indice = 0;
+  indiceActual = -1;
   texto.textContent = "";
   texto.classList.remove("activo");
   overlay.classList.add("activo");
@@ -157,59 +157,48 @@ function iniciarRomance() {
   audio.currentTime = 0;
   audio.play().catch(()=>{});
 
-  mostrarPrimerTexto();
+  audio.ontimeupdate = () => {
+    for (let i = 0; i < cues.length; i++) {
+      if (
+        audio.currentTime >= cues[i].time &&
+        indiceActual !== i
+      ) {
+        cambiarTexto(cues[i].text);
+        indiceActual = i;
+        lanzarCorazones();
+      }
+    }
+  };
 
-  // Cada 6 segundos → 10 textos = 60s
-  intervalo = setInterval(cambiarTexto, 6000);
-
-  // Cerrar todo al minuto
-  setTimeout(finalizarRomance, 60000);
+  audio.onended = finalizarRomance;
 }
 
-function mostrarPrimerTexto() {
+function cambiarTexto(contenido) {
   const texto = document.getElementById("textoRomance");
-  texto.textContent = textos[0];
-  requestAnimationFrame(() => texto.classList.add("activo"));
-  lanzarParticulas();
-}
-
-function cambiarTexto() {
-  const texto = document.getElementById("textoRomance");
-
   texto.classList.remove("activo");
 
   setTimeout(() => {
-    indice++;
-    if (indice >= textos.length) return;
-
-    texto.textContent = textos[indice];
+    texto.textContent = contenido;
     texto.classList.add("activo");
-    lanzarParticulas();
-  }, 800);
+  }, 400);
 }
 
-function lanzarParticulas() {
+function lanzarCorazones() {
   const overlay = document.getElementById("overlayRomance");
-  const simbolos = ["🌹","⭐","❤️"];
-
-  for (let i = 0; i < 18; i++) {
-    const p = document.createElement("div");
-    p.className = "particula";
-    p.textContent = simbolos[Math.floor(Math.random()*simbolos.length)];
-    p.style.left = Math.random()*100 + "%";
-    p.style.top = Math.random()*100 + "%";
-    p.style.fontSize = (18 + Math.random()*24) + "px";
-    p.style.color = "rgba(220,40,60,.9)";
-    overlay.appendChild(p);
-    setTimeout(()=>p.remove(),3000);
+  for (let i = 0; i < 14; i++) {
+    const c = document.createElement("div");
+    c.className = "corazon";
+    c.textContent = "❤️";
+    c.style.left = Math.random() * 100 + "%";
+    c.style.top = Math.random() * 100 + "%";
+    c.style.fontSize = (16 + Math.random() * 20) + "px";
+    overlay.appendChild(c);
+    setTimeout(() => c.remove(), 3000);
   }
 }
 
 function finalizarRomance() {
   const overlay = document.getElementById("overlayRomance");
-  const audio = document.getElementById("audioRomance");
-  clearInterval(intervalo);
-  audio.pause();
   overlay.classList.remove("activo");
 }
 </script>
