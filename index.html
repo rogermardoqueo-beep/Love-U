@@ -1696,86 +1696,21 @@ input[name="foto"]{ display:none; }
         <label for="f1">Inicio ▶</label>
       </div>
     </div>
-<!-- 💿🌸 TOCADISCOS PREMIUM + LIRIOS ORGÁNICOS -->
+<!-- 🌸💿 TOCADISCOS + JARDÍN DE LIRIOS MÁGICO -->
 <style>
 /* ===== CAPAS ===== */
-.fx-field, .lilies-field{
+.garden-field,
+.fireflies,
+.orbit-field{
   position:fixed;
   inset:0;
   pointer-events:none;
   z-index:2;
 }
 
-/* ===== FX SUAVES ===== */
-.particula{
-  position:absolute;
-  bottom:42%;
-  left:50%;
-  opacity:.8;
-  animation: flotarFx 2.8s ease-out forwards;
-  will-change: transform, opacity;
-}
-
-@keyframes flotarFx{
-  from{transform:translate(0,0) scale(.9);opacity:1;}
-  to{transform:translate(-30px,-150px) scale(1.25);opacity:0;}
-}
-
-/* ===== LIRIOS ORGÁNICOS ===== */
-.lily{
-  position:absolute;
-  bottom:0;
-  animation: riseLily 8s ease-out forwards;
-}
-
-.lily-stem{
-  width:5px;
-  height:0;
-  background:linear-gradient(#3ddc84,#1e8449);
-  border-radius:3px;
-  margin:auto;
-  animation: growStem 3.5s ease-out forwards;
-}
-
-.lily-leaf{
-  position:absolute;
-  width:28px;
-  height:14px;
-  background:#239b56;
-  border-radius:50%;
-  left:-22px;
-  top:52%;
-  transform:rotate(-25deg);
-  opacity:0;
-  animation: showLeaf 1.6s 2.2s forwards;
-}
-
-.lily-flower{
-  width:46px;
-  height:46px;
-  margin:-16px auto 0;
-  border-radius:50%;
-  background:
-    radial-gradient(circle at 30% 30%,
-      #ffffff 10%,
-      #e3c6ff 35%,
-      #9b6bdc 70%);
-  box-shadow:
-    0 0 18px rgba(155,89,182,.7),
-    inset 0 0 6px rgba(255,255,255,.6);
-  transform:scale(0);
-  animation:bloom 2s 3.2s forwards;
-}
-
-@keyframes growStem{ to{height:180px;} }
-@keyframes showLeaf{ to{opacity:1;} }
-@keyframes bloom{ to{transform:scale(1);} }
-@keyframes riseLily{
-  to{ transform:translateY(-340px); opacity:0; }
-}
-
-/* ===== TOCADISCOS PREMIUM ===== */
+/* ===== TOCADISCOS ===== */
 .tocadiscos-wrap{
+  position:relative;
   display:flex;
   flex-direction:column;
   align-items:center;
@@ -1787,10 +1722,9 @@ input[name="foto"]{ display:none; }
   position:relative;
   width:260px;
   height:260px;
-  filter: drop-shadow(0 0 18px rgba(255,105,180,.35));
+  filter: drop-shadow(0 0 18px rgba(180,120,255,.35));
 }
 
-/* Disco vinilo */
 .disco{
   width:100%;
   height:100%;
@@ -1804,39 +1738,28 @@ input[name="foto"]{ display:none; }
       #111 7px
     );
   border:12px solid #222;
-  animation: spin 2.4s linear infinite;
+  animation:spin 2.2s linear infinite;
   animation-play-state:paused;
 }
 
 .tocadiscos.activo .disco{
   animation-play-state:running;
-  animation-duration:1.5s;
+  animation-duration:1.6s;
 }
 
-/* Latido elegante */
-.tocadiscos.activo{
-  animation: beat 1.4s ease-in-out infinite;
-}
-@keyframes beat{
-  0%,100%{transform:scale(1);}
-  50%{transform:scale(1.025);}
-}
-
-/* Centro del disco */
+/* centro */
 .disco::after{
   content:"";
   position:absolute;
-  top:50%;
-  left:50%;
-  width:26px;
-  height:26px;
-  background:radial-gradient(circle,#ff99c8,#e91e63);
+  top:50%; left:50%;
+  width:26px; height:26px;
+  background:radial-gradient(circle,#ff9ad5,#c2185b);
   border-radius:50%;
   transform:translate(-50%,-50%);
-  box-shadow:0 0 14px rgba(255,105,180,.85);
+  box-shadow:0 0 16px rgba(255,105,180,.85);
 }
 
-/* Aguja */
+/* aguja */
 .aguja{
   position:absolute;
   top:-14px;
@@ -1853,8 +1776,7 @@ input[name="foto"]{ display:none; }
   position:absolute;
   right:-6px;
   top:-2px;
-  width:8px;
-  height:8px;
+  width:8px; height:8px;
   background:#999;
   border-radius:50%;
 }
@@ -1863,9 +1785,107 @@ input[name="foto"]{ display:none; }
   transform:rotate(-6deg);
 }
 
+/* latido */
+.tocadiscos.activo{
+  animation:beat 1.4s ease-in-out infinite;
+}
+@keyframes beat{
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.025);}
+}
+
 @keyframes spin{ to{transform:rotate(360deg);} }
 
-/* Botón */
+/* ===== PARTÍCULAS ORBITANDO ===== */
+.orbit-field{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+.orbit{
+  position:absolute;
+  width:360px;
+  height:360px;
+  animation:rotar 12s linear infinite;
+}
+
+.part-orbit{
+  position:absolute;
+  font-size:20px;
+  opacity:.9;
+}
+
+@keyframes rotar{
+  to{ transform:rotate(360deg); }
+}
+
+/* ===== LIRIOS (JARDÍN) ===== */
+.garden{
+  position:fixed;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:220px;
+  display:flex;
+  justify-content:space-around;
+  align-items:flex-end;
+  z-index:1;
+}
+
+.lily{
+  position:relative;
+  width:14px;
+  height:0;
+  background:linear-gradient(#5dd39e,#2ecc71);
+  border-radius:8px;
+  animation:growStem 3.5s ease-out forwards;
+}
+
+.lily::before{
+  content:"";
+  position:absolute;
+  top:-18px;
+  left:-26px;
+  width:60px;
+  height:60px;
+  background:
+    radial-gradient(circle at 30% 30%,
+      #fff 15%,
+      #dcc7ff 40%,
+      #9b6bdc 70%);
+  border-radius:50%;
+  box-shadow:0 0 20px rgba(155,120,255,.7);
+  transform:scale(0);
+  animation:bloom 2s 3s forwards;
+}
+
+@keyframes growStem{
+  to{ height:140px; }
+}
+@keyframes bloom{
+  to{ transform:scale(1); }
+}
+
+/* ===== LUCIÉRNAGAS ===== */
+.firefly{
+  position:absolute;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#ffeaa7;
+  box-shadow:0 0 12px #ffeaa7;
+  animation:fly 10s linear infinite;
+  opacity:.8;
+}
+
+@keyframes fly{
+  0%   { transform:translate(0,0); opacity:.4; }
+  50%  { transform:translate(80px,-60px); opacity:1; }
+  100% { transform:translate(0,0); opacity:.4; }
+}
+
+/* ===== BOTÓN ===== */
 .boton-play{
   background:#ff69b4;
   color:white;
@@ -1879,14 +1899,38 @@ input[name="foto"]{ display:none; }
 </style>
 
 <!-- CAPAS -->
-<div class="fx-field" id="fx"></div>
-<div class="lilies-field" id="lilies"></div>
+<div class="garden-field">
+  <div class="garden">
+    <div class="lily"></div>
+    <div class="lily"></div>
+    <div class="lily"></div>
+    <div class="lily"></div>
+    <div class="lily"></div>
+  </div>
+</div>
+
+<div class="fireflies">
+  <div class="firefly" style="top:40%;left:30%;"></div>
+  <div class="firefly" style="top:50%;left:60%;"></div>
+  <div class="firefly" style="top:35%;left:75%;"></div>
+</div>
 
 <!-- TOCADISCOS -->
 <div class="tocadiscos-wrap">
   <div class="tocadiscos" id="deck">
     <div class="disco"></div>
     <div class="aguja"></div>
+
+    <!-- partículas orbitando -->
+    <div class="orbit-field">
+      <div class="orbit">
+        <span class="part-orbit" style="top:0;left:50%;">🐼</span>
+        <span class="part-orbit" style="bottom:0;left:20%;">⭐</span>
+        <span class="part-orbit" style="left:0;top:40%;">❤️</span>
+        <span class="part-orbit" style="right:0;top:60%;">🌹</span>
+      </div>
+    </div>
+
   </div>
   <button class="boton-play" onclick="toggleDisco()">✨ Púlsame ✨</button>
 </div>
@@ -1895,9 +1939,6 @@ input[name="foto"]{ display:none; }
 <audio id="musica" src="cancion.mp3"></audio>
 
 <script>
-let fxInterval=null;
-let lilyInterval=null;
-
 function toggleDisco(){
   const audio=document.getElementById('musica');
   const deck=document.getElementById('deck');
@@ -1905,63 +1946,12 @@ function toggleDisco(){
   if(audio.paused){
     audio.play();
     deck.classList.add('activo');
-    startFx();
-    startLilies();
   }else{
     audio.pause();
     deck.classList.remove('activo');
-    stopFx();
-    stopLilies();
   }
 }
-
-/* FX suaves */
-function startFx(){
-  if(fxInterval) return;
-  fxInterval=setInterval(spawnFx,500);
-}
-function stopFx(){
-  clearInterval(fxInterval);
-  fxInterval=null;
-}
-function spawnFx(){
-  const cont=document.getElementById('fx');
-  const icons=['❤️','🌹','⭐'];
-
-  const p=document.createElement('div');
-  p.className='particula';
-  p.textContent=icons[Math.floor(Math.random()*icons.length)];
-  p.style.left=(48+Math.random()*4)+'%';
-  p.style.fontSize='20px';
-  cont.appendChild(p);
-  setTimeout(()=>p.remove(),2800);
-}
-
-/* Lirios orgánicos */
-function startLilies(){
-  if(lilyInterval) return;
-  lilyInterval=setInterval(spawnLily,1600);
-}
-function stopLilies(){
-  clearInterval(lilyInterval);
-  lilyInterval=null;
-}
-function spawnLily(){
-  const field=document.getElementById('lilies');
-  const lily=document.createElement('div');
-  lily.className='lily';
-  lily.style.left=(Math.random()*88+6)+'%';
-
-  lily.innerHTML=`
-    <div class="lily-flower"></div>
-    <div class="lily-leaf"></div>
-    <div class="lily-stem"></div>
-  `;
-  field.appendChild(lily);
-  setTimeout(()=>lily.remove(),8000);
-}
 </script>
-  </div>
 </div>
 </div>
 </center>
