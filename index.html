@@ -131,22 +131,33 @@
   gap: 18px;
   margin-top: 30px;
 }
+
+/* ✅ CORRECCIÓN CLAVE */
 .tarjeta {
+  display: flex;
+  flex-direction: column;
   background: #faf5ff;
   border-radius: 18px;
   overflow: hidden;
   box-shadow: 0 8px 16px rgba(0,0,0,.15);
   text-align: center;
 }
+
 .tarjeta img {
   width: 100%;
   height: 180px;
   object-fit: cover;
 }
+
+/* ✅ MENSAJE SIEMPRE VISIBLE */
 .mensaje {
-  padding: 14px;
-  font-size: 16px;
+  background: linear-gradient(180deg, #f3e8ff, #ead7ff);
   color: #6c3483;
+  padding: 14px 12px;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+  border-top: 1px solid rgba(155,89,182,.35);
 }
 
 /* Botón volver */
@@ -184,22 +195,24 @@
     <div class="galeria">
       <div class="tarjeta">
         <img src="foto7.jpg">
-        <div class="mensaje">
-          Me encantan tus ojos💕
-        </div>
+        <div class="mensaje">Me encantan tus ojos💕</div>
       </div>
+
       <div class="tarjeta">
         <img src="foto8.jpg">
         <div class="mensaje">Tu sonrisa lo ilumina todo ✨</div>
       </div>
+
       <div class="tarjeta">
         <img src="foto9.jpg">
         <div class="mensaje">bellaaa💜</div>
       </div>
+
       <div class="tarjeta">
         <img src="foto10.jpg">
         <div class="mensaje">te amo abusiva🌸</div>
       </div>
+
       <div class="tarjeta">
         <img src="foto11.jpg">
         <div class="mensaje">preciosa💕🐼</div>
@@ -211,7 +224,7 @@
 </div>
 
 <audio id="fanAudio" preload="auto">
-<source src="fanAudio.mp3" type="audio/mpeg">
+  <source src="fanAudio.mp3" type="audio/mpeg">
 </audio>
 
 <script>
@@ -222,7 +235,7 @@ function iniciarCorazones() {
   for (let i=0;i<25;i++){
     const c = document.createElement("div");
     c.className = "corazon";
-    c.textContent = "💜,💕,💖";
+    c.textContent = "💜";
     c.style.left = Math.random()*100 + "%";
     c.style.fontSize = (16 + Math.random()*20) + "px";
     c.style.animationDuration = (6 + Math.random()*4) + "s";
@@ -243,7 +256,6 @@ function cerrarFan(){
   document.getElementById("fanAudio").pause();
 }
 </script>
-  
   <!-- 🎬 OVERLAY VIDEO + CANCIÓN (10s) -->
 <style>
 .video-overlay {
