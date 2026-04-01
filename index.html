@@ -39,15 +39,15 @@
 
 <BR><FONT COLOR="BLACK" SIZE="30" FACE="TAHOMA"><MARQUEE BEHAVIOR="ALTERNATE">BIENVENIDA MI AMOOOR</MARQUEE></FONT>
 
-<!-- ✨ EFECTO ROMÁNTICO FUNCIONAL -->
+<!-- ❤️ EFECTO ROMÁNTICO ROJO CON TEXTO + ESTRELLAS Y ROSAS -->
 <style>
-/* Botón lado izquierdo */
+/* Botón izquierdo */
 .boton-romantico {
   position: fixed;
   left: 20px;
   top: 50%;
   transform: translateY(-50%);
-  background: #7b4cff;
+  background: #b11226;
   color: white;
   border: none;
   border-radius: 28px;
@@ -55,7 +55,7 @@
   font-size: 16px;
   cursor: pointer;
   z-index: 10001;
-  box-shadow: 0 10px 24px rgba(123,76,255,.4);
+  box-shadow: 0 10px 24px rgba(177,18,38,.5);
 }
 .boton-romantico:hover { filter: brightness(1.1); }
 
@@ -63,10 +63,11 @@
 .overlay-romance {
   position: fixed;
   inset: 0;
-  background: radial-gradient(circle at center, #2c1b47, #000);
+  background: radial-gradient(circle at center, #4b0f16, #000);
   opacity: 0;
   pointer-events: none;
   z-index: 10000;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -79,40 +80,65 @@
 
 /* Texto */
 .texto-romance {
-  color: #ffd6ff;
+  color: #ffd6d6;
   font-size: 28px;
   text-align: center;
+  max-width: 80%;
   opacity: 0;
-  transform: translateY(20px);
-  transition: all .6s ease;
+  transform: translateY(25px);
+  transition: all .8s ease;
   font-family: 'Segoe Script','Comic Sans MS','Ink Free',Tahoma,sans-serif;
 }
 .texto-romance.activo {
   opacity: 1;
   transform: translateY(0);
 }
+
+/* Partículas */
+.particula {
+  position: absolute;
+  font-size: 22px;
+  animation: flotar 3s ease-out forwards;
+  opacity: 0.9;
+}
+
+@keyframes flotar {
+  from {
+    transform: translateY(0) scale(0.7);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-220px) scale(1.4);
+    opacity: 0;
+  }
+}
 </style>
 
 <!-- BOTÓN -->
-<button class="boton-romantico" onclick="iniciarRomance()">✨ Presióname</button>
+<button class="boton-romantico" onclick="iniciarRomance()">❤️ Presióname</button>
 
 <!-- OVERLAY -->
 <div class="overlay-romance" id="overlayRomance">
   <div id="textoRomance" class="texto-romance"></div>
 </div>
 
-<!-- AUDIO (CORRECTO) -->
+<!-- AUDIO -->
 <audio id="audioRomance" preload="auto">
   <source src="cancion.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-const frases = [
-  "estoy ahorrando pa' comprarte el sol",
-  "dias grises cambian con tu voz",
-  "veo las nubes color tornasol",
-  "te acurruco dentro de un girasol",
-  "tu me endulzas con tu pelo y me despego del suelo"
+const textos = [
+  "Eres una obra de arte",
+  "Con solo mirarte",
+  "Algo que da paz",
+  "Cariño",
+  "Eres un amor",
+  "Cariño",
+  "Pintas en color",
+  "Quiero tanto devorarte",
+  "Esta vez besarte",
+  "Si es que soy capaz"
 ];
 
 let indice = 0;
@@ -123,56 +149,70 @@ function iniciarRomance() {
   const texto = document.getElementById("textoRomance");
   const audio = document.getElementById("audioRomance");
 
-  // reset
   indice = 0;
   texto.textContent = "";
   texto.classList.remove("activo");
   overlay.classList.add("activo");
 
-  // reproducir audio (ahora sí válido)
   audio.currentTime = 0;
-  audio.play().catch(() => {});
+  audio.play().catch(()=>{});
 
-  // mostrar primer texto
-  mostrarTexto();
+  mostrarPrimerTexto();
 
-  // secuencia controlada
-  intervalo = setInterval(() => {
-    texto.classList.remove("activo");
+  // Cada 6 segundos → 10 textos = 60s
+  intervalo = setInterval(cambiarTexto, 6000);
 
-    setTimeout(() => {
-      indice++;
-      if (indice >= frases.length) {
-        clearInterval(intervalo);
-        finalizarRomance();
-        return;
-      }
-      texto.textContent = frases[indice];
-      texto.classList.add("activo");
-    }, 600);
-
-  }, 2200);
+  // Cerrar todo al minuto
+  setTimeout(finalizarRomance, 60000);
 }
 
-function mostrarTexto() {
+function mostrarPrimerTexto() {
   const texto = document.getElementById("textoRomance");
-  texto.textContent = frases[0];
-  requestAnimationFrame(() => {
+  texto.textContent = textos[0];
+  requestAnimationFrame(() => texto.classList.add("activo"));
+  lanzarParticulas();
+}
+
+function cambiarTexto() {
+  const texto = document.getElementById("textoRomance");
+
+  texto.classList.remove("activo");
+
+  setTimeout(() => {
+    indice++;
+    if (indice >= textos.length) return;
+
+    texto.textContent = textos[indice];
     texto.classList.add("activo");
-  });
+    lanzarParticulas();
+  }, 800);
+}
+
+function lanzarParticulas() {
+  const overlay = document.getElementById("overlayRomance");
+  const simbolos = ["🌹","⭐","❤️"];
+
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement("div");
+    p.className = "particula";
+    p.textContent = simbolos[Math.floor(Math.random()*simbolos.length)];
+    p.style.left = Math.random()*100 + "%";
+    p.style.top = Math.random()*100 + "%";
+    p.style.fontSize = (18 + Math.random()*24) + "px";
+    p.style.color = "rgba(220,40,60,.9)";
+    overlay.appendChild(p);
+    setTimeout(()=>p.remove(),3000);
+  }
 }
 
 function finalizarRomance() {
   const overlay = document.getElementById("overlayRomance");
   const audio = document.getElementById("audioRomance");
-
-  setTimeout(() => {
-    overlay.classList.remove("activo");
-    audio.pause();
-  }, 2000);
+  clearInterval(intervalo);
+  audio.pause();
+  overlay.classList.remove("activo");
 }
 </script>
-``
   <!-- 💜🐼 FAN #1 — VERSION ROBUSTA -->
 <style>
 /* ===== BOTÓN ===== */
