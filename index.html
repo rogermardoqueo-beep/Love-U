@@ -1696,23 +1696,24 @@ input[name="foto"]{ display:none; }
         <label for="f1">Inicio ▶</label>
       </div>
     </div>
-<!-- 🌸💿 TOCADISCOS + FLORES REALISTAS -->
+<!-- 💿🌸 TOCADISCOS + LIRIOS MÁS REALISTAS -->
 <style>
-/* ================== TOCADISCOS ================== */
+/* ===== CONTENEDOR CENTRAL ===== */
 .tocadiscos-wrap{
+  position: relative;
   display:flex;
   flex-direction:column;
   align-items:center;
   gap:16px;
-  position:relative;
   z-index:10;
 }
 
+/* ===== TOCADISCOS ===== */
 .tocadiscos{
-  position:relative;
+  position: relative;
   width:260px;
   height:260px;
-  filter:drop-shadow(0 0 28px rgba(180,130,255,.45));
+  filter: drop-shadow(0 0 20px rgba(180,100,255,.35));
 }
 
 .disco{
@@ -1721,166 +1722,148 @@ input[name="foto"]{ display:none; }
   border-radius:50%;
   background:
     repeating-radial-gradient(
-      circle,
+      circle at center,
       #111 0px,
       #111 3px,
-      #1b1b1b 4px,
+      #1a1a1a 4px,
       #111 7px
     );
   border:12px solid #222;
-  animation:spin 1.6s linear infinite;
-  animation-play-state:paused;
+  animation: spin 2.2s linear infinite;
+  animation-play-state: paused;
 }
 
 .tocadiscos.activo .disco{
-  animation-play-state:running;
+  animation-play-state: running;
+  animation-duration: 1.6s;
 }
 
+/* Centro */
 .disco::after{
   content:"";
   position:absolute;
-  inset:48%;
-  background:radial-gradient(circle,#ffb6e6,#b3006e);
+  top:50%;
+  left:50%;
+  width:26px;
+  height:26px;
+  background:radial-gradient(circle,#ff9ad5,#c2185b);
   border-radius:50%;
-  box-shadow:0 0 18px rgba(255,120,200,.95);
+  transform:translate(-50%,-50%);
+  box-shadow:0 0 14px rgba(255,105,180,.8);
 }
 
+/* Aguja */
 .aguja{
   position:absolute;
   top:-14px;
-  right:-55px;
-  width:110px;
+  right:-52px;
+  width:100px;
   height:4px;
   background:#ccc;
   transform-origin:left center;
   transform:rotate(-40deg);
-  transition:.7s;
+  transition:transform .7s cubic-bezier(.4,0,.2,1);
 }
 .tocadiscos.activo .aguja{ transform:rotate(-6deg); }
 
 @keyframes spin{ to{ transform:rotate(360deg); } }
 
-/* ================== EMOJIS ================== */
+/* ===== EMOJIS ===== */
 .emojis{
   position:absolute;
   inset:0;
   pointer-events:none;
 }
-
 .emoji{
   position:absolute;
-  font-size:26px;
-  animation:emojiFly 2.6s ease-out forwards;
-  filter:drop-shadow(0 0 10px rgba(255,255,255,.8));
+  font-size:22px;
+  animation: salir 2.8s ease-out forwards;
+}
+@keyframes salir{
+  to{
+    transform:translate(var(--x),var(--y)) scale(1.4);
+    opacity:0;
+  }
 }
 
-@keyframes emojiFly{
-  from{ transform:translate(0,0) scale(.7); opacity:1; }
-  to{ transform:translate(var(--x),var(--y)) scale(1.8); opacity:0; }
-}
-
-/* ================== FLORES REALISTAS ================== */
-.flor{
+/* ===== LIRIOS MEJORADOS ===== */
+.lirio{
   position:fixed;
   bottom:0;
   left:var(--x);
-  width:8px;
+  width:10px;
   height:0;
-  background:linear-gradient(#25d4a4,#11806a);
+  background:linear-gradient(#3ddc84,#1e8449);
   border-radius:6px;
+  animation: crecer 3.6s ease-out forwards;
   transform-origin:bottom center;
-  animation:tallo 4s ease-out forwards;
   z-index:1;
 }
 
-/* hoja */
-.flor::before{
-  content:"";
+/* flor */
+.lirio .flor{
   position:absolute;
-  width:42px;
-  height:16px;
-  background:linear-gradient(90deg,#1a8f6a,#4fe9bf);
-  border-radius:100% 0 100% 0;
-  left:-34px;
-  top:85px;
-  transform:rotate(-30deg);
-  opacity:.85;
-}
-
-/* capullo */
-.capullo{
-  position:absolute;
-  top:-70px;
+  top:-85px;
   left:50%;
-  width:140px;
-  height:140px;
+  width:120px;
+  height:120px;
   transform:translateX(-50%) scale(0);
-  animation:abrir 2.8s 4s forwards;
+  animation: abrir 2.2s 3.6s forwards;
 }
 
-/* pétalo */
-.capullo span{
+/* pétalos */
+.lirio .petalo{
   position:absolute;
-  width:70px;
-  height:120px;
+  width:60px;
+  height:100px;
   left:50%;
   bottom:0;
   transform-origin:bottom center;
   border-radius:65% 65% 40% 40%;
   background:
-    linear-gradient(
-      to top,
-      rgba(150,120,255,.45),
-      rgba(210,185,255,.75),
-      rgba(255,255,255,.95)
-    );
+    linear-gradient(to top,#d9c8ff,#f6f1ff 70%,#ffffff);
   box-shadow:
-    inset 0 0 10px rgba(255,255,255,.9),
-    0 0 26px rgba(180,140,255,.6);
-  backdrop-filter: blur(8px);
+    inset 0 0 6px rgba(255,255,255,.9),
+    0 0 14px rgba(180,140,255,.7);
 }
 
-/* rotación realista */
-.capullo span:nth-child(1){ transform:translateX(-50%) rotate(-45deg); }
-.capullo span:nth-child(2){ transform:translateX(-50%) rotate(-15deg); }
-.capullo span:nth-child(3){ transform:translateX(-50%) rotate(15deg); }
-.capullo span:nth-child(4){ transform:translateX(-50%) rotate(45deg); }
+/* rotación natural */
+.petalo:nth-child(1){ transform:translateX(-50%) rotate(-40deg); }
+.petalo:nth-child(2){ transform:translateX(-50%) rotate(-14deg); }
+.petalo:nth-child(3){ transform:translateX(-50%) rotate(14deg); }
+.petalo:nth-child(4){ transform:translateX(-50%) rotate(40deg); }
 
 /* centro */
-.centro{
+.lirio .centro{
   position:absolute;
-  top:18px;
+  top:26px;
   left:50%;
-  width:18px;
-  height:18px;
+  width:16px;
+  height:16px;
   transform:translateX(-50%);
-  background:radial-gradient(circle,#ffe082,#ff9800);
+  background:radial-gradient(circle,#ffd55a,#ff9800);
   border-radius:50%;
-  box-shadow:0 0 18px rgba(255,200,100,.95);
+  box-shadow:0 0 12px rgba(255,200,80,.9);
 }
 
-/* animaciones flor */
-@keyframes tallo{ to{ height:220px; } }
+/* animaciones */
+@keyframes crecer{ to{ height:180px; } }
 @keyframes abrir{ to{ transform:translateX(-50%) scale(1); } }
 
-.flor.final{
-  animation:marchitar 3s forwards;
+.lirio.final{
+  animation:marchitar 2.2s forwards;
 }
-
 @keyframes marchitar{
-  to{
-    opacity:0;
-    transform:translateY(60px) rotate(-5deg);
-  }
+  to{ opacity:0; transform:translateY(40px); }
 }
 
-/* ================== BOTÓN ================== */
+/* BOTÓN */
 .boton-play{
-  background:#ff5fb7;
-  color:#fff;
+  background:#ff69b4;
+  color:white;
   border:none;
-  border-radius:32px;
-  padding:14px 40px;
+  border-radius:28px;
+  padding:14px 36px;
   font-size:18px;
   cursor:pointer;
 }
@@ -1895,12 +1878,11 @@ input[name="foto"]{ display:none; }
   <button class="boton-play" onclick="toggleDisco()">✨ Púlsame ✨</button>
 </div>
 
-<!-- 🔊 AUDIO -->
-<audio id="musica" src="cancion.mp3"></audio>
+cancion.mp3
 
 <script>
 let emojiInterval=null;
-let florInterval=null;
+let lirioInterval=null;
 
 function toggleDisco(){
   const audio=document.getElementById("musica");
@@ -1909,74 +1891,72 @@ function toggleDisco(){
     audio.play();
     deck.classList.add("activo");
     startEmojis();
-    startFlores();
+    startLirios();
   }else{
     audio.pause();
     deck.classList.remove("activo");
     stopEmojis();
-    stopFlores();
+    stopLirios();
   }
 }
 
-/* 🔥 MUCHOS EMOJIS */
+/* EMOJIS */
 function startEmojis(){
   if(emojiInterval) return;
-  emojiInterval=setInterval(()=>{
-    for(let i=0;i<4;i++) spawnEmoji();
-  },240);
+  emojiInterval=setInterval(spawnEmoji,500);
 }
 function stopEmojis(){
   clearInterval(emojiInterval);
   emojiInterval=null;
 }
-
 function spawnEmoji(){
   const e=document.createElement("div");
-  const icons=["🌸","✨","💖","🌈","🦋","⭐","🪷"];
+  const icons=["🐼","⭐","❤️","🌹"];
   e.className="emoji";
   e.textContent=icons[Math.random()*icons.length|0];
   e.style.left="50%";
   e.style.top="50%";
-  e.style.setProperty("--x",(Math.random()*260-130)+"px");
-  e.style.setProperty("--y",(-170-Math.random()*140)+"px");
+  e.style.setProperty("--x",(Math.random()*120-60)+"px");
+  e.style.setProperty("--y",(-120-Math.random()*80)+"px");
   emojis.appendChild(e);
-  setTimeout(()=>e.remove(),2600);
+  setTimeout(()=>e.remove(),2800);
 }
 
-/* 🌷 FLORES */
-function startFlores(){
-  if(florInterval) return;
-  florInterval=setInterval(spawnFlor,2000);
+/* LIRIOS */
+function startLirios(){
+  if(lirioInterval) return;
+  lirioInterval=setInterval(spawnLirio,1800);
 }
-function stopFlores(){
-  clearInterval(florInterval);
-  florInterval=null;
+function stopLirios(){
+  clearInterval(lirioInterval);
+  lirioInterval=null;
 }
 
-function spawnFlor(){
+function spawnLirio(){
+  const l=document.createElement("div");
+  l.className="lirio";
+  l.style.setProperty("--x",(Math.random()*90+5)+"%");
+
   const flor=document.createElement("div");
   flor.className="flor";
-  flor.style.setProperty("--x",(Math.random()*92+4)+"%");
-
-  const capullo=document.createElement("div");
-  capullo.className="capullo";
 
   for(let i=0;i<4;i++){
-    capullo.appendChild(document.createElement("span"));
+    const p=document.createElement("div");
+    p.className="petalo";
+    flor.appendChild(p);
   }
 
   const centro=document.createElement("div");
   centro.className="centro";
 
-  flor.appendChild(capullo);
-  flor.appendChild(centro);
-  document.body.appendChild(flor);
+  l.appendChild(flor);
+  l.appendChild(centro);
+  document.body.appendChild(l);
 
-  setTimeout(()=>flor.classList.add("final"),7200);
-  setTimeout(()=>flor.remove(),10000);
+  setTimeout(()=>l.classList.add("final"),5800);
+  setTimeout(()=>l.remove(),7800);
 }
 </script>
-</div>
 </div>
 </center>
   <!-- ❤️🐼 LLUVIA MASIVA DE CORAZONES Y PANDAS -->
