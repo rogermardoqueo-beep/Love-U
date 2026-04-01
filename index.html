@@ -1696,7 +1696,7 @@ input[name="foto"]{ display:none; }
         <label for="f1">Inicio ▶</label>
       </div>
     </div>
-<!-- 💿🌸 TOCADISCOS + LIRIOS REALISTAS -->
+<!-- 💿🌸 TOCADISCOS + LIRIOS MEJORADOS -->
 <style>
 /* ===== CONTENEDOR CENTRAL ===== */
 .tocadiscos-wrap{
@@ -1738,7 +1738,7 @@ input[name="foto"]{ display:none; }
   animation-duration: 1.6s;
 }
 
-/* Centro */
+/* Centro disco */
 .disco::after{
   content:"";
   position:absolute;
@@ -1784,7 +1784,7 @@ input[name="foto"]{ display:none; }
   to{ transform:rotate(360deg); }
 }
 
-/* ===== EMOJIS PEGADOS AL TOCADISCOS ===== */
+/* ===== EMOJIS ===== */
 .emojis{
   position:absolute;
   inset:0;
@@ -1798,69 +1798,99 @@ input[name="foto"]{ display:none; }
 }
 
 @keyframes salir{
-  0%{
-    transform:translate(0,0) scale(.8);
-    opacity:1;
-  }
-  100%{
-    transform:translate(var(--x), var(--y)) scale(1.4);
-    opacity:0;
-  }
+  0%{ transform:translate(0,0) scale(.8); opacity:1; }
+  100%{ transform:translate(var(--x), var(--y)) scale(1.4); opacity:0; }
 }
 
-/* ===== LIRIOS REALISTAS ===== */
+/* ===== LIRIOS ULTRA REALISTAS ===== */
 .lirio{
-  position: fixed;
+  position:fixed;
   bottom:0;
   left:var(--x);
-  width:12px;
+  width:14px;
   height:0;
-  background: linear-gradient(#3ddc84,#1e8449);
-  border-radius:6px;
-  animation: crecer 3.2s ease-out forwards;
+  background:linear-gradient(#5ee2a0,#1f7a4a);
+  border-radius:10px;
+  transform-origin:bottom center;
+  animation:
+    crecer 3.5s ease-out forwards,
+    balanceo 6s ease-in-out infinite;
   z-index:1;
 }
 
-.lirio::before,
-.lirio::after{
+/* Hoja */
+.lirio::before{
   content:"";
   position:absolute;
-  top:-26px;
-  left:-28px;
-  width:68px;
-  height:68px;
-  border-radius:50%;
+  width:38px;
+  height:16px;
+  background:linear-gradient(90deg,#1f7a4a,#52e0a4);
+  border-radius:100% 0 100% 0;
+  left:-32px;
+  top:70px;
+  transform:rotate(-25deg);
+  opacity:.85;
+}
+
+/* Pétalos */
+.petalos{
+  position:absolute;
+  top:-52px;
+  left:50%;
+  width:96px;
+  height:96px;
+  transform:translateX(-50%) scale(0);
+  animation: florecer 2.5s 3.5s forwards;
+}
+
+.petalos span{
+  position:absolute;
+  inset:0;
+  border-radius:70% 70% 50% 50%;
   background:
     radial-gradient(circle at 30% 30%,
-      #ffffff 10%,
-      #e5d7ff 40%,
-      #9b6bdc 75%);
+      #fff 12%,
+      #eadfff 42%,
+      #a57ae8 78%);
   box-shadow:
-    0 0 18px rgba(155,120,255,.7),
-    inset 0 0 6px rgba(255,255,255,.7);
-  transform:scale(0);
-  animation: flor 2s 3.2s forwards;
+    inset 0 0 6px rgba(255,255,255,.8),
+    0 0 20px rgba(180,120,255,.75);
 }
 
-.lirio::after{
-  filter:blur(2px);
+.petalos span:nth-child(1){ transform:rotate(0deg); }
+.petalos span:nth-child(2){ transform:rotate(60deg); }
+.petalos span:nth-child(3){ transform:rotate(120deg); }
+
+/* Centro */
+.centro{
+  position:absolute;
+  top:-8px;
+  left:50%;
+  width:14px;
+  height:14px;
+  transform:translateX(-50%);
+  background:radial-gradient(circle,#ffd54f,#ff9800);
+  border-radius:50%;
+  box-shadow:0 0 12px rgba(255,200,0,.9);
 }
 
-@keyframes crecer{
-  to{ height:160px; }
+/* Animaciones lirio */
+@keyframes crecer{ to{ height:180px; } }
+@keyframes florecer{ to{ transform:translateX(-50%) scale(1); } }
+@keyframes balanceo{
+  0%,100%{ transform:rotate(0deg); }
+  50%{ transform:rotate(2deg); }
 }
 
-@keyframes flor{
-  to{ transform:scale(1); }
-}
-
-/* desaparecer */
 .lirio.final{
-  animation: marchitar 2s forwards;
+  animation: marchitar 2.6s forwards;
 }
 
 @keyframes marchitar{
-  to{ opacity:0; transform:translateY(30px); }
+  to{
+    opacity:0;
+    transform:translateY(45px) rotate(-4deg);
+  }
 }
 
 /* BOTÓN */
@@ -1886,7 +1916,7 @@ input[name="foto"]{ display:none; }
   <button class="boton-play" onclick="toggleDisco()">✨ Púlsame ✨</button>
 </div>
 
-<audio id="musica" src="cancion.mp3"></audio>
+<audio id="musica" src="cancion.mp3" loop></audio>
 
 <script>
 let emojiInterval=null;
@@ -1909,7 +1939,7 @@ function toggleDisco(){
   }
 }
 
-/* ===== EMOJIS DESDE EL TOCADISCOS ===== */
+/* EMOJIS */
 function startEmojis(){
   if(emojiInterval) return;
   emojiInterval=setInterval(spawnEmoji,500);
@@ -1918,14 +1948,13 @@ function stopEmojis(){
   clearInterval(emojiInterval);
   emojiInterval=null;
 }
-
 function spawnEmoji(){
   const cont=document.getElementById("emojis");
   const e=document.createElement("div");
   const icons=["🐼","⭐","❤️","🌹"];
 
   e.className="emoji";
-  e.textContent=icons[Math.floor(Math.random()*icons.length)];
+  e.textContent=icons[Math.random()*icons.length|0];
   e.style.left="50%";
   e.style.top="50%";
   e.style.setProperty("--x",(Math.random()*120-60)+"px");
@@ -1935,12 +1964,11 @@ function spawnEmoji(){
   setTimeout(()=>e.remove(),2800);
 }
 
-/* ===== LIRIOS QUE FLORECEN Y MUEREN ===== */
+/* LIRIOS */
 function startLirios(){
   if(lirioInterval) return;
   lirioInterval=setInterval(spawnLirio,1800);
 }
-
 function stopLirios(){
   clearInterval(lirioInterval);
   lirioInterval=null;
@@ -1951,13 +1979,23 @@ function spawnLirio(){
   l.className="lirio";
   l.style.setProperty("--x",(Math.random()*90+5)+"%");
 
+  const petalos=document.createElement("div");
+  petalos.className="petalos";
+  for(let i=0;i<3;i++){
+    petalos.appendChild(document.createElement("span"));
+  }
+
+  const centro=document.createElement("div");
+  centro.className="centro";
+
+  l.appendChild(petalos);
+  l.appendChild(centro);
   document.body.appendChild(l);
 
-  setTimeout(()=>l.classList.add("final"),5500);
-  setTimeout(()=>l.remove(),7500);
+  setTimeout(()=>l.classList.add("final"),6000);
+  setTimeout(()=>l.remove(),8200);
 }
 </script>
-``
 </div>
 </div>
 </center>
