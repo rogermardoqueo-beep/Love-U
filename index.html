@@ -1696,9 +1696,9 @@ input[name="foto"]{ display:none; }
         <label for="f1">Inicio ▶</label>
       </div>
     </div>
-<!-- 💿🌸 TOCADISCOS + FLORES TRANSLÚCIDAS -->
+<!-- 🌸💿 TOCADISCOS + FLORES REALISTAS -->
 <style>
-/* ===== CONTENEDOR ===== */
+/* ================== TOCADISCOS ================== */
 .tocadiscos-wrap{
   display:flex;
   flex-direction:column;
@@ -1708,12 +1708,11 @@ input[name="foto"]{ display:none; }
   z-index:10;
 }
 
-/* ===== TOCADISCOS ===== */
 .tocadiscos{
   position:relative;
   width:260px;
   height:260px;
-  filter:drop-shadow(0 0 24px rgba(200,120,255,.4));
+  filter:drop-shadow(0 0 28px rgba(180,130,255,.45));
 }
 
 .disco{
@@ -1722,10 +1721,10 @@ input[name="foto"]{ display:none; }
   border-radius:50%;
   background:
     repeating-radial-gradient(
-      circle at center,
+      circle,
       #111 0px,
       #111 3px,
-      #1a1a1a 4px,
+      #1b1b1b 4px,
       #111 7px
     );
   border:12px solid #222;
@@ -1737,137 +1736,151 @@ input[name="foto"]{ display:none; }
   animation-play-state:running;
 }
 
-/* centro */
 .disco::after{
   content:"";
   position:absolute;
   inset:48%;
   background:radial-gradient(circle,#ffb6e6,#b3006e);
   border-radius:50%;
-  box-shadow:0 0 16px rgba(255,120,200,.9);
+  box-shadow:0 0 18px rgba(255,120,200,.95);
 }
 
-/* aguja */
 .aguja{
   position:absolute;
-  top:-16px;
-  right:-54px;
+  top:-14px;
+  right:-55px;
   width:110px;
   height:4px;
   background:#ccc;
   transform-origin:left center;
   transform:rotate(-40deg);
-  transition:0.7s;
+  transition:.7s;
 }
 .tocadiscos.activo .aguja{ transform:rotate(-6deg); }
 
 @keyframes spin{ to{ transform:rotate(360deg); } }
 
-/* ===== EMOJIS BOOST ===== */
+/* ================== EMOJIS ================== */
 .emojis{
   position:absolute;
   inset:0;
   pointer-events:none;
 }
+
 .emoji{
   position:absolute;
-  font-size:24px;
+  font-size:26px;
   animation:emojiFly 2.6s ease-out forwards;
-  filter:drop-shadow(0 0 8px rgba(255,255,255,.7));
+  filter:drop-shadow(0 0 10px rgba(255,255,255,.8));
 }
 
 @keyframes emojiFly{
-  from{ transform:translate(0,0) scale(.8); opacity:1; }
-  to{ transform:translate(var(--x),var(--y)) scale(1.6); opacity:0; }
+  from{ transform:translate(0,0) scale(.7); opacity:1; }
+  to{ transform:translate(var(--x),var(--y)) scale(1.8); opacity:0; }
 }
 
-/* ===== FLORES TRANSLÚCIDAS ===== */
+/* ================== FLORES REALISTAS ================== */
 .flor{
   position:fixed;
   bottom:0;
   left:var(--x);
-  width:6px;
+  width:8px;
   height:0;
-  background:linear-gradient(#7dffd6,#00a98f);
+  background:linear-gradient(#25d4a4,#11806a);
   border-radius:6px;
-  animation:
-    crecer 4s ease-out forwards,
-    balance 7s ease-in-out infinite;
+  transform-origin:bottom center;
+  animation:tallo 4s ease-out forwards;
   z-index:1;
 }
 
-/* pétalos */
-.flor .petalos{
+/* hoja */
+.flor::before{
+  content:"";
   position:absolute;
-  top:-58px;
-  left:50%;
-  width:120px;
-  height:120px;
-  transform:translateX(-50%) scale(0);
-  animation:abrir 2.6s 4s forwards;
-}
-
-.flor .petalos span{
-  position:absolute;
-  inset:0;
-  border-radius:60% 60% 50% 50%;
-  background:
-    radial-gradient(circle at 30% 30%,
-      rgba(255,255,255,.9),
-      rgba(210,170,255,.55),
-      rgba(140,80,200,.2)
-    );
-  backdrop-filter: blur(6px);
-  box-shadow:
-    inset 0 0 12px rgba(255,255,255,.6),
-    0 0 22px rgba(190,140,255,.6);
+  width:42px;
+  height:16px;
+  background:linear-gradient(90deg,#1a8f6a,#4fe9bf);
+  border-radius:100% 0 100% 0;
+  left:-34px;
+  top:85px;
+  transform:rotate(-30deg);
   opacity:.85;
 }
 
-.flor .petalos span:nth-child(1){ transform:rotate(0deg); }
-.flor .petalos span:nth-child(2){ transform:rotate(72deg); }
-.flor .petalos span:nth-child(3){ transform:rotate(144deg); }
-.flor .petalos span:nth-child(4){ transform:rotate(216deg); }
-.flor .petalos span:nth-child(5){ transform:rotate(288deg); }
+/* capullo */
+.capullo{
+  position:absolute;
+  top:-70px;
+  left:50%;
+  width:140px;
+  height:140px;
+  transform:translateX(-50%) scale(0);
+  animation:abrir 2.8s 4s forwards;
+}
+
+/* pétalo */
+.capullo span{
+  position:absolute;
+  width:70px;
+  height:120px;
+  left:50%;
+  bottom:0;
+  transform-origin:bottom center;
+  border-radius:65% 65% 40% 40%;
+  background:
+    linear-gradient(
+      to top,
+      rgba(150,120,255,.45),
+      rgba(210,185,255,.75),
+      rgba(255,255,255,.95)
+    );
+  box-shadow:
+    inset 0 0 10px rgba(255,255,255,.9),
+    0 0 26px rgba(180,140,255,.6);
+  backdrop-filter: blur(8px);
+}
+
+/* rotación realista */
+.capullo span:nth-child(1){ transform:translateX(-50%) rotate(-45deg); }
+.capullo span:nth-child(2){ transform:translateX(-50%) rotate(-15deg); }
+.capullo span:nth-child(3){ transform:translateX(-50%) rotate(15deg); }
+.capullo span:nth-child(4){ transform:translateX(-50%) rotate(45deg); }
 
 /* centro */
-.flor .centro{
+.centro{
   position:absolute;
-  top:-6px;
+  top:18px;
   left:50%;
   width:18px;
   height:18px;
   transform:translateX(-50%);
+  background:radial-gradient(circle,#ffe082,#ff9800);
   border-radius:50%;
-  background:radial-gradient(circle,#fff59d,#ff9800);
-  box-shadow:0 0 20px rgba(255,220,120,.9);
+  box-shadow:0 0 18px rgba(255,200,100,.95);
 }
 
 /* animaciones flor */
-@keyframes crecer{ to{ height:190px; } }
+@keyframes tallo{ to{ height:220px; } }
 @keyframes abrir{ to{ transform:translateX(-50%) scale(1); } }
-@keyframes balance{
-  0%,100%{ transform:rotate(0deg); }
-  50%{ transform:rotate(2.4deg); }
-}
 
 .flor.final{
   animation:marchitar 3s forwards;
 }
+
 @keyframes marchitar{
   to{
     opacity:0;
-    transform:translateY(60px) scale(.8);
+    transform:translateY(60px) rotate(-5deg);
   }
 }
 
-/* botón */
+/* ================== BOTÓN ================== */
 .boton-play{
   background:#ff5fb7;
   color:#fff;
   border:none;
-  border-radius:30px;
-  padding:14px 38px;
+  border-radius:32px;
+  padding:14px 40px;
   font-size:18px;
   cursor:pointer;
 }
@@ -1882,6 +1895,7 @@ input[name="foto"]{ display:none; }
   <button class="boton-play" onclick="toggleDisco()">✨ Púlsame ✨</button>
 </div>
 
+<!-- 🔊 AUDIO -->
 <audio id="musica" src="cancion.mp3"></audio>
 
 <script>
@@ -1904,12 +1918,12 @@ function toggleDisco(){
   }
 }
 
-/* MUCHOS EMOJIS */
+/* 🔥 MUCHOS EMOJIS */
 function startEmojis(){
   if(emojiInterval) return;
   emojiInterval=setInterval(()=>{
-    for(let i=0;i<3;i++) spawnEmoji();
-  },280);
+    for(let i=0;i<4;i++) spawnEmoji();
+  },240);
 }
 function stopEmojis(){
   clearInterval(emojiInterval);
@@ -1918,18 +1932,18 @@ function stopEmojis(){
 
 function spawnEmoji(){
   const e=document.createElement("div");
-  const icons=["🌸","✨","💖","🪷","🌈","⭐","🦋"];
+  const icons=["🌸","✨","💖","🌈","🦋","⭐","🪷"];
   e.className="emoji";
   e.textContent=icons[Math.random()*icons.length|0];
   e.style.left="50%";
   e.style.top="50%";
-  e.style.setProperty("--x",(Math.random()*220-110)+"px");
-  e.style.setProperty("--y",(-160-Math.random()*120)+"px");
+  e.style.setProperty("--x",(Math.random()*260-130)+"px");
+  e.style.setProperty("--y",(-170-Math.random()*140)+"px");
   emojis.appendChild(e);
   setTimeout(()=>e.remove(),2600);
 }
 
-/* FLORES TRANSLÚCIDAS */
+/* 🌷 FLORES */
 function startFlores(){
   if(florInterval) return;
   florInterval=setInterval(spawnFlor,2000);
@@ -1940,23 +1954,26 @@ function stopFlores(){
 }
 
 function spawnFlor(){
-  const f=document.createElement("div");
-  f.className="flor";
-  f.style.setProperty("--x",(Math.random()*95+2)+"%");
+  const flor=document.createElement("div");
+  flor.className="flor";
+  flor.style.setProperty("--x",(Math.random()*92+4)+"%");
 
-  const pet=document.createElement("div");
-  pet.className="petalos";
-  for(let i=0;i<5;i++) pet.appendChild(document.createElement("span"));
+  const capullo=document.createElement("div");
+  capullo.className="capullo";
 
-  const cen=document.createElement("div");
-  cen.className="centro";
+  for(let i=0;i<4;i++){
+    capullo.appendChild(document.createElement("span"));
+  }
 
-  f.appendChild(pet);
-  f.appendChild(cen);
-  document.body.appendChild(f);
+  const centro=document.createElement("div");
+  centro.className="centro";
 
-  setTimeout(()=>f.classList.add("final"),7000);
-  setTimeout(()=>f.remove(),10000);
+  flor.appendChild(capullo);
+  flor.appendChild(centro);
+  document.body.appendChild(flor);
+
+  setTimeout(()=>flor.classList.add("final"),7200);
+  setTimeout(()=>flor.remove(),10000);
 }
 </script>
 </div>
