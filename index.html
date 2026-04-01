@@ -39,16 +39,16 @@
 
 <BR><FONT COLOR="BLACK" SIZE="30" FACE="TAHOMA"><MARQUEE BEHAVIOR="ALTERNATE">BIENVENIDA MI AMOOOR</MARQUEE></FONT>
 
-<!-- ❤️ EFECTO ROMÁNTICO ROJO CON TEXTO (OPTIMIZADO) -->
+<!-- ❤️ ROMANCE EN CANVAS (ULTRA FLUIDO) -->
 <style>
-/* Botón izquierdo */
-.boton-romantico {
+/* Botón lado izquierdo */
+.boton-romance {
   position: fixed;
   left: 20px;
   top: 50%;
   transform: translateY(-50%);
   background: #b11226;
-  color: white;
+  color: #fff;
   border: none;
   border-radius: 28px;
   padding: 14px 26px;
@@ -57,7 +57,7 @@
   z-index: 10001;
   box-shadow: 0 10px 24px rgba(177,18,38,.5);
 }
-.boton-romantico:hover { filter: brightness(1.1); }
+.boton-romance:hover { filter: brightness(1.1); }
 
 /* Overlay */
 .overlay-romance {
@@ -67,70 +67,53 @@
   opacity: 0;
   pointer-events: none;
   z-index: 10000;
-  overflow: hidden;
+  transition: opacity .6s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: opacity .6s ease;
 }
 .overlay-romance.activo {
   opacity: 1;
   pointer-events: auto;
 }
 
-/* Texto */
+/* Texto centrado */
 .texto-romance {
+  position: absolute;
   color: #ffd6d6;
   font-size: 28px;
   text-align: center;
   max-width: 80%;
-  opacity: 0;
-  transform: translateY(25px);
-  transition: all .8s ease;
   font-family: 'Segoe Script','Comic Sans MS','Ink Free',Tahoma,sans-serif;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all .6s ease;
 }
 .texto-romance.activo {
   opacity: 1;
   transform: translateY(0);
 }
 
-/* Partículas OPTIMIZADAS */
-.particula {
+canvas {
   position: absolute;
-  font-size: 22px;
-  color: rgba(220,40,60,.85);
-  animation: flotar 2.6s ease-out forwards;
-  will-change: transform, opacity;
-}
-
-@keyframes flotar {
-  from {
-    transform: translateY(0) scale(0.8);
-    opacity: 1;
-  }
-  to {
-    transform: translateY(-160px) scale(1.3);
-    opacity: 0;
-  }
+  inset: 0;
 }
 </style>
 
-<!-- BOTÓN -->
-<button class="boton-romantico" onclick="iniciarRomance()">❤️ Presióname</button>
+<button class="boton-romance" onclick="iniciarRomance()">❤️ Presióname</button>
 
-<!-- OVERLAY -->
-<div class="overlay-romance" id="overlayRomance">
-  <div id="textoRomance" class="texto-romance"></div>
+<div class="overlay-romance" id="overlay">
+  <canvas id="canvas"></canvas>
+  <div id="texto" class="texto-romance"></div>
 </div>
 
-<!-- AUDIO -->
-<audio id="audioRomance" preload="auto">
+<audio id="audio" preload="auto">
   <source src="cancion4.mp3" type="audio/mpeg">
 </audio>
 
 <script>
 /* =========================
-   TEXTOS (NO CAMBIADOS)
+   ✏️ TEXTOS (SIN CAMBIOS)
    ========================= */
 const textos = [
   "Eres una obra de arte",
@@ -146,79 +129,99 @@ const textos = [
 ];
 
 /* =========================
-   TIEMPOS EDITABLES (segundos)
+   ⏱️ TIEMPOS EDITABLES (segundos)
    ========================= */
-const tiempos = [
-  0.0,
-  2.6,
-  5.1,
-  7.6,
-  9.6,
-  12.1,
-  14.4,
-  17.9,
-  21.3,
-  24.7
-];
+const tiempos = [0,2.6,5.1,7.6,9.6,12.1,14.4,17.9,21.3,24.7];
 
-let indiceActual = -1;
+let indice = -1;
 
+/* =========================
+   CANVAS SETUP
+   ========================= */
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+let w, h, particles = [];
+
+function resize() {
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resize);
+
+/* Partícula */
+class Particle {
+  constructor() {
+    this.x = Math.random() * w;
+    this.y = h * 0.55;
+    this.vy = - (1 + Math.random() * 2.5);
+    this.size = 18 + Math.random()*18;
+    this.life = 120;
+    this.char = ["❤️","🌹","⭐"][Math.floor(Math.random()*3)];
+  }
+  update() {
+    this.y += this.vy;
+    this.life--;
+  }
+  draw() {
+    ctx.font = `${this.size}px serif`;
+    ctx.fillText(this.char, this.x, this.y);
+  }
+}
+
+function spawnParticles() {
+  for (let i=0;i<6;i++) particles.push(new Particle());
+}
+
+function animate() {
+  ctx.clearRect(0,0,w,h);
+  particles = particles.filter(p=>p.life>0);
+  particles.forEach(p=>{
+    p.update();
+    p.draw();
+  });
+  requestAnimationFrame(animate);
+}
+
+/* =========================
+   LÓGICA PRINCIPAL
+   ========================= */
 function iniciarRomance() {
-  const overlay = document.getElementById("overlayRomance");
-  const texto = document.getElementById("textoRomance");
-  const audio = document.getElementById("audioRomance");
+  const overlay = document.getElementById("overlay");
+  const textoEl = document.getElementById("texto");
+  const audio = document.getElementById("audio");
 
-  indiceActual = -1;
-  texto.textContent = "";
-  texto.classList.remove("activo");
+  resize();
   overlay.classList.add("activo");
+  indice = -1;
+
+  textoEl.textContent = "";
+  textoEl.classList.remove("activo");
 
   audio.currentTime = 0;
   audio.play().catch(()=>{});
 
   audio.ontimeupdate = () => {
-    for (let i = 0; i < tiempos.length; i++) {
-      if (audio.currentTime >= tiempos[i] && indiceActual !== i) {
-        cambiarTexto(textos[i]);
-        lanzarParticulas();
-        indiceActual = i;
+    for (let i=0;i<tiempos.length;i++) {
+      if (audio.currentTime >= tiempos[i] && indice !== i) {
+        indice = i;
+        textoEl.classList.remove("activo");
+        setTimeout(()=>{
+          textoEl.textContent = textos[i];
+          textoEl.classList.add("activo");
+        },300);
+        spawnParticles();
       }
     }
   };
 
-  audio.onended = finalizarRomance;
+  audio.onended = cerrarTodo;
+
+  animate();
 }
 
-function cambiarTexto(contenido) {
-  const texto = document.getElementById("textoRomance");
-  texto.classList.remove("activo");
-  setTimeout(() => {
-    texto.textContent = contenido;
-    texto.classList.add("activo");
-  }, 400);
-}
-
-/* ✅ PARTÍCULAS OPTIMIZADAS */
-function lanzarParticulas() {
-  const overlay = document.getElementById("overlayRomance");
-  const simbolos = ["🌹", "⭐", "❤️"];
-
-  for (let i = 0; i < 8; i++) {
-    const p = document.createElement("div");
-    p.className = "particula";
-    p.textContent = simbolos[Math.floor(Math.random() * simbolos.length)];
-    p.style.left = Math.random() * 100 + "%";
-    p.style.top = "55%";
-    overlay.appendChild(p);
-    setTimeout(() => p.remove(), 2600);
-  }
-}
-
-function finalizarRomance() {
-  const overlay = document.getElementById("overlayRomance");
-  const audio = document.getElementById("audioRomance");
-  audio.pause();
-  overlay.classList.remove("activo");
+function cerrarTodo() {
+  document.getElementById("overlay").classList.remove("activo");
+  particles = [];
 }
 </script>
   <!-- 💜🐼 FAN #1 — VERSION ROBUSTA -->
