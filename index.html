@@ -135,25 +135,25 @@ const textos = [
   "Pintas en color",
   "Quiero tanto devorarte",
   "Esta vez besarte",
-  "Si es que soy capaz"
-  "cariño"
-  "eres un amor"
+  "Si es que soy capaz",
+  "Cariño",
+  "Eres un amor"
 ];
 
-/* 🔥 EDITA AQUÍ LOS TIEMPOS (en milisegundos) */
+/* 🔥 TIEMPOS BIEN DISTRIBUIDOS (0s → 60s) */
 const tiempos = [
   0,
-  9000,
-  13000,
+  5000,
+  10000,
   15000,
-  18000,
-  21500,
-  31000,
+  20000,
+  25000,
+  30000,
   35000,
-  38000,
-  41000,
-  44000,
-  49000
+  40000,
+  45000,
+  52000,
+  56000
 ];
 
 let timers = [];
@@ -170,7 +170,6 @@ function iniciarRomance() {
   audio.currentTime = 0;
   audio.play().catch(()=>{});
 
-  /* limpiar timers anteriores */
   timers.forEach(t => clearTimeout(t));
   timers = [];
 
