@@ -36,7 +36,69 @@
   <div class="snoopy">🐼</div>
 </div>
 
-<BR><FONT COLOR="BLACK" SIZE="30" FACE="TAHOMA"><MARQUEE BEHAVIOR="ALTERNATE">BIENVENIDA MI AMOOOR</MARQUEE></FONT>
+<!-- 🌸 ANIMACIÓN DE BIENVENIDA AL ENTRAR -->
+<style>
+#bienvenida-overlay{
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, #ffdde1, #ee9ca7);
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeOut 1s ease forwards;
+  animation-delay: 4s; /* CUÁNTO TIEMPO SE QUEDA */
+}
+
+.bienvenida-contenido{
+  text-align: center;
+  animation: entrar 1.2s ease;
+  font-family: 'Segoe Script','Comic Sans MS','Ink Free',Tahoma,sans-serif;
+  color: #7b1fa2;
+}
+
+.bienvenida-contenido h1{
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+.bienvenida-contenido p{
+  font-size: 22px;
+}
+
+@keyframes entrar{
+  from{
+    opacity: 0;
+    transform: scale(0.8) translateY(20px);
+  }
+  to{
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes fadeOut{
+  to{
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+</style>
+
+<div id="bienvenida-overlay">
+  <div class="bienvenida-contenido">
+    <h1>💖 Bienvenida 💖</h1>
+    <p>Esta página fue hecha con amor 🐼✨</p>
+  </div>
+</div>
+
+<script>
+/* Eliminar completamente el overlay después */
+setTimeout(() => {
+  const overlay = document.getElementById("bienvenida-overlay");
+  if (overlay) overlay.remove();
+}, 5000); // debe coincidir con el tiempo de arriba
+</script>
 
 <!-- ❤️ EFECTO ROMÁNTICO ROJO CON TEXTO + ESTRELLAS Y ROSAS -->
 <style>
