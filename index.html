@@ -38,7 +38,180 @@
 </div>
 
 <BR><FONT COLOR="BLACK" SIZE="30" FACE="TAHOMA"><MARQUEE BEHAVIOR="ALTERNATE">BIENVENIDA MI AMOOOR</MARQUEE></FONT>
-<!-- 💜🐼 FAN #1 — VERSION ROBUSTA -->
+
+ <!-- ✨ EFECTO ROMÁNTICO CON TEXTO SECUENCIAL -->
+<style>
+/* Botón lado izquierdo */
+.boton-romantico {
+  position: fixed;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #7b4cff;
+  color: white;
+  border: none;
+  border-radius: 28px;
+  padding: 14px 26px;
+  font-size: 16px;
+  cursor: pointer;
+  z-index: 10001;
+  box-shadow: 0 10px 24px rgba(123,76,255,.4);
+}
+.boton-romantico:hover { filter: brightness(1.1); }
+
+/* Overlay */
+.overlay-romance {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, #2c1b47, #000);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10000;
+  overflow: hidden;
+}
+.overlay-romance.activo {
+  animation: aparecer 0.6s ease forwards;
+}
+@keyframes aparecer {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Explosión */
+.explosion {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffd6ff, #7b4cff);
+  transform: translate(-50%,-50%) scale(0);
+}
+.overlay-romance.activo .explosion {
+  animation: explotar 1.2s ease-out forwards;
+}
+@keyframes explotar {
+  0%   { transform: translate(-50%,-50%) scale(0); }
+  70%  { transform: translate(-50%,-50%) scale(18); }
+  100% { transform: translate(-50%,-50%) scale(20); opacity: 0; }
+}
+
+/* Texto */
+.texto-romance {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) translateY(20px);
+  color: #ffd6ff;
+  font-size: 28px;
+  text-align: center;
+  opacity: 0;
+  transition: all .6s ease;
+  font-family: 'Segoe Script','Comic Sans MS','Ink Free',Tahoma,sans-serif;
+}
+.texto-romance.activo {
+  opacity: 1;
+  transform: translate(-50%, -50%) translateY(0);
+}
+
+/* Corazones */
+.corazon {
+  position: absolute;
+  font-size: 22px;
+  color: #ff69b4;
+  animation: flotar 3s ease-out forwards;
+}
+@keyframes flotar {
+  from { transform: translateY(0) scale(.7); opacity:1; }
+  to { transform: translateY(-200px) scale(1.4); opacity:0; }
+}
+</style>
+
+<!-- BOTÓN -->
+<button class="boton-romantico" onclick="iniciarRomance()">
+  ✨ Presióname
+</button>
+
+<!-- OVERLAY -->
+<div class="overlay-romance" id="overlayRomance">
+  <div class="explosion"></div>
+  <div id="texto" class="texto-romance"></div>
+</div>
+
+<!-- AUDIO -->
+<audio id="audioRomance" preload="auto">
+  cancion.mp3
+</audio>
+
+<script>
+const textos = [
+  "estoy ahorrando pa' comprarte el sol",
+  "dias grises cambian con tu voz",
+  "veo las nubes color tornasol",
+  "te acurruco dentro de un girasol",
+  "tu me endulzas con tu pelo y me despego del suelo"
+];
+
+let indice = 0;
+
+function iniciarRomance() {
+  const overlay = document.getElementById("overlayRomance");
+  const textoEl = document.getElementById("texto");
+  const audio = document.getElementById("audioRomance");
+
+  indice = 0;
+  textoEl.classList.remove("activo");
+  overlay.classList.add("activo");
+
+  audio.currentTime = 0;
+  audio.play();
+
+  lanzarCorazones();
+
+  mostrarTexto();
+
+  // ocultar todo después de la secuencia
+  setTimeout(() => {
+    overlay.classList.remove("activo");
+    audio.pause();
+  }, textos.length * 2500 + 500);
+}
+
+function mostrarTexto() {
+  const textoEl = document.getElementById("texto");
+
+  if (indice > 0) {
+    textoEl.classList.remove("activo");
+  }
+
+  if (indice < textos.length) {
+    setTimeout(() => {
+      textoEl.textContent = textos[indice];
+      textoEl.classList.add("activo");
+
+      indice++;
+      mostrarTexto();
+    }, 2000);
+  }
+}
+
+function lanzarCorazones() {
+  const overlay = document.getElementById("overlayRomance");
+  for (let i = 0; i < 24; i++) {
+    const c = document.createElement("div");
+    c.className = "corazon";
+    c.textContent = "💜";
+    c.style.left = Math.random()*100 + "%";
+    c.style.top = Math.random()*100 + "%";
+    c.style.fontSize = (16 + Math.random()*24) + "px";
+    overlay.appendChild(c);
+    setTimeout(() => c.remove(), 3000);
+  }
+}
+</script>
+`` 
+  <!-- 💜🐼 FAN #1 — VERSION ROBUSTA -->
 <style>
 /* ===== BOTÓN ===== */
 .boton-fan {
