@@ -38,7 +38,211 @@
 </div>
 
 <BR><FONT COLOR="BLACK" SIZE="30" FACE="TAHOMA"><MARQUEE BEHAVIOR="ALTERNATE">BIENVENIDA MI AMOOOR</MARQUEE></FONT>
-<!-- 🎬 OVERLAY VIDEO + CANCIÓN (10s) -->
+<!-- 💜🐼 FAN #1 — GALERÍA CON MENSAJES + PANDAS + CORAZONES -->
+<style>
+/* Botón de entrada */
+.boton-fan {
+  background: #8e44ad;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 14px 28px;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(142,68,173,.4);
+}
+.boton-fan:hover { filter: brightness(1.1); }
+
+/* Overlay */
+.fan-overlay {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(180deg, #f7e9ff, #ecd9ff);
+  z-index: 100000;
+  display: none;
+  overflow-y: auto;
+  font-family: 'Segoe Script','Comic Sans MS','Ink Free',Tahoma,sans-serif;
+  animation: aparecer .8s ease;
+}
+@keyframes aparecer {
+  from { opacity: 0; transform: scale(.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Corazones flotando */
+.fondo-corazones {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100001;
+}
+.corazon {
+  position: absolute;
+  bottom: -40px;
+  font-size: 22px;
+  color: rgba(155,89,182,.6);
+  animation: flotar 8s linear infinite;
+}
+@keyframes flotar {
+  from { transform: translateY(0); opacity: 0; }
+  10% { opacity: 1; }
+  to { transform: translateY(-120vh); opacity: 0; }
+}
+
+/* Contenido */
+.fan-contenido {
+  max-width: 900px;
+  margin: 70px auto;
+  background: white;
+  border-radius: 25px;
+  padding: 40px 30px;
+  box-shadow: 0 20px 40px rgba(155,89,182,.35);
+  position: relative;
+  z-index: 100002;
+}
+
+.fan-contenido h1 {
+  text-align: center;
+  color: #7b1fa2;
+  font-size: 40px;
+}
+.fan-sub {
+  text-align: center;
+  font-size: 22px;
+  color: #9b59b6;
+  margin-bottom: 16px;
+}
+
+/* Pandas flotando */
+.pandas {
+  text-align: center;
+  font-size: 40px;
+  animation: pandaFlota 3s ease-in-out infinite;
+}
+@keyframes pandaFlota {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Galería */
+.galeria {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 18px;
+  margin-top: 30px;
+}
+.tarjeta {
+  background: #faf5ff;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 8px 16px rgba(0,0,0,.15);
+  text-align: center;
+}
+.tarjeta img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+.mensaje {
+  padding: 14px;
+  font-size: 16px;
+  color: #6c3483;
+}
+
+/* Botón volver */
+.boton-volver {
+  display: block;
+  margin: 40px auto 0;
+  background: #ff69b4;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 14px 30px;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(255,105,180,.35);
+}
+
+/* Móvil */
+@media (max-width:600px){
+  .fan-contenido h1 { font-size: 30px; }
+  .fan-sub { font-size: 18px; }
+}
+</style>
+
+<button class="boton-fan" onclick="abrirFan()">💜 Soy tu fan #1 🐼</button>
+
+<div class="fan-overlay" id="fanOverlay">
+  <div class="fondo-corazones" id="corazones"></div>
+
+  <div class="fan-contenido">
+    <h1>💜 SOY TU FAN #1 💜</h1>
+    <div class="fan-sub">Siempre apoyándote, siempre contigo</div>
+    <div class="pandas">🐼💖 🐼💖 🐼💖</div>
+
+    <!-- GALERÍA CON MENSAJES -->
+    <div class="galeria">
+      <div class="tarjeta">
+        foto7.jpg
+        <div class="mensaje">Me encantan tus ojos💕</div>
+      </div>
+      <div class="tarjeta">
+        foto8.jpg
+        <div class="mensaje">Tu sonrisa lo ilumina todo ✨</div>
+      </div>
+      <div class="tarjeta">
+        foto9.jpg
+        <div class="mensaje">bellaaa💜</div>
+      </div>
+      <div class="tarjeta">
+        foto10.jpg
+        <div class="mensaje">te amo abusiva🌸</div>
+      </div>
+      <div class="tarjeta">
+        foto11.jpg
+        <div class="mensaje">preciosa💕🐼</div>
+      </div>
+    </div>
+
+    <button class="boton-volver" onclick="cerrarFan()">🔙 Volver</button>
+  </div>
+</div>
+
+<audio id="fanAudio" preload="auto">
+<source src="fanAudio.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+/* Corazones flotando */
+function iniciarCorazones() {
+  const cont = document.getElementById("corazones");
+  cont.innerHTML = "";
+  for (let i=0;i<25;i++){
+    const c = document.createElement("div");
+    c.className = "corazon";
+    c.textContent = "💜";
+    c.style.left = Math.random()*100 + "%";
+    c.style.fontSize = (16 + Math.random()*20) + "px";
+    c.style.animationDuration = (6 + Math.random()*4) + "s";
+    cont.appendChild(c);
+  }
+}
+
+function abrirFan(){
+  document.getElementById("fanOverlay").style.display="block";
+  iniciarCorazones();
+  const audio=document.getElementById("fanAudio");
+  audio.currentTime=0;
+  audio.play();
+}
+
+function cerrarFan(){
+  document.getElementById("fanOverlay").style.display="none";
+  document.getElementById("fanAudio").pause();
+}
+</script>
+  
+  <!-- 🎬 OVERLAY VIDEO + CANCIÓN (10s) -->
 <style>
 .video-overlay {
   position: fixed;
