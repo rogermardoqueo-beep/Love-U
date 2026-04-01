@@ -39,7 +39,7 @@
 
 <BR><FONT COLOR="BLACK" SIZE="30" FACE="TAHOMA"><MARQUEE BEHAVIOR="ALTERNATE">BIENVENIDA MI AMOOOR</MARQUEE></FONT>
 
- <!-- ✨ EFECTO ROMÁNTICO CON TEXTO SECUENCIAL -->
+<!-- ✨ EFECTO ROMÁNTICO FUNCIONAL -->
 <style>
 /* Botón lado izquierdo */
 .boton-romantico {
@@ -67,85 +67,47 @@
   opacity: 0;
   pointer-events: none;
   z-index: 10000;
-  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .overlay-romance.activo {
-  animation: aparecer 0.6s ease forwards;
-}
-@keyframes aparecer {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-/* Explosión */
-.explosion {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: radial-gradient(circle, #ffd6ff, #7b4cff);
-  transform: translate(-50%,-50%) scale(0);
-}
-.overlay-romance.activo .explosion {
-  animation: explotar 1.2s ease-out forwards;
-}
-@keyframes explotar {
-  0%   { transform: translate(-50%,-50%) scale(0); }
-  70%  { transform: translate(-50%,-50%) scale(18); }
-  100% { transform: translate(-50%,-50%) scale(20); opacity: 0; }
+  opacity: 1;
+  pointer-events: auto;
+  transition: opacity .6s ease;
 }
 
 /* Texto */
 .texto-romance {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) translateY(20px);
   color: #ffd6ff;
   font-size: 28px;
   text-align: center;
   opacity: 0;
+  transform: translateY(20px);
   transition: all .6s ease;
   font-family: 'Segoe Script','Comic Sans MS','Ink Free',Tahoma,sans-serif;
 }
 .texto-romance.activo {
   opacity: 1;
-  transform: translate(-50%, -50%) translateY(0);
-}
-
-/* Corazones */
-.corazon {
-  position: absolute;
-  font-size: 22px;
-  color: #ff69b4;
-  animation: flotar 3s ease-out forwards;
-}
-@keyframes flotar {
-  from { transform: translateY(0) scale(.7); opacity:1; }
-  to { transform: translateY(-200px) scale(1.4); opacity:0; }
+  transform: translateY(0);
 }
 </style>
 
 <!-- BOTÓN -->
-<button class="boton-romantico" onclick="iniciarRomance()">
-  ✨ Presióname
-</button>
+<button class="boton-romantico" onclick="iniciarRomance()">✨ Presióname</button>
 
 <!-- OVERLAY -->
 <div class="overlay-romance" id="overlayRomance">
-  <div class="explosion"></div>
-  <div id="texto" class="texto-romance"></div>
+  <div id="textoRomance" class="texto-romance"></div>
 </div>
 
-<!-- AUDIO -->
+<!-- AUDIO (CORRECTO) -->
 <audio id="audioRomance" preload="auto">
-  cancion.mp3
+  <source src="cancion.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-const textos = [
+const frases = [
   "estoy ahorrando pa' comprarte el sol",
   "dias grises cambian con tu voz",
   "veo las nubes color tornasol",
@@ -154,63 +116,63 @@ const textos = [
 ];
 
 let indice = 0;
+let intervalo = null;
 
 function iniciarRomance() {
   const overlay = document.getElementById("overlayRomance");
-  const textoEl = document.getElementById("texto");
+  const texto = document.getElementById("textoRomance");
   const audio = document.getElementById("audioRomance");
 
+  // reset
   indice = 0;
-  textoEl.classList.remove("activo");
+  texto.textContent = "";
+  texto.classList.remove("activo");
   overlay.classList.add("activo");
 
+  // reproducir audio (ahora sí válido)
   audio.currentTime = 0;
-  audio.play();
+  audio.play().catch(() => {});
 
-  lanzarCorazones();
-
+  // mostrar primer texto
   mostrarTexto();
 
-  // ocultar todo después de la secuencia
-  setTimeout(() => {
-    overlay.classList.remove("activo");
-    audio.pause();
-  }, textos.length * 2500 + 500);
+  // secuencia controlada
+  intervalo = setInterval(() => {
+    texto.classList.remove("activo");
+
+    setTimeout(() => {
+      indice++;
+      if (indice >= frases.length) {
+        clearInterval(intervalo);
+        finalizarRomance();
+        return;
+      }
+      texto.textContent = frases[indice];
+      texto.classList.add("activo");
+    }, 600);
+
+  }, 2200);
 }
 
 function mostrarTexto() {
-  const textoEl = document.getElementById("texto");
-
-  if (indice > 0) {
-    textoEl.classList.remove("activo");
-  }
-
-  if (indice < textos.length) {
-    setTimeout(() => {
-      textoEl.textContent = textos[indice];
-      textoEl.classList.add("activo");
-
-      indice++;
-      mostrarTexto();
-    }, 2000);
-  }
+  const texto = document.getElementById("textoRomance");
+  texto.textContent = frases[0];
+  requestAnimationFrame(() => {
+    texto.classList.add("activo");
+  });
 }
 
-function lanzarCorazones() {
+function finalizarRomance() {
   const overlay = document.getElementById("overlayRomance");
-  for (let i = 0; i < 24; i++) {
-    const c = document.createElement("div");
-    c.className = "corazon";
-    c.textContent = "💜";
-    c.style.left = Math.random()*100 + "%";
-    c.style.top = Math.random()*100 + "%";
-    c.style.fontSize = (16 + Math.random()*24) + "px";
-    overlay.appendChild(c);
-    setTimeout(() => c.remove(), 3000);
-  }
+  const audio = document.getElementById("audioRomance");
+
+  setTimeout(() => {
+    overlay.classList.remove("activo");
+    audio.pause();
+  }, 2000);
 }
 </script>
-`` 
+``
   <!-- 💜🐼 FAN #1 — VERSION ROBUSTA -->
 <style>
 /* ===== BOTÓN ===== */
