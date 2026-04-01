@@ -39,9 +39,9 @@
 
 <BR><FONT COLOR="BLACK" SIZE="30" FACE="TAHOMA"><MARQUEE BEHAVIOR="ALTERNATE">BIENVENIDA MI AMOOOR</MARQUEE></FONT>
 
-<!-- ❤️ ROMANCE EN CANVAS (ULTRA FLUIDO) -->
+<!-- ❤️ ROMANCE EN CANVAS (FLUIDO Y ESTABLE) -->
 <style>
-/* Botón lado izquierdo */
+/* Botón izquierdo */
 .boton-romance {
   position: fixed;
   left: 20px;
@@ -68,53 +68,56 @@
   pointer-events: none;
   z-index: 10000;
   transition: opacity .6s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 .overlay-romance.activo {
   opacity: 1;
   pointer-events: auto;
 }
 
-/* Texto centrado */
+/* Texto */
 .texto-romance {
-  position: absolute;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) translateY(20px);
   color: #ffd6d6;
   font-size: 28px;
   text-align: center;
   max-width: 80%;
   font-family: 'Segoe Script','Comic Sans MS','Ink Free',Tahoma,sans-serif;
   opacity: 0;
-  transform: translateY(20px);
   transition: all .6s ease;
+  z-index: 10002;
 }
 .texto-romance.activo {
   opacity: 1;
-  transform: translateY(0);
+  transform: translate(-50%, -50%) translateY(0);
 }
 
 canvas {
-  position: absolute;
+  position: fixed;
   inset: 0;
+  z-index: 10001;
 }
 </style>
 
+<!-- BOTÓN -->
 <button class="boton-romance" onclick="iniciarRomance()">❤️ Presióname</button>
 
-<div class="overlay-romance" id="overlay">
-  <canvas id="canvas"></canvas>
-  <div id="texto" class="texto-romance"></div>
-</div>
+<!-- OVERLAY -->
+<div class="overlay-romance" id="overlay"></div>
+<canvas id="canvas"></canvas>
+<div id="texto" class="texto-romance"></div>
 
+<!-- AUDIO -->
 <audio id="audio" preload="auto">
-  <source src="cancion4.mp3" type="audio/mpeg">
+   <source src="cancion4.mp3" type="audio/mpeg">
 </audio>
 
 <script>
-/* =========================
-   ✏️ TEXTOS (SIN CAMBIOS)
-   ========================= */
+/* ======================
+   TEXTOS (SIN CAMBIOS)
+   ====================== */
 const textos = [
   "Eres una obra de arte",
   "Con solo mirarte",
@@ -128,19 +131,20 @@ const textos = [
   "Si es que soy capaz"
 ];
 
-/* =========================
-   ⏱️ TIEMPOS EDITABLES (segundos)
-   ========================= */
+/* ======================
+   TIEMPOS EDITABLES (s)
+   ====================== */
 const tiempos = [0,2.6,5.1,7.6,9.6,12.1,14.4,17.9,21.3,24.7];
 
 let indice = -1;
 
-/* =========================
-   CANVAS SETUP
-   ========================= */
+/* ======================
+   CANVAS
+   ====================== */
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-let w, h, particles = [];
+let w, h;
+let particles = [];
 
 function resize() {
   w = canvas.width = window.innerWidth;
@@ -150,13 +154,13 @@ window.addEventListener("resize", resize);
 
 /* Partícula */
 class Particle {
-  constructor() {
+  constructor(char) {
+    this.char = char;
     this.x = Math.random() * w;
     this.y = h * 0.55;
-    this.vy = - (1 + Math.random() * 2.5);
-    this.size = 18 + Math.random()*18;
-    this.life = 120;
-    this.char = ["❤️","🌹","⭐"][Math.floor(Math.random()*3)];
+    this.vy = - (1 + Math.random() * 2);
+    this.size = 18 + Math.random() * 18;
+    this.life = 100;
   }
   update() {
     this.y += this.vy;
@@ -168,23 +172,31 @@ class Particle {
   }
 }
 
-function spawnParticles() {
-  for (let i=0;i<6;i++) particles.push(new Particle());
+/* ✅ CANTIDAD FIJA DE EMOJIS */
+function spawnParticles(cantidad = 8) {
+  particles = []; // limpieza total
+  const simbolos = ["❤️","🌹","⭐"];
+
+  for (let i = 0; i < cantidad; i++) {
+    particles.push(new Particle(
+      simbolos[Math.floor(Math.random()*simbolos.length)]
+    ));
+  }
 }
 
 function animate() {
   ctx.clearRect(0,0,w,h);
-  particles = particles.filter(p=>p.life>0);
-  particles.forEach(p=>{
+  particles = particles.filter(p => p.life > 0);
+  particles.forEach(p => {
     p.update();
     p.draw();
   });
   requestAnimationFrame(animate);
 }
 
-/* =========================
+/* ======================
    LÓGICA PRINCIPAL
-   ========================= */
+   ====================== */
 function iniciarRomance() {
   const overlay = document.getElementById("overlay");
   const textoEl = document.getElementById("texto");
@@ -204,18 +216,19 @@ function iniciarRomance() {
     for (let i=0;i<tiempos.length;i++) {
       if (audio.currentTime >= tiempos[i] && indice !== i) {
         indice = i;
+
         textoEl.classList.remove("activo");
-        setTimeout(()=>{
+        setTimeout(() => {
           textoEl.textContent = textos[i];
           textoEl.classList.add("activo");
-        },300);
-        spawnParticles();
+        }, 300);
+
+        spawnParticles(8); // 🔥 SIEMPRE 8
       }
     }
   };
 
   audio.onended = cerrarTodo;
-
   animate();
 }
 
