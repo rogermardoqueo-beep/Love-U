@@ -100,7 +100,247 @@ setTimeout(() => {
 }, 5000); // debe coincidir con el tiempo de arriba
 </script>
 
-<!-- ❤️ EFECTO ROMÁNTICO ROJO CON TEXTO + ESTRELLAS Y ROSAS -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JARDÍN MÁGICO - CÓDIGO FINAL</title>
+
+<style>
+/* 🔒 RESET Y CONFIGURACIÓN */
+.flower-exp * { margin: 0; padding: 0; box-sizing: border-box; }
+
+.flower-exp {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+  font-family: sans-serif;
+}
+
+/* 🌌 FONDO */
+.flower-exp .night {
+  transition: opacity 1.5s ease;
+  opacity: 0;
+  position: absolute;
+  width: 100%; height: 100%;
+  background: radial-gradient(circle at 50% 10%, rgba(255,255,255,0.1), transparent 60%),
+              linear-gradient(to top, #000 40%, #01010a 100%);
+}
+
+/* ✨ LUCIÉRNAGAS */
+.firefly {
+  position: absolute;
+  width: 4px; height: 4px;
+  background-color: #fffa65;
+  border-radius: 50%;
+  box-shadow: 0 0 10px 2px #fff700, 0 0 20px 4px rgba(255, 250, 101, 0.5);
+  opacity: 0;
+  z-index: 2;
+}
+
+@keyframes flicker-erratic {
+  0%, 100% { opacity: 0; transform: translate(0, 0) scale(0.8); }
+  10%, 90% { opacity: 1; transform: translate(5px, -5px) scale(1); }
+  50% { opacity: 1; transform: translate(15px, -15px) scale(1.1); }
+}
+
+/* 🌸 CONTENEDOR (Separación de 70px) */
+.flower-exp .flowers {
+  position: absolute;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 70px; 
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  z-index: 10;
+  width: 100vw;
+}
+
+/* ESTRUCTURA FLOR */
+.flower {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: sway 6s ease-in-out infinite;
+  transform-origin: bottom;
+}
+
+@keyframes sway {
+  0%, 100% { transform: rotate(-2deg); }
+  50% { transform: rotate(2deg); }
+}
+
+/* TALLOS */
+.stem {
+  width: 8px; height: 0;
+  background: linear-gradient(to top, #1e5f3a, #4caf50);
+  border-radius: 4px;
+  position: relative;
+  z-index: 1;
+}
+
+.main-flower .stem { animation: growMain 3s ease-out forwards; width: 10px; }
+.side-flower .stem { animation: growSide 3s ease-out forwards; width: 6px; }
+
+@keyframes growMain { to { height: 240px; } }
+@keyframes growSide { to { height: 150px; } }
+
+/* CABEZA */
+.flower-head { position: absolute; display: flex; justify-content: center; align-items: center; z-index: 5; }
+.main-flower .flower-head { bottom: 240px; transform: scale(1.15); }
+.side-flower .flower-head { bottom: 150px; transform: scale(0.75); }
+
+/* PÉTALOS */
+.petals {
+  position: absolute; transform: scale(0);
+  animation: bloom 1.5s 2.5s ease-out forwards;
+  display: flex; justify-content: center; align-items: center;
+}
+
+.petals span {
+  position: absolute; width: 25px; height: 55px;
+  border-radius: 50%; transform-origin: bottom center; bottom: 0;
+}
+
+.type-sunflower span { background: linear-gradient(to top, #ffcc00, #fff176); }
+.type-rose span { background: linear-gradient(to top, #ff4d4d, #ffb3b3); }
+.type-lavender span { background: linear-gradient(to top, #9933ff, #e6ccff); }
+
+.petals span:nth-child(n) { transform: rotate(calc(30deg * var(--i))); }
+
+@keyframes bloom { to { transform: scale(1.2); } }
+
+/* CENTRO */
+.center {
+  position: absolute; width: 32px; height: 32px; border-radius: 50%;
+  opacity: 0; animation: appear 1s 2.5s forwards; z-index: 10;
+}
+.type-sunflower .center { background: radial-gradient(circle, #ffd54f, #ff9800, #ff6f00); }
+.type-rose .center { background: radial-gradient(circle, #ff1a1a, #800000); width: 25px; height: 25px; }
+.type-lavender .center { background: radial-gradient(circle, #6600cc, #330066); width: 20px; height: 20px; }
+
+@keyframes appear { to { opacity: 1; } }
+
+/* BOTÓN */
+.flower-btn {
+  position: fixed; top: 20px; right: 20px;
+  padding: 15px 30px; background: #fff700;
+  border: none; border-radius: 30px;
+  font-weight: bold; cursor: pointer; z-index: 10000;
+  box-shadow: 0 4px 20px rgba(255, 247, 0, 0.4);
+  pointer-events: all;
+}
+
+.hide { opacity: 0 !important; transition: opacity 1.5s; }
+</style>
+</head>
+<body>
+
+<button class="flower-btn" onclick="startExperience()">🌼 INICIAR SHOW</button>
+
+<div class="flower-exp" id="main-experience">
+  
+  <!-- 🎵 AQUÍ CONFIGURAS TU MÚSICA -->
+  <audio id="music" loop>
+    <source src="TU_ARCHIVO.mp3" type="audio/mpeg">
+    <source src="musica7.mp3" type="audio/mpeg">
+    <!-- El navegador intentará cargar el primero, si no existe, pasará al segundo -->
+  </audio>
+
+  <div class="night" id="night-bg"></div>
+
+  <div class="flowers" id="flower-container">
+    <script>
+      const container = document.getElementById('flower-container');
+      const getPetals = () => {
+        let h = '';
+        for(let i=1; i<=12; i++) h += `<span style="--i:${i}"></span>`;
+        return h;
+      };
+
+      // Flores Izquierda (Pequeñas)
+      for(let i=0; i<3; i++) {
+        container.innerHTML += `
+          <div class="flower side-flower type-rose">
+            <div class="flower-head"><div class="petals">${getPetals()}</div><div class="center"></div></div>
+            <div class="stem"></div>
+          </div>`;
+      }
+
+      // Flores Centro (4 Grandes - Girasoles)
+      for(let i=0; i<4; i++) {
+        container.innerHTML += `
+          <div class="flower main-flower type-sunflower">
+            <div class="flower-head"><div class="petals">${getPetals()}</div><div class="center"></div></div>
+            <div class="stem"></div>
+          </div>`;
+      }
+
+      // Flores Derecha (Pequeñas)
+      for(let i=0; i<3; i++) {
+        container.innerHTML += `
+          <div class="flower side-flower type-lavender">
+            <div class="flower-head"><div class="petals">${getPetals()}</div><div class="center"></div></div>
+            <div class="stem"></div>
+          </div>`;
+      }
+    </script>
+  </div>
+</div>
+
+<script>
+function createFireflies(count) {
+  const main = document.getElementById('main-experience');
+  for (let i = 0; i < count; i++) {
+    const firefly = document.createElement('div');
+    firefly.className = 'firefly';
+    firefly.style.left = Math.random() * 100 + 'vw';
+    firefly.style.top = Math.random() * 100 + 'vh';
+    const duration = 4 + Math.random() * 8;
+    firefly.style.animation = `flicker-erratic ${duration}s ${Math.random()*5}s infinite ease-in-out`;
+    main.appendChild(firefly);
+  }
+}
+
+function startExperience() {
+  const flowers = document.getElementById('flower-container');
+  const night = document.getElementById('night-bg');
+  const music = document.getElementById('music');
+  
+  // Limpiar y arrancar
+  document.querySelectorAll('.firefly').forEach(f => f.remove());
+  createFireflies(50);
+
+  flowers.style.opacity = "1";
+  night.style.opacity = "1";
+  document.querySelectorAll('.firefly').forEach(f => f.style.opacity = '1');
+
+  // Reproducción inmediata al clic
+  music.currentTime = 0;
+  music.play().catch(e => console.log("Revisa que el archivo de música exista."));
+
+  flowers.classList.remove('hide');
+
+  // Reset a los 30 segundos
+  setTimeout(() => {
+    flowers.classList.add('hide');
+    night.style.opacity = "0";
+    document.querySelectorAll('.firefly').forEach(f => f.style.opacity = '0');
+    setTimeout(() => { music.pause(); }, 1500);
+  }, 30000);
+}
+</script>
+
+</body>
+</html>
+  <!-- ❤️ EFECTO ROMÁNTICO ROJO CON TEXTO + ESTRELLAS Y ROSAS -->
 <style>
 /* Botón izquierdo */
 .boton-romantico {
